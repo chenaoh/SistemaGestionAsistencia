@@ -200,5 +200,82 @@ public class EstudianteDao {
 		return resp;
 	}
 
+	public ArrayList<String> obtenerNombres() {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		Conexion conexion = new Conexion();
+		EstudianteVo miEstudiante;
+		ArrayList<String> listaNombres = new ArrayList<>();
+		
+		conn = conexion.getConnection();
+		
+		String consulta = "SELECT * FROM estudiante";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			result = statement.executeQuery();
+			
+			while(result.next()==true){
+				miEstudiante = new EstudianteVo();
+				miEstudiante.setNombre(result.getString("nombre"));
+				listaNombres.add(miEstudiante.getNombre());
+				
+			}
+			
+			conexion.desconectar();
+			
+		} catch (SQLException e) {
+			System.out.println("Error en la lista de los nombres de los estudiantes: "+e.getMessage());
+			listaNombres = null;
+		}
+		
+		return listaNombres;
+	}
+
+	public ArrayList<EstudianteVo> consultarEstudianteNombre(String nombreEstu) {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		Conexion conexion = new Conexion();
+		EstudianteVo miEstudiante;
+		ArrayList<EstudianteVo> estudiante = new ArrayList<>();
+		
+		conn = conexion.getConnection();
+		
+		String consulta = "SELECT * FROM estudiante WHERE nombre = ?";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			statement.setString(1, nombreEstu);
+			result = statement.executeQuery();
+			
+			while(result.next()==true){
+				miEstudiante = new EstudianteVo();
+				miEstudiante.setDocumento(result.getString("documento"));
+				miEstudiante.setNombre(result.getString("nombre"));
+				miEstudiante.setDireccion(result.getString("direccion"));
+				miEstudiante.setTelefono(result.getString("telefono"));
+				miEstudiante.setEmail(result.getString("email"));
+				miEstudiante.setGrupo(result.getString("grupo"));
+				miEstudiante.setFechaNacimiento(result.getDate("fecha_nacimiento"));
+				miEstudiante.setSexo(result.getString("sexo"));
+				miEstudiante.setEstado(result.getString("estado"));
+				estudiante.add(miEstudiante);
+				
+			}
+			
+			conexion.desconectar();
+			
+		} catch (SQLException e) {
+			System.out.println("Error en la lista de los nombres de los estudiantes: "+e.getMessage());
+			estudiante = null;
+		}
+		
+		return estudiante;
+	}
+
 	
 }

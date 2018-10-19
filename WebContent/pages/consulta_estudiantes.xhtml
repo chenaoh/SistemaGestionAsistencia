@@ -22,6 +22,18 @@
             <div class="card-panel">
 
             <form jsf:id="formulario">
+            	<div class="row">
+            		<div class="input-field col s4">
+            			<h:selectOneMenu value="#{estudianteBean.nombreEstu}">
+	            			<f:selectItems value="#{estudianteBean.nombresEstudiantes}"/>
+	            		</h:selectOneMenu>
+            		</div>
+            		<div class="input-field col s4">
+            			<h:commandButton action="#{estudianteBean.consultarEstudiante()}" value="search" class="material-icons no-btn"/>
+            		</div>
+            	</div>
+            			
+		       	
             	<h:dataTable value="#{estudianteBean.listaEstudiantes}" var="datos" class="striped  ">
             		<h:column>
 						<f:facet name="header">Documento</f:facet>
