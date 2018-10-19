@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<ui:composition
+	  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      template="/templates/gestion_archivos.xhtml"> 
+
+<ui:param name="tituloPagina" value="Registro Estudiantes" />	
+<ui:param name="nombrePagina" value="Gestión de Estudiantes - Registro" />	
+
+<ui:define name="tabEstudiante">
+        
+		<div class="row">
+			<div class="col s12 m12 green">
+          		<div class="tarjetas-text">Registro de Estudiantes</div>
+          	</div>
+        </div>
+      	
+		  <h:form enctype="multipart/form-data">
+		        <h:inputFile value="#{uploadBean2.file}" />
+		        <h:commandButton value="Post Upload" action="#{uploadBean2.upload}" />
+		    </h:form>
+		    <h:form enctype="multipart/form-data">
+		        <h:inputFile value="#{uploadBean2.file}" />
+		        <h:commandButton value="Ajax Upload">
+		            <f:ajax listener="#{uploadBean2.upload}" execute="@form"
+		                render="countOutput" />
+		        </h:commandButton>
+		    <!-- Counts the uploaded items -->
+		    <h:outputText id="countOutput"
+		        value="Files uploaded #{uploadBean2.filesUploaded}" />
+		    </h:form>
+
+	</ui:define>
+
+
+</ui:composition>

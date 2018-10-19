@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<ui:composition
+	  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      template="/templates/plantilla.xhtml"> 
+
+  
+  <ui:define name="contenido">      
+
+		<div class="card-panel ">
+        	
+        	<div class="row">
+        		<div class="col s6 m9">
+					<p>Espacio de pruebas para la carga y descarga de archivos </p>
+  	  			</div>
+        		<div class="col s6 m3">
+					<a href="#!user"><img class="perfil2" src="../resources/img/notificacion.png"/></a>
+  	  			</div> 
+  	  		</div>	
+  	  		<div class="row center">	 
+	  	  		<div class="col s6 m6 ">
+	  	  				<a class="waves-effect waves-light btn" href="carga_imagen.jsf" style="width: 100%">Subir Imagen</a>
+				</div>	
+				<div class="col s6 m6 ">
+	  	  			 <a class="waves-effect waves-light btn" href="#" style="width: 100%">Subir Archivo</a>
+				</div>	  
+        	</div>
+        		<div class="row">	
+        			<div class="col s12 m12 "> 
+  	  					<ui:insert name="tabEstudiante"/>
+  	  				</div>
+  	  			</div>		  			
+        	
+        </div>
+
+  </ui:define>
+
+
+</ui:composition>

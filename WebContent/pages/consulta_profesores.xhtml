@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<ui:composition
+	  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      template="/templates/gestion_profesores.xhtml"> 
+
+<ui:param name="tituloPagina" value="Consulta de Profesores" />	
+<ui:param name="nombrePagina" value="Gestión de Profesores - Consulta" />	
+
+<ui:define name="tabProfesor">
+        
+	
+		<div class="row">
+			<div class="col s12 m12 orange">
+          		<div class="tarjetas-text">Consulta de Profesores</div>
+          	</div>
+        </div>
+           <h6>#{profesorBean.mensajeConfirmacion}</h6>  
+            <div class="card-panel">
+
+            <form jsf:id="formulario">
+            	<h:dataTable value="#{profesorBean.listaProfesores}" var="datos" class="striped  ">
+            		<h:column>
+						<f:facet name="header">Documento</f:facet>
+						<h:outputLabel value="#{datos.documento}" />
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Nombre</f:facet>
+						<h:outputLabel value="#{datos.nombre}"/>            		
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Telefono</f:facet>
+						<h:outputLabel value="#{datos.telefono}" />
+            		</h:column>            		
+            		<h:column>
+						<f:facet name="header">Profesión</f:facet>
+						<h:outputLabel value="#{datos.profesion}"/>
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Sexo</f:facet>
+						<h:outputLabel value="#{datos.sexo}" />
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Email</f:facet>
+						<h:outputLabel value="#{datos.email}" />
+            		</h:column>
+					<h:column>
+						<f:facet name="header">Perfil</f:facet>
+						<h:outputLabel value="#{datos.email}" />
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Asesoria</f:facet>
+						<h:outputLabel value="#{datos.asesoria}" />
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Estado</f:facet>
+						<h:outputLabel value="#{datos.estado}" />
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Tipo</f:facet>
+						<h:outputLabel value="#{datos.tipo}" />
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Acciones</f:facet>
+						<h:commandLink action="#{profesorBean.editarProfesor(datos.documento)}"><i class="material-icons s12">create</i></h:commandLink>
+						<h:commandLink action="#{profesorBean.eliminarProfesor(datos)}" ><i class="material-icons s12">delete</i></h:commandLink>
+					
+					</h:column>
+            	
+            	</h:dataTable>
+             </form> 
+            </div>                 
+
+	</ui:define>
+
+
+</ui:composition>

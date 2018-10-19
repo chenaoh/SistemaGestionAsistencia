@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es"
+	  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+
+	<head jsf:id="head">
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="../resources/css/materialize.min.css" />
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<title>Login</title>
+		
+		<script type="text/javascript"> window.history.forward(-1); </script>
+		
+	</head>
+<body style="background-color:rgb(236,239,241)">
+		 <header>
+             <nav>
+                <div class="nav-wrapper #263238 blue-grey darken-4">
+                  <a href="#!" class="brand-logo">Gestión de Asistencia</a>
+                  <ul class="right hide-on-med-and-down">
+                    <li><a class="waves-effect waves-light modal-trigger" href="#modal1" ><i class="material-icons left">help_outline</i>Ayuda</a></li>
+                  </ul>
+                </div>
+              </nav>
+        </header>
+        
+    <main>
+        <section>
+            
+            <form class="col s12 center"  jsf:id="formulario">
+                  <!-- Modal Structure -->
+                  <div id="modal1" class="modal">
+                    <div class="modal-content">
+                      <div class="card">
+                            <div class="card-action  lighten-1 white-text #263238 blue-grey darken-4">
+                                <h4>Ayuda</h4>
+                            </div>
+                          
+                        
+                          <div class="row">
+                            <div class="input-field col s12">
+                                <p>Ingrese su usuario y contraseña</p>
+                            </div>
+                          </div>
+                
+	                    <div class="modal-footer">
+	                      <a class="modal-action modal-close waves-effect #37474f blue-grey darken-3 btn" href="#">Aceptar</a>
+	                    </div>
+
+                    	</div>
+ 					</div>
+                  </div>
+             </form> 
+            
+        </section>
+          <h5>#{loginBean.mensaje}</h5>
+        <br></br><br></br><br></br>
+        <form class="col s12"  jsf:id="formLogin">
+        <div class="container">
+                <div class="row">
+
+                  <div class="col s11 m4 offset-m4"> <!-- Note that "m4 l3" was added -->
+                      <div class="card">
+                        
+                            <div class="card-action  lighten-1 white-text #263238 blue-grey darken-4">
+                                <h5><a href="#"><img class="perfil" src="../resources/img/icono_cuenta4.png" /></a>
+                                Iniciar Sesión</h5>
+                            </div>
+
+                            <div class="card-content">
+                                <div class="input-field">
+                                    <label for="user">Usuario</label>
+                                    <input jsf:id="txtUser" id="user" type="text" class="validate" jsf:value="#{loginBean.miPersonaVo.documento}"/>
+                                </div>
+                                <br></br>
+
+                                <div class="input-field">
+                                    <label for="pass">Password</label>
+                                    <input jsf:id="txtPass" id="pass" type="text" class="validate" jsf:value="#{loginBean.miPersonaVo.password}"/>
+                                </div>
+                                  <br></br>
+                                  
+                                  <label>Tipo de Usuario</label>
+                                  <h:selectOneMenu value="#{loginBean.tipoUsuario}">
+                                  	<f:selectItem itemValue="profesor" itemLabel="Profesor"/>
+                                  	<f:selectItem itemValue="estudiante" itemLabel="Estudiante"/>
+                                  </h:selectOneMenu>
+                                  
+								</div>
+                                 <br></br>  
+                                <div class="form-field">
+                                     <h:commandButton class="btn-large waves-effect waves-light" 
+	                      				action="#{loginBean.validarIngreso()}" style="width: 100%" value="Ingresar" />
+	                      		</div>
+                            </div>
+                      </div>    
+                  </div>
+    	    </div>
+		
+		 </form> 
+    </main>
+
+
+     <footer>
+       
+     </footer>
+
+		<script src="../resources/js/jquery.js"></script>
+		<script src="../resources/js/materialize.min.js"></script>
+		<script>
+		
+		    $(document).ready(function(){
+		                  $(".button-collapse").sideNav();
+		                   $('.modal').modal();
+		                   $('select').material_select();
+		            })
+		</script>
+		
+ </body>
+
+<style>
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
+      body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  .perfil{
+    width: 13%;
+    margin-left: -5%;
+    
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+</style>
+
+</html>

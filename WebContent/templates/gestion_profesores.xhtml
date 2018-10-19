@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<ui:composition
+	  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      template="/templates/plantilla.xhtml"> 
+  
+  <ui:define name="contenido">      
+
+		<div class="card-panel ">
+        	
+        	<div class="row">
+        		<div class="col s6 m9">
+					<p>En este espacio podrás realizar toda la gestión de <b>profesores</b> tales como el registro,
+					 consulta, actualización, activación e inactivación. Navega desde el menú lateral o 
+					 hazlo directamente desde los botones de registro o consulta. </p>
+  	  			</div>
+        		<div class="col s6 m3">
+					<a href="#!user"><img class="perfil2" src="../resources/img/iconoProfesor.png"/></a>
+  	  			</div> 
+  	  		</div>	
+  	  		<div class="row center">	 
+	  	  		<div class="col s6 m6 ">
+	  	  				<a class="waves-effect waves-light btn" href="registro_profesor.jsf" style="width: 100%">Registrar Profesor</a>
+				</div>	
+				<div class="col s6 m6 ">
+	  	  			 <a class="waves-effect waves-light btn" href="consulta_profesores.jsf" style="width: 100%">Consultar Profesores</a>
+				</div>	  
+        	</div>
+        		<div class="row">	
+        			<div class="col s12 m12 "> 
+  	  					<ui:insert name="tabProfesor"/>
+  	  				</div>
+  	  			</div>		  			
+        	
+        	
+        	
+        	
+        		
+        	         
+        </div>
+
+  </ui:define>
+
+
+</ui:composition>
