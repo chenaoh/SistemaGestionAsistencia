@@ -2,8 +2,6 @@ package vo;
 
 public class ProyectoVo {
 
-	//Esta es una prueba de modificación este es 
-	//Otro cambio
 	private Integer codigoProyecto;
 	private Integer numProyecto;
 	private String nombreProyecto;
