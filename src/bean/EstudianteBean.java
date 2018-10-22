@@ -21,6 +21,7 @@ public class EstudianteBean {
 	private String mensajeConfirmacion;
 	private EstudianteDao estudianteDao;
 	private String nombreEstu;
+	private boolean tipoUser;
 	
 	private ArrayList<String> nombresEstudiantes =  new ArrayList<>();
 	private ArrayList<EstudianteVo> listaEstudiantes=new ArrayList<>();
@@ -166,6 +167,14 @@ public class EstudianteBean {
 
 	public void setNombreEstu(String nombreEstu) {
 		this.nombreEstu = nombreEstu;
+	}
+
+	public boolean isTipoUser() {
+		return tipoUser;
+	}
+
+	public void setTipoUser(boolean tipoUser) {
+		this.tipoUser = tipoUser;
 	}
 	
 	

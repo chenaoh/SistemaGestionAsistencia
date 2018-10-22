@@ -32,6 +32,7 @@ public class LoginBean {
 	private boolean validado=false;
 	private String tipoUsuario;
 	private String tipoUser;
+	private static boolean ver;
 	private String rutaImagenUser;
 	FacesContext context = FacesContext.getCurrentInstance();
 	HttpSession session = (HttpSession)context.getExternalContext().getSession(true);
@@ -45,7 +46,7 @@ public class LoginBean {
 		
 		miProfesorDao=new ProfesorDao();
 		miProfesorVo=new ProfesorVo();
-		
+				
 	}
 	
 	public String validarIngreso(){
@@ -57,11 +58,15 @@ public class LoginBean {
 		PersonaVo persona=null;
 		
 		if (tipoUsuario.equals("profesor")) {
+			
 			System.out.println("Profesor");
 			persona=miProfesorDao.consultarProfesorLogin(miPersonaVo.getDocumento(), miPersonaVo.getPassword());
+			setVer(true);
+			
 		}else{
 			System.out.println("Estudiante");
 			persona=miEstudianteDao.consultarEstudianteLogin(miPersonaVo.getDocumento(), miPersonaVo.getPassword());
+			setVer(false);
 		}
 	
 		if (persona!=null) {
@@ -197,4 +202,13 @@ public class LoginBean {
 		this.tipoUser = tipoUser;
 	}
 
+	public boolean isVer() {
+		return ver;
+	}
+
+	public void setVer(boolean ver) {
+		this.ver = ver;
+	}
+
+	
 }
