@@ -23,10 +23,9 @@
 
             <form jsf:id="formulario">
             	<div class="row">
+            		
             		<div class="input-field col s4">
-            			<h:selectOneMenu value="#{estudianteBean.nombreEstu}">
-	            			<f:selectItems value="#{estudianteBean.nombresEstudiantes}"/>
-	            		</h:selectOneMenu>
+            			<h:inputText value="#{estudianteBean.nombreEstu}" />
             		</div>
             		<div class="input-field col s4">
             			<h:commandButton action="#{estudianteBean.consultarEstudiante()}" value="search" class="material-icons no-btn"/>

@@ -243,13 +243,13 @@ public class EstudianteDao {
 		ArrayList<EstudianteVo> estudiante = new ArrayList<>();
 		
 		conn = conexion.getConnection();
+		System.out.println("Nombre estudiante: "+nombreEstu);
 		
-		String consulta = "SELECT * FROM estudiante WHERE nombre = ?";
+		String consulta = "SELECT * FROM estudiante WHERE nombre LIKE '%"+nombreEstu+"%'";
 		
 		try {
 			
 			statement = conn.prepareStatement(consulta);
-			statement.setString(1, nombreEstu);
 			result = statement.executeQuery();
 			
 			while(result.next()==true){
