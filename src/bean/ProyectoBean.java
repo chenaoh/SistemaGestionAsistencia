@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
+import dao.EstudianteDao;
 import dao.GrupoDao;
 import dao.ProfesorDao;
 import dao.ProyectoDao;
@@ -22,19 +23,51 @@ public class ProyectoBean {
 	private ProyectoVo proyecto;
 	private String mensajeConfirmacion;
 	private ProyectoDao proyectoDao;
+	private EstudianteDao estudianteDAO;
 	private ArrayList<ProyectoVo> listaProyectos=new ArrayList<>();
 	private List<SelectItem> itemGrupos;
 	HashMap<String, GrupoVo> mapaGrupos=new HashMap<>();
+	private ArrayList<String> proyectos;
+	private ArrayList<String> estudiantes;
+	private ArrayList<String> nombresEstudiantes;
+	private String nombreProyecto;
+	private String mensaje;
+	EstudianteBean estudianteBean;
 	
 	public ProyectoBean(){
 		proyecto=new ProyectoVo();
 		proyectoDao=new ProyectoDao();
+		estudianteDAO = new EstudianteDao();
 		itemGrupos=new ArrayList<SelectItem>();
+		estudianteBean = new EstudianteBean();
+		setProyectos(new ArrayList<>());
+		setEstudiantes(new ArrayList<>());
 		cargarGrupos();
 		cargarProyectos();
+		cargarNombreProyectos();
+		cargarEstudiantes();
+		cargarDatosHashMapProyectos();
 		
 	}
 	
+	public void cargarDatosHashMapProyectos() {
+		ArrayList<ProyectoVo> listProyectos = proyectoDao.obtenerListaProyecto();
+		proyectoDao.cargarDatosHashMapProyectos(listProyectos);
+		estudianteBean.cargarDatosHashMapEstudiantes();
+		
+		
+	}
+
+	private void cargarEstudiantes() {
+		setEstudiantes(estudianteDAO.obtenerNombres());
+		
+	}
+
+	public void cargarNombreProyectos() {
+		setProyectos(proyectoDao.consultarNombresProyectos());
+		
+	}
+
 	private void cargarGrupos() {
 		GrupoDao grupoDao=new GrupoDao();
 		ArrayList<GrupoVo> listaGrupos;
@@ -106,6 +139,23 @@ public class ProyectoBean {
 		proyecto.setEditar(false);
 		
 	}
+	
+	public void asociarEstudiantes(){
+		ArrayList<String> idEstudiante = estudianteDAO.obtenerIdEstudiante(getNombresEstudiantes());
+		int idProyecto = proyectoDao.obtenerIdProyecto(getNombreProyecto());
+		
+		registrarAsociacionDeEstudiantes(idEstudiante,idProyecto);
+	}
+
+	private void registrarAsociacionDeEstudiantes(ArrayList<String> idEstudiante, int idProyecto) {
+		String res = proyectoDao.registrarAsociacionDeEstudiantes(idEstudiante,idProyecto);
+		if(res.equals("ok")){
+			setMensaje("Registro Exitoso!!!");
+		}else{
+			setMensaje("Registro Erroneo");
+		}
+		
+	}
 
 	public ProyectoVo getProyecto() {
 		return proyecto;
@@ -140,6 +190,46 @@ public class ProyectoBean {
 
 	public void setItemGrupos(List<SelectItem> itemGrupos) {
 		this.itemGrupos = itemGrupos;
+	}
+
+	public ArrayList<String> getProyectos() {
+		return proyectos;
+	}
+
+	public void setProyectos(ArrayList<String> proyectos) {
+		this.proyectos = proyectos;
+	}
+
+	public ArrayList<String> getEstudiantes() {
+		return estudiantes;
+	}
+
+	public void setEstudiantes(ArrayList<String> estudiantes) {
+		this.estudiantes = estudiantes;
+	}
+
+	public String getNombreProyecto() {
+		return nombreProyecto;
+	}
+
+	public void setNombreProyecto(String nombreProyecto) {
+		this.nombreProyecto = nombreProyecto;
+	}
+
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+
+	public ArrayList<String> getNombresEstudiantes() {
+		return nombresEstudiantes;
+	}
+
+	public void setNombresEstudiantes(ArrayList<String> nombresEstudiantes) {
+		this.nombresEstudiantes = nombresEstudiantes;
 	}
 
 }

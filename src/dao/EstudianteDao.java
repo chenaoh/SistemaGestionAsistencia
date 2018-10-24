@@ -5,12 +5,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import conexion.Conexion;
 import vo.EstudianteVo;
 import vo.GrupoVo;
 
 public class EstudianteDao {
+	
+	public static HashMap<String, EstudianteVo> mapaEstudiantes;
+	
+	public EstudianteDao(){
+		mapaEstudiantes = new HashMap<>();
+	}
 
 	public EstudianteVo consultarEstudianteLogin(String documento, String password) {
 		Connection connection = null;
@@ -198,6 +207,104 @@ public class EstudianteDao {
 			resp = "No se pudo eliminar el estudiante";
 		}
 		return resp;
+	}
+
+	public ArrayList<String> obtenerNombres() {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		Conexion conexion = new Conexion();
+		EstudianteVo miEstudiante;
+		ArrayList<String> listaNombres = new ArrayList<>();
+		
+		conn = conexion.getConnection();
+		
+		String consulta = "SELECT * FROM estudiante";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			result = statement.executeQuery();
+			
+			while(result.next()==true){
+				miEstudiante = new EstudianteVo();
+				miEstudiante.setNombre(result.getString("nombre"));
+				listaNombres.add(miEstudiante.getNombre());
+				
+			}
+			
+			conexion.desconectar();
+			
+		} catch (SQLException e) {
+			System.out.println("Error en la lista de los nombres de los estudiantes: "+e.getMessage());
+			listaNombres = null;
+		}
+		
+		return listaNombres;
+	}
+
+	public ArrayList<EstudianteVo> consultarEstudianteNombre(String nombreEstu) {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		Conexion conexion = new Conexion();
+		EstudianteVo miEstudiante;
+		ArrayList<EstudianteVo> estudiante = new ArrayList<>();
+		
+		conn = conexion.getConnection();
+		System.out.println("Nombre estudiante: "+nombreEstu);
+		
+		String consulta = "SELECT * FROM estudiante WHERE nombre LIKE '%"+nombreEstu+"%'";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			result = statement.executeQuery();
+			
+			while(result.next()==true){
+				miEstudiante = new EstudianteVo();
+				miEstudiante.setDocumento(result.getString("documento"));
+				miEstudiante.setNombre(result.getString("nombre"));
+				miEstudiante.setDireccion(result.getString("direccion"));
+				miEstudiante.setTelefono(result.getString("telefono"));
+				miEstudiante.setEmail(result.getString("email"));
+				miEstudiante.setGrupo(result.getString("grupo"));
+				miEstudiante.setFechaNacimiento(result.getDate("fecha_nacimiento"));
+				miEstudiante.setSexo(result.getString("sexo"));
+				miEstudiante.setEstado(result.getString("estado"));
+				estudiante.add(miEstudiante);
+				
+			}
+			
+			conexion.desconectar();
+			
+		} catch (SQLException e) {
+			System.out.println("Error en la lista de los nombres de los estudiantes: "+e.getMessage());
+			estudiante = null;
+		}
+		
+		return estudiante;
+	}
+
+	public void cargarDatosHashMapEstudiantes(ArrayList<EstudianteVo> listaEstudiantes) {
+		for (int i = 0; i < listaEstudiantes.size(); i++) {
+			mapaEstudiantes.put(listaEstudiantes.get(i).getNombre(), listaEstudiantes.get(i));
+		}
+		
+		System.out.println("****MAPA ESTUDIANTES****: "+mapaEstudiantes);
+	}
+
+	public ArrayList<String> obtenerIdEstudiante(ArrayList<String> nombresEstudiantes) {		
+		System.out.println("Nombres estudiantes: "+nombresEstudiantes);
+		System.out.println("*****Mapa estudiantes****: "+mapaEstudiantes);
+		ArrayList<String> listDocumentosEstu = new ArrayList<>();
+		for (int i = 0; i < nombresEstudiantes.size(); i++) {
+			EstudianteVo miEstudiante = mapaEstudiantes.get(nombresEstudiantes.get(i));
+			listDocumentosEstu.add(miEstudiante.getDocumento());
+			
+		}
+		
+		return listDocumentosEstu;
 	}
 
 	

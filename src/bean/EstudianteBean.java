@@ -20,13 +20,33 @@ public class EstudianteBean {
 	private String fecha;
 	private String mensajeConfirmacion;
 	private EstudianteDao estudianteDao;
+	private String nombreEstu;
+	private boolean tipoUser;
 	
+	private ArrayList<String> nombresEstudiantes =  new ArrayList<>();
 	private ArrayList<EstudianteVo> listaEstudiantes=new ArrayList<>();
 	
 	public EstudianteBean(){
 		estudiante=new EstudianteVo();
 		estudianteDao=new EstudianteDao();
 		cargarEstudiantes();
+		cargarNombres();
+		cargarDatosHashMapEstudiantes();
+	}
+
+	public void cargarDatosHashMapEstudiantes() {
+		ArrayList<EstudianteVo> estudiantes = estudianteDao.obtenerListaEstudiantes();
+		estudianteDao.cargarDatosHashMapEstudiantes(estudiantes);
+		
+	}
+
+	public void cargarNombres(){
+		nombresEstudiantes.clear();
+		nombresEstudiantes = estudianteDao.obtenerNombres();
+		
+		if(nombresEstudiantes!=null){
+			mensajeConfirmacion = "No se pudo conectar, verifique la BD esté iniciada.";
+		}
 	}
 	
 	private void cargarEstudiantes() {
@@ -97,6 +117,14 @@ public class EstudianteBean {
 		mensajeConfirmacion=estudianteDao.eliminarEstudiante(estudiante);
 		listaEstudiantes.remove(estudiante);
 	}
+	
+	public void consultarEstudiante(){
+		setListaEstudiantes(estudianteDao.consultarEstudianteNombre(getNombreEstu()));
+	}
+
+	public void setListaEstudiantes(ArrayList<EstudianteVo> listaEstudiantes) {
+		this.listaEstudiantes = listaEstudiantes;
+	}
 
 	public EstudianteVo getEstudiante() {
 		return estudiante;
@@ -110,8 +138,12 @@ public class EstudianteBean {
 		return listaEstudiantes;
 	}
 
-	public void setListaEstudiantes(ArrayList<EstudianteVo> listaEstudiantes) {
-		this.listaEstudiantes = listaEstudiantes;
+	public ArrayList<String> getNombresEstudiantes() {
+		return nombresEstudiantes;
+	}
+
+	public void setNombresEstudiantes(ArrayList<String> nombresEstudiantes) {
+		this.nombresEstudiantes = nombresEstudiantes;
 	}
 
 	public String getFecha() {
@@ -134,6 +166,22 @@ public class EstudianteBean {
 
 	public void setMensajeConfirmacion(String mensajeConfirmacion) {
 		this.mensajeConfirmacion = mensajeConfirmacion;
+	}
+
+	public String getNombreEstu() {
+		return nombreEstu;
+	}
+
+	public void setNombreEstu(String nombreEstu) {
+		this.nombreEstu = nombreEstu;
+	}
+
+	public boolean isTipoUser() {
+		return tipoUser;
+	}
+
+	public void setTipoUser(boolean tipoUser) {
+		this.tipoUser = tipoUser;
 	}
 	
 	

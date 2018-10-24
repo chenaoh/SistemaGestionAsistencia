@@ -18,10 +18,22 @@
           		<div class="tarjetas-text">Consulta de Estudiantes</div>
           	</div>
         </div>
-        <h6>#{estudianteBean.mensajeConfirmacion}</h6>  
+        <!--<h6>#{estudianteBean.mensajeConfirmacion}</h6> -->  
             <div class="card-panel">
 
             <form jsf:id="formulario">
+            	<div class="row">
+            		
+            		<div class="input-field col s4">
+            			<h:outputLabel value="Nombre Estudiante"  rendered="#{loginBean.ver}"/>
+            			<h:inputText value="#{estudianteBean.nombreEstu}" rendered="#{loginBean.ver}"/>
+            		</div>
+            		<div class="input-field col s4">
+            			<h:commandButton action="#{estudianteBean.consultarEstudiante()}" value="search" class="material-icons no-btn"  rendered="#{loginBean.ver}"/>
+            		</div>
+            	</div>
+            			
+		       	
             	<h:dataTable value="#{estudianteBean.listaEstudiantes}" var="datos" class="striped  ">
             		<h:column>
 						<f:facet name="header">Documento</f:facet>

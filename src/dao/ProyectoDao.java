@@ -5,12 +5,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import conexion.Conexion;
 import vo.GrupoVo;
 import vo.ProyectoVo;
 
 public class ProyectoDao {
+	
+	private HashMap<String , ProyectoVo> mapaProyectos;
+	
+	public ProyectoDao(){
+		mapaProyectos = new HashMap<>();
+	}
 
 	public String registrarProyecto(ProyectoVo proyecto) {
 		String resultado = "";
@@ -142,6 +149,86 @@ public class ProyectoDao {
 			resp = "No se pudo eliminar el Proyecto";
 		}
 		return resp;
+	}
+
+	public ArrayList<String> consultarNombresProyectos() {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		Conexion conexion = new Conexion();
+		ProyectoVo miProyectoVo;
+		ArrayList<String> proyectos = new ArrayList<>();
+		
+		conn =  conexion.getConnection();
+		
+		String consulta = "SELECT * FROM proyecto";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			result = statement.executeQuery();
+			
+			while(result.next()==true) {
+				miProyectoVo = new ProyectoVo();
+				miProyectoVo.setNombreProyecto(result.getString("nombre"));
+				proyectos.add(miProyectoVo.getNombreProyecto());
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Error al cargar la lista de los nombres de los proyectos: "+e.getMessage());
+			proyectos = null;
+		}
+				
+		return proyectos;
+	}
+
+	public void cargarDatosHashMapProyectos(ArrayList<ProyectoVo> listaProyectos) {
+		for (int i = 0; i < listaProyectos.size(); i++) {
+			mapaProyectos.put(listaProyectos.get(i).getNombreProyecto(), listaProyectos.get(i));
+		}
+			
+		System.out.println("****Mapa proyectos****: "+mapaProyectos);
+	}
+
+	public int obtenerIdProyecto(String nombreProyecto) {
+		ProyectoVo miProyecto = mapaProyectos.get(nombreProyecto);
+		int idProyecto = miProyecto.getCodigoProyecto();
+		return idProyecto;
+	}
+
+	public String registrarAsociacionDeEstudiantes(ArrayList<String> idEstudiante, int idProyecto) {
+		String resultado = "";
+		Connection conn = null;
+		PreparedStatement statement = null;
+		Conexion conexion  = new Conexion();
+		
+		conn = conexion.getConnection();
+		
+		
+		
+		try {
+			
+			for (int i = 0; i < idEstudiante.size(); i++) {
+				System.out.println("Estudiante "+i+"-"+idEstudiante.get(i));
+				String consulta = "INSERT INTO proyecto_estudiantes VALUES (?,?)";
+				statement = conn.prepareStatement(consulta);
+				statement.setInt(1, idProyecto);
+				statement.setString(2, idEstudiante.get(i));
+				statement.execute();
+			}
+			
+			resultado = "ok";
+			
+			
+		} catch (SQLException e) {
+			System.out.println("Error al registrar la asociacion: "+e.getMessage());
+			resultado = "error";
+		}
+		
+		conexion.desconectar();
+		
+		return resultado;
+		
 	}
 
 
