@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
+import dao.EstudianteDao;
 import dao.GrupoDao;
 import dao.ProfesorDao;
 import dao.ProyectoDao;
@@ -22,19 +23,37 @@ public class ProyectoBean {
 	private ProyectoVo proyecto;
 	private String mensajeConfirmacion;
 	private ProyectoDao proyectoDao;
+	private EstudianteDao estudianteDAO;
 	private ArrayList<ProyectoVo> listaProyectos=new ArrayList<>();
 	private List<SelectItem> itemGrupos;
 	HashMap<String, GrupoVo> mapaGrupos=new HashMap<>();
+	private ArrayList<String> proyectos;
+	private ArrayList<String> estudiantes;
 	
 	public ProyectoBean(){
 		proyecto=new ProyectoVo();
 		proyectoDao=new ProyectoDao();
+		estudianteDAO = new EstudianteDao();
 		itemGrupos=new ArrayList<SelectItem>();
+		setProyectos(new ArrayList<>());
+		setEstudiantes(new ArrayList<>());
 		cargarGrupos();
 		cargarProyectos();
+		cargarNombreProyectos();
+		cargarEstudiantes();
 		
 	}
 	
+	private void cargarEstudiantes() {
+		setEstudiantes(estudianteDAO.obtenerNombres());
+		
+	}
+
+	public void cargarNombreProyectos() {
+		setProyectos(proyectoDao.consultarNombresProyectos());
+		
+	}
+
 	private void cargarGrupos() {
 		GrupoDao grupoDao=new GrupoDao();
 		ArrayList<GrupoVo> listaGrupos;
@@ -140,6 +159,22 @@ public class ProyectoBean {
 
 	public void setItemGrupos(List<SelectItem> itemGrupos) {
 		this.itemGrupos = itemGrupos;
+	}
+
+	public ArrayList<String> getProyectos() {
+		return proyectos;
+	}
+
+	public void setProyectos(ArrayList<String> proyectos) {
+		this.proyectos = proyectos;
+	}
+
+	public ArrayList<String> getEstudiantes() {
+		return estudiantes;
+	}
+
+	public void setEstudiantes(ArrayList<String> estudiantes) {
+		this.estudiantes = estudiantes;
 	}
 
 }

@@ -144,5 +144,36 @@ public class ProyectoDao {
 		return resp;
 	}
 
+	public ArrayList<String> consultarNombresProyectos() {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		Conexion conexion = new Conexion();
+		ProyectoVo miProyectoVo;
+		ArrayList<String> proyectos = new ArrayList<>();
+		
+		conn =  conexion.getConnection();
+		
+		String consulta = "SELECT * FROM proyecto";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			result = statement.executeQuery();
+			
+			while(result.next()==true) {
+				miProyectoVo = new ProyectoVo();
+				miProyectoVo.setNombreProyecto(result.getString("nombre"));
+				proyectos.add(miProyectoVo.getNombreProyecto());
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Error al cargar la lista de los nombres de los proyectos: "+e.getMessage());
+			proyectos = null;
+		}
+				
+		return proyectos;
+	}
+
 
 }

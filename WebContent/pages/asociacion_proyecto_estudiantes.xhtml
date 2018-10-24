@@ -18,11 +18,23 @@
 			<div class="col s12 m12 deep-orange accent-3">
           		<div class="tarjetas-text">Asociación Proyecto - Estudiantes</div>
           	</div>
+        </div>   
+        <div class="row">
+        	<div class="input-field col s6">
+        		<h:selectOneMenu>
+	        		<f:selectItems value="#{proyectoBean.proyectos}"/>
+	        	</h:selectOneMenu>
+        	</div>
+        	<div class="input-field col s6">
+        		<h:selectManyListbox>
+        			<f:selectItems value="#{proyectoBean.estudiantes}"/>
+        		</h:selectManyListbox>
+        	</div>
+        	<div class="input-field col s6">
+        		<h:commandButton value="Asociar" class="btn" />
+        	</div>
         </div>
-            
-            
-                   
-            </h:form> 
+     </h:form> 
             <h:form>
             	<h3 style="margin-top: 0">Basic PickList</h3>
                 <p:pickList id="simple" value="#{pickListView.cities}" var="cities" itemValue="#{cities}" itemLabel="#{cities}"/>
