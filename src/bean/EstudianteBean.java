@@ -31,8 +31,15 @@ public class EstudianteBean {
 		estudianteDao=new EstudianteDao();
 		cargarEstudiantes();
 		cargarNombres();
+		cargarDatosHashMapEstudiantes();
 	}
-	
+
+	public void cargarDatosHashMapEstudiantes() {
+		ArrayList<EstudianteVo> estudiantes = estudianteDao.obtenerListaEstudiantes();
+		estudianteDao.cargarDatosHashMapEstudiantes(estudiantes);
+		
+	}
+
 	public void cargarNombres(){
 		nombresEstudiantes.clear();
 		nombresEstudiantes = estudianteDao.obtenerNombres();

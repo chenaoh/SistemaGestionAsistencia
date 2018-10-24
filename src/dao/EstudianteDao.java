@@ -5,12 +5,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import conexion.Conexion;
 import vo.EstudianteVo;
 import vo.GrupoVo;
 
 public class EstudianteDao {
+	
+	public static HashMap<String, EstudianteVo> mapaEstudiantes;
+	
+	public EstudianteDao(){
+		mapaEstudiantes = new HashMap<>();
+	}
 
 	public EstudianteVo consultarEstudianteLogin(String documento, String password) {
 		Connection connection = null;
@@ -275,6 +284,27 @@ public class EstudianteDao {
 		}
 		
 		return estudiante;
+	}
+
+	public void cargarDatosHashMapEstudiantes(ArrayList<EstudianteVo> listaEstudiantes) {
+		for (int i = 0; i < listaEstudiantes.size(); i++) {
+			mapaEstudiantes.put(listaEstudiantes.get(i).getNombre(), listaEstudiantes.get(i));
+		}
+		
+		System.out.println("****MAPA ESTUDIANTES****: "+mapaEstudiantes);
+	}
+
+	public ArrayList<String> obtenerIdEstudiante(ArrayList<String> nombresEstudiantes) {		
+		System.out.println("Nombres estudiantes: "+nombresEstudiantes);
+		System.out.println("*****Mapa estudiantes****: "+mapaEstudiantes);
+		ArrayList<String> listDocumentosEstu = new ArrayList<>();
+		for (int i = 0; i < nombresEstudiantes.size(); i++) {
+			EstudianteVo miEstudiante = mapaEstudiantes.get(nombresEstudiantes.get(i));
+			listDocumentosEstu.add(miEstudiante.getDocumento());
+			
+		}
+		
+		return listDocumentosEstu;
 	}
 
 	

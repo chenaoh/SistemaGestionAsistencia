@@ -19,19 +19,23 @@
           		<div class="tarjetas-text">Asociación Proyecto - Estudiantes</div>
           	</div>
         </div>   
+        		<h:outputLabel value="#{proyectoBean.mensaje}" />
+        
         <div class="row">
         	<div class="input-field col s6">
-        		<h:selectOneMenu>
+        		<h:selectOneMenu value="#{proyectoBean.nombreProyecto}">
 	        		<f:selectItems value="#{proyectoBean.proyectos}"/>
 	        	</h:selectOneMenu>
+	        	<label>Proyectos</label>
         	</div>
         	<div class="input-field col s6">
-        		<h:selectManyListbox>
+        		<h:selectManyListbox value="#{proyectoBean.nombresEstudiantes}">
         			<f:selectItems value="#{proyectoBean.estudiantes}"/>
         		</h:selectManyListbox>
+        		<label>Estudiantes</label>
         	</div>
         	<div class="input-field col s6">
-        		<h:commandButton value="Asociar" class="btn" />
+        		<h:commandButton value="Asociar" class="btn" action="#{proyectoBean.asociarEstudiantes()}"/>
         	</div>
         </div>
      </h:form> 
