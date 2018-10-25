@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import conexion.Conexion;
+import sun.dc.pr.PRError;
 import vo.GrupoVo;
 import vo.ProyectoVo;
 
@@ -229,6 +230,43 @@ public class ProyectoDao {
 		
 		return resultado;
 		
+	}
+
+	public String consultarAsociacion(ArrayList<String> idEstudiante) {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		Conexion conexion = new Conexion();
+		ResultSet result = null;
+		String res="";
+		
+		conn = conexion.getConnection();
+		
+		try {
+			
+			for (int i = 0; i < idEstudiante.size(); i++) {
+				String consulta = "SELECT * FROM proyecto_estudiantes WHERE doc_estudiante = ?";
+				statement = conn.prepareStatement(consulta);
+				statement.setString(1, idEstudiante.get(i));
+				result = statement.executeQuery();
+				
+				if(result.next()==true) {
+					res="existe";
+					break;
+				}else {
+					res="no existe";
+				}
+				
+				System.out.println("REspuesta de asocicacion: ******jjsdfhsdjfd"+res);
+				
+			}
+			
+			conexion.desconectar();
+			
+		} catch (SQLException e) {
+			System.out.println("Error al verificar la existencia de la asociacion: "+e.getMessage());
+		}
+		
+		return res;
 	}
 
 
