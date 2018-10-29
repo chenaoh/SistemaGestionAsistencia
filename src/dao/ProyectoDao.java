@@ -269,5 +269,35 @@ public class ProyectoDao {
 		return res;
 	}
 
+	public String desasociarEstudiantes(String doc) {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		Conexion conexion = new Conexion();
+		String res ="";
+		
+		conn = conexion.getConnection();
+		
+		String consulta = "DELETE FROM proyecto_estudiantes WHERE doc_estudiante = ?";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			statement.setString(1, doc);
+			statement.execute();
+		
+			res = "ok";
+			
+			
+			
+		} catch (SQLException e) {
+			System.out.println("Error al desasociar al estudiante: "+e.getMessage());
+			res = "error";
+		}
+		
+		conexion.desconectar();
+		
+		return res;
+	}
+
 
 }

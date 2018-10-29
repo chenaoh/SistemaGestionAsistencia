@@ -11,6 +11,7 @@ import java.util.Map;
 
 import conexion.Conexion;
 import vo.EstudianteVo;
+import vo.EstudiantesPtoyectosVo;
 import vo.GrupoVo;
 
 public class EstudianteDao {
@@ -305,6 +306,48 @@ public class EstudianteDao {
 		}
 		
 		return listDocumentosEstu;
+	}
+
+	public ArrayList<EstudiantesPtoyectosVo> consultarEstudiantesAsociados() {
+		
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		EstudiantesPtoyectosVo estuProyectos;
+		ArrayList<EstudiantesPtoyectosVo> listaEstudiantesProyectos = new ArrayList<>();
+		Conexion conexion = new Conexion();
+		
+		conn = conexion.getConnection();
+		
+		String consulta = "SELECT e.nombre as nombre, p.nombre as nombreP FROM proyecto_estudiantes pe, estudiante e, proyecto p WHERE pe.cod_proyecto = p.codigo AND pe.doc_estudiante = e.documento ";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			result = statement.executeQuery();
+			
+			while(result.next()){
+				estuProyectos = new EstudiantesPtoyectosVo();
+				estuProyectos.setCod_proyecto(result.getString("nombreP"));
+				estuProyectos.setDocEstudiante(result.getString("nombre"));
+				listaEstudiantesProyectos.add(estuProyectos);
+			}
+			
+			conexion.desconectar();
+			
+			
+		} catch (SQLException e) {
+			System.out.println("Error al traer la lista de estudiantes asociados: "+e.getMessage());
+			listaEstudiantesProyectos = null;
+		}
+		
+		return listaEstudiantesProyectos;
+	}
+
+	public String obtenerIdUnEstudiante(String nombre) {
+		EstudianteVo miEstudiante = mapaEstudiantes.get(nombre);
+		String doc = miEstudiante.getDocumento();
+		return doc;
 	}
 
 	

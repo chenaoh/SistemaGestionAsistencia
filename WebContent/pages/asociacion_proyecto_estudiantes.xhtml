@@ -39,25 +39,25 @@
         	</div>
         </div>
      </h:form> 
-            <h:form>
-            	<h3 style="margin-top: 0">Basic PickList</h3>
-                <p:pickList id="simple" value="#{pickListView.cities}" var="cities" itemValue="#{cities}" itemLabel="#{cities}"/>
-    			
-   				
-   				 <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="cityDialog">
-		        <h:panelGrid id="displayCities" columns="2">
-		            <h:outputText value="Source: " style="font-weight:bold" />
-		             <ui:repeat value="#{pickListView.cities.source}" var="item">
-		                <h:outputText value="#{item}" style="margin-right:5px" />
-		            </ui:repeat>
-		 
-		            <h:outputText value="Target: " style="font-weight:bold" />
-		            <ui:repeat value="#{pickListView.cities.target}" var="item">
-		                <h:outputText value="#{item}" style="margin-right:5px" />
-		            </ui:repeat>
-		        </h:panelGrid>
-		    </p:dialog>        
- 
+            <h:form>  
+            	<div class="row">
+            		<div class="card-panel">
+            			<h:dataTable value="#{estudianteBean.listaEstudiantesAsociados}" var="asociado" class="striped">
+            				<h:column>
+            					<f:facet name="header">Proyecto</f:facet>
+            					<h:outputLabel value="#{asociado.cod_proyecto}" />
+            				</h:column>
+            				<h:column>
+            					<f:facet name="header">Estudiantes</f:facet>
+            					<h:outputLabel value="#{asociado.docEstudiante}" />
+            				</h:column>
+            				<h:column>
+            					<f:facet name="header">Desasociar</f:facet>
+            					<h:commandButton value="clear" action="#{proyectoBean.desasociarEstudiantes(asociado.docEstudiante)}" class="material-icons no-btn red-text"/>
+            				</h:column>
+            			</h:dataTable>
+            		</div>
+            	</div>
             </h:form>
 
 	</ui:define>

@@ -146,8 +146,20 @@ public class ProyectoBean {
 		if(res.equals("no existe")) {
 			int idProyecto = proyectoDao.obtenerIdProyecto(getNombreProyecto());
 			registrarAsociacionDeEstudiantes(idEstudiante,idProyecto);
+			estudianteBean.cargarEstudiantesAsociados();
 		}else {
 			setMensaje("Uno o los estudiantes ya se encuentras asociados a un proyecto");
+		}
+	}
+	
+	public void desasociarEstudiantes(String nombre){
+		String doc = estudianteDAO.obtenerIdUnEstudiante(nombre);
+		System.out.println("Documento estudiante***: "+doc);
+		
+		String res = proyectoDao.desasociarEstudiantes(doc);
+		
+		if(res.equals("ok")){
+			estudianteBean.cargarEstudiantesAsociados();
 		}
 	}
 
