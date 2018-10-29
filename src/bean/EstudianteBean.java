@@ -11,12 +11,14 @@ import javax.faces.bean.ViewScoped;
 
 import dao.EstudianteDao;
 import vo.EstudianteVo;
+import vo.EstudiantesPtoyectosVo;
 import vo.GrupoVo;
 @ManagedBean
 @ViewScoped
 public class EstudianteBean {
 	
 	private EstudianteVo estudiante;
+	private EstudiantesPtoyectosVo estuProyectoVo;
 	private String fecha;
 	private String mensajeConfirmacion;
 	private EstudianteDao estudianteDao;
@@ -25,13 +27,21 @@ public class EstudianteBean {
 	
 	private ArrayList<String> nombresEstudiantes =  new ArrayList<>();
 	private ArrayList<EstudianteVo> listaEstudiantes=new ArrayList<>();
+	private static ArrayList<EstudiantesPtoyectosVo>  listaEstudiantesAsociados = new ArrayList<>();
 	
 	public EstudianteBean(){
 		estudiante=new EstudianteVo();
+		estuProyectoVo  = new EstudiantesPtoyectosVo();
 		estudianteDao=new EstudianteDao();
 		cargarEstudiantes();
 		cargarNombres();
 		cargarDatosHashMapEstudiantes();
+		cargarEstudiantesAsociados();
+	}
+
+	public void cargarEstudiantesAsociados() {
+		setListaEstudiantesAsociados(estudianteDao.consultarEstudiantesAsociados());
+		
 	}
 
 	public void cargarDatosHashMapEstudiantes() {
@@ -182,6 +192,14 @@ public class EstudianteBean {
 
 	public void setTipoUser(boolean tipoUser) {
 		this.tipoUser = tipoUser;
+	}
+
+	public ArrayList<EstudiantesPtoyectosVo> getListaEstudiantesAsociados() {
+		return listaEstudiantesAsociados;
+	}
+
+	public void setListaEstudiantesAsociados(ArrayList<EstudiantesPtoyectosVo> listaEstudiantesAsociados) {
+		this.listaEstudiantesAsociados = listaEstudiantesAsociados;
 	}
 	
 	
