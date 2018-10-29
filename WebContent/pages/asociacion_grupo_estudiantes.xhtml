@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<ui:composition
+	  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      template="/templates/gestion_grupos.xhtml"> 
+
+<ui:param name="tituloPagina" value="Asociacion Grupos" />	
+<ui:param name="nombrePagina" value="Gestión de Grupos - Asociación Grupo Estudiantes" />	
+
+<ui:define name="tabGrupos">
+        
+	<form jsf:id="formulario">
+		<div class="row">
+			<div class="col s12 m12 teal lighten-2">
+          		<div class="tarjetas-text">Asociación Grupo - Estudiantes</div>
+          	</div>
+        </div>
+            
+<h6>#{grupoBean.mensajeConfirmacion}</h6>
+            <div class="card-panel ">
+                 <div class="row">
+                 
+  					<div class="input-field col m4 offset-m8">
+	                   <label>Seleccione el Grupo</label><br></br>
+							<h:selectOneMenu id="combo" value="#{grupoBean.grupoId}" >
+								<f:selectItems value="#{grupoBean.itemGrupos}" />
+								<f:ajax event="change" listener="#{grupoBean.consultarEstudiantesGrupo}" render="formcombos nombre sinAsociar2 asociados2 tabla info" update="sinAsociar2 asociados2" execute="@this"/>
+		                   </h:selectOneMenu>
+					</div> 
+                               
+                  <div class="input-field col m12">
+                  <label>Nombre</label><br></br>
+                    <input jsf:id="nombre" type="text" class="validate" jsf:value="#{grupoBean.grupo.nombreGrupo}" disabled="true" />
+                  </div> 
+                                    
+                  <h:dataTable value="#{grupoBean.listaGrupoSeleccionado}" var="datos" class="striped" id="tabla" >
+            		<h:column>
+						<f:facet name="header">Codigo</f:facet>
+						<h:inputText value="#{datos.codigoGrupo}" rendered="#{datos.editar}" disabled="true"/>
+						<h:outputLabel value="#{datos.codigoGrupo}" rendered="#{not datos.editar}" />
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Nombre</f:facet>
+						<h:inputText value="#{datos.nombreGrupo}" rendered="#{datos.editar}" />
+						<h:outputLabel value="#{datos.nombreGrupo}" rendered="#{not datos.editar}" />            		
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Director</f:facet>
+						<h:selectOneMenu value="#{datos.directorGrupo}" rendered="#{datos.editar}">
+							<f:selectItems value="#{grupoBean.itemProfesores}" />
+		                </h:selectOneMenu>
+						<h:outputLabel value="#{grupoBean.obtenerNombreProfesor(datos.directorGrupo)}" rendered="#{not datos.editar}" />
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Inicio</f:facet>
+						<input  id="fecha" type = "date" class = "datepicker" jsf:value="#{datos.fechaIni}" jsf:rendered="#{datos.editar}" />
+						<h:outputLabel value="#{datos.fechaIni}" rendered="#{not datos.editar}" />
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Fin</f:facet>
+						<input  id="fecha" type = "date" class = "datepicker" jsf:value="#{datos.fechaFin}" jsf:rendered="#{datos.editar}" />
+						<h:outputLabel value="#{datos.fechaFin}" rendered="#{not datos.editar}" />
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Observación</f:facet>
+						<h:inputText value="#{datos.observacion}" rendered="#{datos.editar}" />
+						<h:outputLabel value="#{datos.observacion}" rendered="#{not datos.editar}" />
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Estado</f:facet>
+						<h:selectOneMenu value="#{datos.estado}" rendered="#{datos.editar}">
+		                   	<f:selectItem itemValue="activo" itemLabel="Activo"/>
+		                <f:selectItem itemValue="inactivo" itemLabel="Inactivo"/>
+	                   </h:selectOneMenu>
+						<h:outputLabel value="#{datos.estado}" rendered="#{not datos.editar}" />
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Acciones</f:facet>
+						<h:commandLink action="#{grupoBean.editarGrupo(datos)}" rendered="#{not datos.editar}" ><i class="material-icons s12">create</i></h:commandLink>
+						<h:commandLink action="#{grupoBean.guardarGrupo(datos)}" rendered="#{datos.editar}" ><i class="material-icons s12">save</i></h:commandLink> 
+						<h:commandLink action="#{grupoBean.eliminarGrupo(datos)}" ><i class="material-icons s12">delete</i></h:commandLink>
+					<!--  	<a class="waves-effect waves-light modal-trigger" href="#modal2"  ><i class="material-icons left">help_outline</i></a>-->
+					</h:column>
+            	
+            	</h:dataTable>
+            	
+            	<h:selectManyListbox id="sinAsociar2" value="#{grupoBean.listaSeleccionados}"  >
+                  	<f:selectItems value="#{grupoBean.listaDias}" id="info"/>
+                  </h:selectManyListbox>
+                  
+                <h:selectOneMenu id="asociados2" value="#{grupoBean.itemEstudiantesAsociados}"  >
+                  	<f:selectItems value="#{grupoBean.itemEstudiantesAsociados}" />
+                  </h:selectOneMenu>  
+                  
+			<br></br>
+			<h:form id="formcombos">
+                  <div class="input-field col m5">
+                  <h6><b>Estudiantes Disponibles</b></h6>
+                  <h:selectManyListbox id="sinAsociar" value="#{grupoBean.listaEstudiantesDisponibles}"  >
+                  	<f:selectItems value="#{grupoBean.itemEstudiantesDisponibles}" />
+                  </h:selectManyListbox>
+				</div>
+				
+				<div class="input-field col m2 " >
+					<div class="row">
+						<div class="input-field col m12 " >	
+							<h:commandButton class="waves-effect waves-light btn" action="#{grupoBean.asociarEstudiantes()}" value="&gt;">
+								<f:ajax execute="sinAsociar" render="asociados" />
+							</h:commandButton>
+						</div>
+						<div class="input-field col m12 " >
+							<h:commandButton class="waves-effect waves-light btn" action="#{grupoBean.asociarEstudiantes()}" value="&lt;" />
+						</div>
+					</div>
+				</div>
+				<div class="input-field col m5 " >
+				<h6><b>Estudiantes Asociados</b></h6>
+				<h:selectManyListbox id="asociados" value="#{grupoBean.itemEstudiantesAsociados}"  >
+                  	<f:selectItems value="#{grupoBean.itemEstudiantesAsociados}" />
+                  </h:selectManyListbox>
+				</div>
+           </h:form>
+              </div>
+                <a class="btn-floating btn-large waves-effect waves-light orange right" jsf:action="#{grupoBean.asociarEstudiantes()}"><i class="material-icons">save</i></a>
+              
+            </div>                        
+
+    </form> 
+
+	</ui:define>
+
+
+</ui:composition>
+

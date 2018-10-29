@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es"
+	  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"> 
+
+<f:metadata>
+  <f:event type="preRenderView" listener="#{inicioBean.redirige()}"/>
+</f:metadata>
+
+
+	<h:head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="../resources/css/materialize.min.css" />
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<title>#{tituloPagina}</title>
+	</h:head>
+<body style="background-color:rgb(236,239,241)">
+
+<header>
+	 <form class="col s12 center"  jsf:id="formularioMenu">
+    <section class="ContentPage blue-grey darken-4">
+   
+        <!-- Nav Info -->
+        <div class="ContentPage-Nav ">
+
+            <div class="navbar-fixed">
+              <nav>
+                  <div class="nav-wrapper #263238 blue-grey darken-4">
+                    <ul class="right hide-on-med-and-down">
+                      <li><a href="inicio.jsf"><i class="material-icons left">home</i>Inicio</a></li>
+                        <li><a class="waves-effect waves-light modal-trigger" href="#modal1" ><i class="material-icons left">help_outline</i>Ayuda</a></li>
+                         <li><h:commandLink action="#{loginBean.cerrarSesion()}" value="Close" /></li>
+                    </ul>
+                    <ul id="mobile-demo">
+                       <li><a href="inicio.jsf"><i class="material-icons left">home</i></a></li>
+                        <li><a class="waves-effect waves-light modal-trigger" href="#modal1" ><i class="material-icons left">help_outline</i></a></li>
+                      <li><a href="login.jsf"><i class="material-icons left">close</i></a></li>
+                    </ul>
+                  </div>
+
+                </nav>
+          </div>
+        </div>
+    
+    </section>  
+    </form>
+ </header>
+	<main>
+	 <section>
+	 		  <ul id="slide-out" class="side-nav fixed">
+                        <li>
+	                        <div class="user-view">
+	                       <div class="background">
+	                            <img src="../resources/img/fondo8.png" />
+	                          </div>
+	                          <a href="#!user"><img class="perfil" src="#{inicioBean.rutaImagenUser}"/></a>
+	                       		 <a class="user">#{inicioBean.tipoUser}</a>   
+	                        </div>
+	                        
+	                     </li>
+                        <li><a href="inicio.jsf"><img class="icono4" src="../resources/img/inicio.png"/><a href="inicio.jsf" style="margin-top: -14%; margin-left: 10%;">Inicio</a></a></li>
+                       <li><div class="divider"></div></li>
+                        <li><a class="subheader">Gestionar</a></li>
+
+                         <ul class="collapsible" data-collapsible="accordion">
+                              <li>
+                               <div class="collapsible-header"><img class="icono3" src="../resources/img/grupo3.png"/>Grupos</div>
+                                <div class="collapsible-body">
+                                  <ul>
+                                   <li><a href="registro_grupos.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
+                                   <li><a href="consulta_grupos.jsf"><i class="material-icons">search</i>Consultar</a></li>
+                                   <li><a href="asociacion_grupo_estudiantes.jsf"><i class="material-icons">compare_arrows</i>Asociar Estudiantes</a></li>
+                                   </ul>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="collapsible-header"><img class="icono3" src="../resources/img/iconoEstudiantes.png"/>Estudiantes</div>
+                                <div class="collapsible-body">
+                                  <ul>
+                                   <li><a href="registro_estudiante.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
+                                   <li><a href="consulta_estudiantes.jsf"><i class="material-icons">search</i>Consultar</a></li>
+                                   </ul>
+                                </div>
+                              </li>
+                               <li>
+                                <div class="collapsible-header"><img class="icono3" src="../resources/img/iconoProfesor.png"/>Profesores</div>
+                                <div class="collapsible-body">
+                                  <ul>
+                                   <li><a href="registro_profesor.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
+                                   <li><a href="consulta_profesores.jsf"><i class="material-icons">search</i>Consultar</a></li>
+                                   </ul>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="collapsible-header"><img class="icono3" src="../resources/img/proyecto.png"/>Proyectos</div>
+                                <div class="collapsible-body">
+                                  <ul>
+                                   <li><a href="registro_proyectos.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
+                                   <li><a href="consulta_proyectos.jsf"><i class="material-icons">search</i>Consultar</a></li>
+                                   <li><a href="asociacion_proyecto_estudiantes.jsf"><i class="material-icons">compare_arrows</i>Asociar Estudiantes</a></li>
+                                   </ul>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="collapsible-header"><img class="icono3" src="../resources/img/asistencia1.png"/>Asistencia</div>
+                                <div class="collapsible-body">
+                                  <ul>
+                                   <li><a href="registro_asistencia.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
+                                   <li><a href="consulta_asistencia.jsf"><i class="material-icons">search</i>Consultar</a></li>
+                                   </ul>
+                                </div>
+                              </li>
+                               <li>
+                                <div class="collapsible-header"><img class="icono3" src="../resources/img/notificacion.png"/>Archivos</div>
+                                <div class="collapsible-body">
+                                  <ul>
+                                   <li><a href="carga_imagen.jsf"><i class="material-icons">add_circle</i>Subir Imagen</a></li>
+                                   <li><a href="#"><i class="material-icons">search</i>Subir Archivo</a></li>
+                                   </ul>
+                                </div>
+                              </li>
+                            </ul>
+
+                      </ul>
+                      <a href="#" data-activates="slide-out" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
+	 
+	 
+               <!-- Modal Structure -->
+                  <div id="modal1" class="modal">
+                    <div class="modal-content blue-grey lighten-5">
+                      <div class="card">
+                            <div class="card-action  lighten-1 white-text #263238 blue-grey darken-4">
+                                <h4>Ayuda</h4>
+                            </div>
+                          
+                        
+                          <div class="row">
+                            <div class="input-field col s12">
+                           		 <i class="material-icons left">help_outline</i>
+                                <p>Navegue por el menú lateral o directamente desde la página de inicio para acceder a las diferentes opciones</p>
+                            </div>
+                          </div>
+                
+	                    <div class="modal-footer">
+	                      <a class="modal-action modal-close waves-effect #37474f blue-grey darken-3 btn" href="#">Aceptar</a>
+	                    </div>
+
+                    	</div>
+ 					</div>
+                  </div>
+          
+        </section>
+
+	<div class="row">
+
+    <div class="menu col s2 m2 l3 ">
+
+  
+    </div>
+
+		<div class="col s12 m12 l9 ">
+     
+          <h5>#{nombrePagina}</h5>    
+      <div class="container-fluid">
+      	
+  			     <ui:insert name="contenido"/>		                    
+	 </div> 
+	</div>
+</div>
+</main>
+
+  <footer class="page-footer #37474f blue-grey darken-3 ">
+
+              <div class="row">
+                    <div class="col s12 m12 l3 right">
+      				        <p>Cristian David Henao  © 2018 Copyright Text</p>
+                    </div>
+              </div>
+
+  </footer>
+</body>
+<script src="../resources/js/jquery.js"></script>
+<script src="../resources/js/materialize.min.js"></script>
+<script>
+	$(document).ready(function(){
+				  $(".button-collapse").sideNav();
+				   $('.modal').modal();
+           			$('.collapsible').collapsible();
+           		  	$('select').material_select();
+           			$('ul.tabs').tabs();
+           		 	$('input#input_text, textarea#textarea1').characterCounter();
+           			$('.datepicker').pickadate({
+           			    selectMonths: true, // Creates a dropdown to control month
+           			    selectYears: 80, // Creates a dropdown of 15 years to control year,
+           			 format: 'yyyy-mm-dd',
+           			 labelMonthNext: 'Siguiente Mes',
+	           		  labelMonthPrev: 'Mes Anterior',
+	           		  labelMonthSelect: 'Seleccione un Mes',
+	           		  labelYearSelect: 'Seleccione un Año',	
+	           		  monthsFull: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Diciembre', 'Novimbre', 'Diciembre' ],
+	           		  monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+	           		  weekdaysFull: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado' ],
+	           		  weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab' ],
+	           		  weekdaysLetter: [ 'D', 'L', 'M', 'Mi', 'J', 'V', 'S' ],
+           			    today: 'Hoy',
+           			    clear: 'Limpiar',
+           			    close: 'Ok',
+           			    closeOnSelect: false // Close upon selecting a date,
+           			  });
+           			
+			})
+						
+</script>
+<style>
+*{
+  margin: 0;
+  padding: 0;
+}
+
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+
+	.perfil{
+		width: 50%;
+    	margin-left: 20%;
+    	margin-top: 20%;
+    	border-radius: 50%;
+	}
+
+	.perfil2{
+		width: 40%;
+    	margin-left: 55%;
+    	margin-top: -5%;
+	}
+
+  .user{
+    margin-left: 22%;  
+    color: #FFFFFF;
+  }
+  
+   .icono{
+    margin-left: 22%;  
+  }
+  
+   .icono2{
+   width: 20%;
+    margin-left: -5%;  
+  }
+  
+  .icono3{
+   margin-right: 5%;
+   margin-top:4%;
+   width: 10%;
+   height:10%
+  }
+  
+  .icono4{
+   margin-right: 6%;
+   margin-left: -7%; 
+   margin-top:6%;
+   width: 13%;
+  }  
+  
+  .cant{
+    margin-left: -655%;  
+  }
+  
+  .tarjetas-text{
+  	color: #FFFFFF;
+  	text-align: center;
+  }
+
+
+.scroll {
+	height: 200px;
+	width: 400px;
+	border: 1px solid #ddd;
+	overflow-y: scroll;
+	background:#fff;
+}
+
+
+#global {
+	height: 100px;
+	width: 400px;
+	border: 1px solid #ddd;
+	background: #f1f1f1;
+	overflow-y: scroll;
+}
+
+.texto {
+	padding:4px;
+	background:#fff;
+}
+
+</style>
+</html>

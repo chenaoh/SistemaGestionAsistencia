@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<ui:composition
+	  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      template="gestion_estudiante.xhtml"> 
+
+<ui:param name="tituloPagina" value="Inicio" />	
+<ui:param name="nombrePagina" value="Inicio desde el llamado al Template" />	
+
+<ui:define name="tabEstudiante">
+        
+	<form class="center">
+        <div class="col m2 offset-m10">
+                        <a class="waves-effect #37474f blue-grey darken-3 btn">Registrar</a>
+       	</div>
+     
+        <h4>Registro de Usuario</h4>
+            
+            <div class="card-panel ">
+                 <div class="row">
+                    <div class="input-field col m3 offset-m9">
+                    <input id="documento" type="text" class="validate" />
+                    <label for="documento">Documento</label>
+                  </div>  
+
+                  <div class="input-field col m6">
+                    <input id="nombre" type="text" class="validate" />
+                    <label for="nombre">Nombre</label>
+                  </div>
+
+                  <div class="input-field col m6">
+                    <input id="apellido" type="text" class="validate" />
+                    <label for="apellido">Apellido</label>
+                  </div>  
+
+                  <div class="input-field col m6">
+                    <input id="profesion" type="text" class="validate" />
+                    <label for="profesion">Profesion</label>
+                  </div>  
+                  <div class="input-field col m6">
+                    <input id="salario" type="text" class="validate" />
+                    <label for="salario">Salario</label>
+                  </div>  
+
+                  <div class="input-field col m6">
+                    <input id="edad" type="text" class="validate" />
+                    <label for="edad">Edad</label>
+                  </div>
+
+                  <div class="input-field col m6">
+                    <input id="sexo" type="text" class="validate" />
+                    <label for="sexo">Sexo</label>
+                  </div>
+                  
+              </div>
+            </div>                 
+
+            </form> 
+
+	</ui:define>
+
+
+</ui:composition>
