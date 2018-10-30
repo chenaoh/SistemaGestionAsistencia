@@ -18,6 +18,7 @@ import vo.ProfesorVo;
 @ViewScoped
 public class ProfesorBean {
 	
+	private String nomProf;
 	private ProfesorVo profesor;
 	private String mensajeConfirmacion;
 	private ProfesorDao profesorDao;
@@ -29,6 +30,12 @@ public class ProfesorBean {
 		profesor=new ProfesorVo();
 		profesorDao=new ProfesorDao();
 		cargarProfesores();
+	}
+	
+	
+	public void filtrarProfesor(){
+		System.out.println("nombre: "+nomProf);
+		setListaProfesores(profesorDao.filtrarProfesor(getNomProf()));
 	}
 	
 	private void cargarProfesores() {
@@ -125,6 +132,14 @@ public class ProfesorBean {
 
 	public void setMensajeConfirmacion(String mensajeConfirmacion) {
 		this.mensajeConfirmacion = mensajeConfirmacion;
+	}
+
+	public String getNomProf() {
+		return nomProf;
+	}
+
+	public void setNomProf(String nomProf) {
+		this.nomProf = nomProf;
 	}
 	
 	

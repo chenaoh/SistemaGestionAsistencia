@@ -5,11 +5,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import conexion.Conexion;
 import vo.GrupoVo;
 
 public class GrupoDao {
+	
+	private static HashMap<String, GrupoVo> mapaGrupos;
+	
+	public GrupoDao(){
+		mapaGrupos=new HashMap<>();
+	}
 
 	public String registrarGrupo(GrupoVo grupoVo) {
 		String resultado = "";
@@ -144,6 +151,53 @@ public class GrupoDao {
 			resp = "No se pudo eliminar el grupo";
 		}
 		return resp;
+	}
+
+	public ArrayList<String> cargarGrupos() {
+		Connection connection = null;
+		Conexion miConexion = new Conexion();
+		connection = miConexion.getConnection();
+		ResultSet result = null;
+		
+		GrupoVo grupoVo;
+		ArrayList<String> grupos = new ArrayList<>();
+
+		String resp = "";
+		try {
+			String sentencia = "SELECT * FROM grupo";
+
+			PreparedStatement statement = connection.prepareStatement(sentencia);
+			result = statement.executeQuery();
+		
+			while(result.next()==true){
+				grupoVo= new GrupoVo();
+				grupoVo.setNombreGrupo(result.getString("nombre"));
+				grupos.add(grupoVo.getNombreGrupo());
+			}
+			
+			miConexion.desconectar();
+
+		} catch (SQLException e) {
+			System.out.println("Error al cargar los grupos en estudiantes"+e.getMessage());
+			grupos=null;
+		}
+		return grupos;
+		
+	}
+
+	public void cargarDatosHasgMap(ArrayList<GrupoVo> listaGrupos) {
+		for (int i = 0; i < listaGrupos.size(); i++) {
+			mapaGrupos.put(listaGrupos.get(i).getNombreGrupo(), listaGrupos.get(i));
+		}
+		
+	}
+
+	public String obtenerId(String grupo) {
+		
+		GrupoVo grupoVo = mapaGrupos.get(grupo);
+		String codigo = grupoVo.getCodigoGrupo();
+		
+		return codigo;
 	}
 
 }

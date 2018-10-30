@@ -350,5 +350,50 @@ public class EstudianteDao {
 		return doc;
 	}
 
+	public ArrayList<EstudianteVo> consultarEstudianteGrupos(String codigo) {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		EstudianteVo estudiante;
+		ArrayList<EstudianteVo> listaEstudiantes = new ArrayList<>();
+		Conexion conexion = new Conexion();
+		
+		conn = conexion.getConnection();
+		
+		String consulta = "SELECT e.*, g.nombre as nombreg FROM  estudiante e, grupo g WHERE g.codigo = ? AND e.grupo = g.codigo ";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			statement.setString(1, codigo);
+			result = statement.executeQuery();
+			
+			while(result.next()){
+				estudiante = new EstudianteVo();
+				estudiante.setDocumento(result.getString("documento"));
+				estudiante.setNombre(result.getString("nombre"));
+				estudiante.setDireccion(result.getString("direccion"));
+				estudiante.setTelefono(result.getString("telefono"));
+				estudiante.setEmail(result.getString("email"));
+				estudiante.setGrupo(result.getString("grupo"));
+				estudiante.setFechaNacimiento(result.getDate("fecha_nacimiento"));
+				estudiante.setFecha(estudiante.getFechaNacimiento()+"");
+				estudiante.setSexo(result.getString("sexo"));
+				estudiante.setEstado(result.getString("estado"));
+				listaEstudiantes.add(estudiante);
+				
+			}
+			
+			conexion.desconectar();
+			
+			
+		} catch (SQLException e) {
+			System.out.println("Error al traer la lista de estudiantes asociados a grupos: "+e.getMessage());
+			listaEstudiantes = null;
+		}
+		
+		return listaEstudiantes;
+	}
+
 	
 }

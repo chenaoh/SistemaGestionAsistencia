@@ -23,7 +23,6 @@
 
             <form jsf:id="formulario">
             	<div class="row">
-            		
             		<div class="input-field col s4">
             			<h:outputLabel value="Nombre Estudiante"  rendered="#{loginBean.ver}"/>
             			<h:inputText value="#{estudianteBean.nombreEstu}" rendered="#{loginBean.ver}"/>
@@ -32,6 +31,16 @@
             			<h:commandButton action="#{estudianteBean.consultarEstudiante()}" value="search" class="material-icons no-btn"  rendered="#{loginBean.ver}"/>
             		</div>
             	</div>
+            	<div class="row">
+            		<div class="input-field col s4">
+            			<h:selectOneMenu value="#{estudianteBean.grupo}">
+            				<f:selectItems value="#{estudianteBean.grupos}"/>
+            			</h:selectOneMenu>
+            		</div>
+            		<div class="input-field col s4">
+            		  	<h:commandButton value="search" action="#{estudianteBean.consultarEstudiantesGrupos()}" class="material-icons no-btn"/>
+            		</div>
+            	</div> 
             			
 		       	
             	<h:dataTable value="#{estudianteBean.listaEstudiantes}" var="datos" class="striped  ">
