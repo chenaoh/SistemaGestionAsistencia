@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import dao.EstudianteDao;
+import dao.GrupoDao;
 import vo.EstudianteVo;
 import vo.EstudiantesPtoyectosVo;
 import vo.GrupoVo;
@@ -22,21 +23,45 @@ public class EstudianteBean {
 	private String fecha;
 	private String mensajeConfirmacion;
 	private EstudianteDao estudianteDao;
+	private GrupoDao grupoDao;
 	private String nombreEstu;
+	private String grupo;
 	private boolean tipoUser;
 	
 	private ArrayList<String> nombresEstudiantes =  new ArrayList<>();
-	private ArrayList<EstudianteVo> listaEstudiantes=new ArrayList<>();
+	private static ArrayList<EstudianteVo> listaEstudiantes=new ArrayList<>();
+	private ArrayList<String> grupos=new ArrayList<>();
 	private static ArrayList<EstudiantesPtoyectosVo>  listaEstudiantesAsociados = new ArrayList<>();
 	
 	public EstudianteBean(){
 		estudiante=new EstudianteVo();
 		estuProyectoVo  = new EstudiantesPtoyectosVo();
 		estudianteDao=new EstudianteDao();
+		grupoDao=new GrupoDao();
 		cargarEstudiantes();
 		cargarNombres();
 		cargarDatosHashMapEstudiantes();
 		cargarEstudiantesAsociados();
+		cargarGrupos();
+		cargarDatosHashMap();
+	}
+	
+	public void consultarEstudiantesGrupos(){
+		String codigo = grupoDao.obtenerId(getGrupo());
+		System.out.println("Grupo*****: "+codigo);
+		setListaEstudiantes(estudianteDao.consultarEstudianteGrupos(codigo));
+	}
+
+	private void cargarDatosHashMap() {
+		System.out.println("*******Esta cargando los datos de los grupos**************");
+		ArrayList<GrupoVo> listaGrupos = grupoDao.obtenerListaGrupos();
+		grupoDao.cargarDatosHasgMap(listaGrupos);
+		
+	}
+
+	private void cargarGrupos() {
+		setGrupos(grupoDao.cargarGrupos());
+		
 	}
 
 	public void cargarEstudiantesAsociados() {
@@ -200,6 +225,22 @@ public class EstudianteBean {
 
 	public void setListaEstudiantesAsociados(ArrayList<EstudiantesPtoyectosVo> listaEstudiantesAsociados) {
 		this.listaEstudiantesAsociados = listaEstudiantesAsociados;
+	}
+
+	public String getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(String grupo) {
+		this.grupo = grupo;
+	}
+
+	public ArrayList<String> getGrupos() {
+		return grupos;
+	}
+
+	public void setGrupos(ArrayList<String> grupos) {
+		this.grupos = grupos;
 	}
 	
 	

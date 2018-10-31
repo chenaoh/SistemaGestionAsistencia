@@ -22,6 +22,16 @@
             <div class="card-panel">
 
             <form jsf:id="formulario">
+            	<div class="row">
+            		<div class="input-field col s4">
+            		<label>Nombre Profesor</label>
+			             <h:inputText value="#{profesorBean.nomProf}" />
+		             </div>
+		             <div class="input-field col s4">
+		             	<h:commandButton action="#{profesorBean.filtrarProfesor()}" value="search" class="material-icons no-btn"/>
+		             </div>
+            	</div>
+            
             	<h:dataTable value="#{profesorBean.listaProfesores}" var="datos" class="striped  ">
             		<h:column>
 						<f:facet name="header">Documento</f:facet>

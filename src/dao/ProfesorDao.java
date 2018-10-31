@@ -245,4 +245,50 @@ public class ProfesorDao {
 
 	}
 
+	public ArrayList<ProfesorVo> filtrarProfesor(String nomProf) {
+		Connection connection = null;
+		Conexion miConexion = new Conexion();
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		
+		ProfesorVo profesorVo;
+		ArrayList<ProfesorVo> profesor =new ArrayList<>();
+		
+		connection=miConexion.getConnection();
+		
+		String consulta="SELECT * FROM profesor WHERE nombre LIKE '%"+nomProf+"%'";
+		
+		try {
+			
+			statement=connection.prepareStatement(consulta);
+			result=statement.executeQuery();
+			System.out.println("Entra a realizar la consulta");
+			
+			while(result.next()==true){
+				profesorVo=new ProfesorVo();
+				profesorVo.setDocumento(result.getString("documento"));
+				profesorVo.setNombre(result.getString("nombre"));
+				profesorVo.setTelefono(result.getString("telefono"));
+				profesorVo.setProfesion(result.getString("profesion"));
+				profesorVo.setSexo(result.getString("sexo"));
+				profesorVo.setEmail(result.getString("email"));
+				profesorVo.setPerfil(result.getString("perfil"));
+				profesorVo.setAsesoria(result.getString("asesoria"));
+				profesorVo.setEstado(result.getString("estado"));
+				profesorVo.setTipo(result.getString("tipo"));
+				
+				profesor.add(profesorVo);
+			}
+			
+			miConexion.desconectar();
+			
+		} catch (SQLException e) {
+			System.out.println("Error al filtrar por profesor: "+e.getMessage());
+			profesor=null;
+		}
+		
+		
+		return profesor;
+	}
+
 }
