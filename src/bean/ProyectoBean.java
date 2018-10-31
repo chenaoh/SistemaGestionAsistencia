@@ -33,6 +33,9 @@ public class ProyectoBean {
 	private String nombreProyecto;
 	private String mensaje;
 	EstudianteBean estudianteBean;
+	private String filtro;
+	private String nombreGrupo;
+	private boolean consultaGrupo;
 	
 	public ProyectoBean(){
 		proyecto=new ProyectoVo();
@@ -54,8 +57,16 @@ public class ProyectoBean {
 		ArrayList<ProyectoVo> listProyectos = proyectoDao.obtenerListaProyecto();
 		proyectoDao.cargarDatosHashMapProyectos(listProyectos);
 		estudianteBean.cargarDatosHashMapEstudiantes();
-		
-		
+	}
+	
+	public void consultarProyectoNombre(){
+		if(filtro.equals("N")){
+		setConsultaGrupo(false);
+		setListaProyectos(proyectoDao.consultarProyectoNombre(getNombreProyecto()));
+		}else if(filtro.equals("G")){
+		setConsultaGrupo(true);
+		setListaProyectos(proyectoDao.consultarProyectoGrupo(getNombreProyecto()));
+		}
 	}
 
 	private void cargarEstudiantes() {
@@ -246,6 +257,29 @@ public class ProyectoBean {
 
 	public void setNombresEstudiantes(ArrayList<String> nombresEstudiantes) {
 		this.nombresEstudiantes = nombresEstudiantes;
+	}
+	public boolean isConsultaGrupo() {
+		return consultaGrupo;
+	}
+
+	public void setConsultaGrupo(boolean consultaGrupo) {
+		this.consultaGrupo = consultaGrupo;
+	}
+
+	public String getNombreGrupo() {
+		return nombreGrupo;
+	}
+
+	public void setNombreGrupo(String nombreGrupo) {
+		this.nombreGrupo = nombreGrupo;
+	}
+
+	public String getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(String filtro) {
+		this.filtro = filtro;
 	}
 
 }

@@ -21,6 +21,17 @@
             <div class="card-panel">
 
             <form jsf:id="formulario">
+            
+            	<div class="row">
+            	<div class="input-field col s4"> 
+              	<h:inputText type="text" class="validate" value="#{grupoBean.nombreGrupo}" rendered="#{loginBean.ver}"/>
+               </div>
+               <div class="input-field col s4">
+               
+               <h:commandButton action="#{grupoBean.consultarGrupoNombre()}" value="search" rendered="#{loginBean.ver}" class="material-icons no-btn"/>
+               </div>
+                    
+               </div>
             	<h:dataTable value="#{grupoBean.listaGrupos}" var="datos" class="striped  ">
             		<h:column>
 						<f:facet name="header">Codigo</f:facet>

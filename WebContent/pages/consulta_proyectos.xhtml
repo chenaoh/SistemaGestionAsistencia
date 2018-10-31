@@ -22,6 +22,25 @@
             <div class="card-panel">
 
             <form jsf:id="formulario">
+              <div class="row">  
+            <div class="input-field col m6">
+                    <h:inputText id="nombre" type="text" class="validate" value="#{proyectoBean.nombreProyecto}"  rendered="#{loginBean.ver}"   />
+                   	<h:outputLabel value="Nombre" rendered="#{loginBean.ver}" />
+                  </div>
+			 
+			 <div class="input-field col s4">
+			 				<h:selectOneMenu value="#{proyectoBean.filtro}" rendered="#{loginBean.ver}">
+							<f:selectItem itemLabel="Nombre" itemValue="N" />
+							<f:selectItem itemLabel="Grupo" itemValue="G" />
+		         </h:selectOneMenu>
+		      </div>
+               <div class="input-field col s2">
+               <h:commandButton action="#{proyectoBean.consultarProyectoNombre()}" value="search" rendered="#{loginBean.ver}" class="material-icons no-btn" />
+               </div>
+              
+            </div>
+            
+            
             	<h:dataTable value="#{proyectoBean.listaProyectos}" var="datos" class="striped  ">
             		<h:column>
 						<f:facet name="header">Codigo</f:facet>
@@ -48,7 +67,8 @@
 							<h:selectOneMenu value="#{datos.codigoGrupo}" rendered="#{datos.editar}">
 							<f:selectItems value="#{proyectoBean.itemGrupos}" />
 		                   </h:selectOneMenu>
-							<h:outputLabel value="#{proyectoBean.obtenerNombreGrupo(datos.codigoGrupo)}" rendered="#{not datos.editar}"/>
+							<h:outputLabel value="#{proyectoBean.obtenerNombreGrupo(datos.codigoGrupo)}" rendered="#{not proyectoBean.consultaGrupo}"/>
+							<h:outputLabel value="#{datos.nombreGrupo}" rendered="#{proyectoBean.consultaGrupo}"/>
             		</h:column>
             		<h:column>
 						<f:facet name="header">Acciones</f:facet>

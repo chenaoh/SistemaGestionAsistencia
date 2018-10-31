@@ -298,6 +298,85 @@ public class ProyectoDao {
 		
 		return res;
 	}
+	
+	public ArrayList<ProyectoVo> consultarProyectoNombre(String nombreProyecto) {
+		Connection connection = null;
+		Conexion miConexion = new Conexion();
+		PreparedStatement statement = null;
+		ResultSet result = null;
+
+		ProyectoVo proyecto = new ProyectoVo();
+		ArrayList<ProyectoVo> listaProyectos = null;
+
+		connection = miConexion.getConnection();
+		
+		String consulta = "SELECT * FROM proyecto WHERE nombre like '%"+nombreProyecto+"%'";
+		System.out.println(consulta);
+		try {
+			if (connection != null) {
+				listaProyectos = new ArrayList<>();
+				statement = connection.prepareStatement(consulta);
+
+				result = statement.executeQuery();
+
+				while (result.next() == true) {
+					proyecto = new ProyectoVo();
+					proyecto.setCodigoProyecto(result.getInt("codigo"));
+					proyecto.setNumProyecto(result.getInt("numero"));    
+					proyecto.setNombreProyecto(result.getString("nombre"));
+					proyecto.setDescripcionProyecto(result.getString("descripcion"));
+					proyecto.setCodigoGrupo(result.getString("grupo"));
+					listaProyectos.add(proyecto);
+				}
+				
+			}
+		} catch (SQLException e) {
+			System.out.println("Error en la consulta del Proyecto: " + e.getMessage());
+		} finally {
+			miConexion.desconectar();
+		}
+		return listaProyectos;
+	}
+	
+	public ArrayList<ProyectoVo> consultarProyectoGrupo(String nombreProyecto) {
+		Connection connection = null;
+		Conexion miConexion = new Conexion();
+		PreparedStatement statement = null;
+		ResultSet result = null;
+
+		ProyectoVo proyecto = new ProyectoVo();
+		ArrayList<ProyectoVo> listaProyectos = null;
+
+		connection = miConexion.getConnection();
+		
+		
+		String consulta = "SELECT p.codigo, p.numero, p.nombre, p.descripcion, g.nombre FROM proyecto p inner join grupo g on p.grupo=g.codigo WHERE g.nombre like '%"+nombreProyecto+"%'";
+		System.out.println(consulta);
+		try {
+			if (connection != null) {
+				listaProyectos = new ArrayList<>();
+				statement = connection.prepareStatement(consulta);
+
+				result = statement.executeQuery();
+
+				while (result.next() == true) {
+					proyecto = new ProyectoVo();
+					proyecto.setCodigoProyecto(result.getInt("p.codigo"));
+					proyecto.setNumProyecto(result.getInt("p.numero"));    
+					proyecto.setNombreProyecto(result.getString("p.nombre"));
+					proyecto.setDescripcionProyecto(result.getString("p.descripcion"));
+					proyecto.setNombreGrupo(result.getString("g.nombre"));
+					listaProyectos.add(proyecto);
+				}
+				
+			}
+		} catch (SQLException e) {
+			System.out.println("Error en la consulta del Proyecto: " + e.getMessage());
+		} finally {
+			miConexion.desconectar();
+		}
+		return listaProyectos;
+	}
 
 
 }

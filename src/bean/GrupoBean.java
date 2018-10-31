@@ -26,6 +26,7 @@ import vo.ProfesorVo;
 @SessionScoped
 public class GrupoBean implements Serializable{
 	
+	private String nombreGrupo;
 	private GrupoVo grupo;
 	private String fechaInicio;
 	private String fechaFin;
@@ -40,6 +41,12 @@ public class GrupoBean implements Serializable{
 	
 	List<String> listaDias, listaSeleccionados;
 	
+	public void consultarGrupoNombre(){
+		setListaGrupos(grupoDao.consultarGrupoNombre(getNombreGrupo()));
+	}
+	
+	
+
 	public List<String> getListaSeleccionados() {
 		return listaSeleccionados;
 	}
@@ -357,6 +364,13 @@ public class GrupoBean implements Serializable{
 
 	public void setListaEstudiantesAsociados(List<String> listaEstudiantesAsociados) {
 		this.listaEstudiantesAsociados = listaEstudiantesAsociados;
+	}
+	public String getNombreGrupo() {
+		return nombreGrupo;
+	}
+
+	public void setNombreGrupo(String nombreGrupo) {
+		this.nombreGrupo = nombreGrupo;
 	}
 	
 }

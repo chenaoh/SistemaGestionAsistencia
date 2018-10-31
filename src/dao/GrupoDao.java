@@ -184,6 +184,47 @@ public class GrupoDao {
 		return grupos;
 		
 	}
+	
+	public ArrayList<GrupoVo> consultarGrupoNombre(String nombreGrupo) {
+		Connection conn=null;
+		PreparedStatement statement=null;
+		ResultSet result=null;
+		Conexion conexion=new Conexion();
+		GrupoVo miGrupo;
+		ArrayList<GrupoVo> grupo=new ArrayList<>();
+		
+		conn= conexion.getConnection();
+		
+		String consulta = "SELECT * FROM grupo WHERE nombre like '%"+nombreGrupo+"%'";
+		
+	
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			result = statement.executeQuery();
+			
+			while (result.next()== true) {
+				miGrupo = new GrupoVo();
+				miGrupo.setCodigoGrupo(result.getString("codigo"));
+				miGrupo.setNombreGrupo(result.getString("nombre"));
+				miGrupo.setDirectorGrupo(result.getString("director_grupo"));
+				miGrupo.setFechaInicioGrupo(result.getDate("fecha_inicio"));
+				miGrupo.setFechaFinGrupo(result.getDate("fecha_fin"));
+				miGrupo.setObservacion(result.getString("observacion"));
+				miGrupo.setEstado(result.getString("estado"));
+				miGrupo.setFechaIni(miGrupo.getFechaInicioGrupo()+"");
+				miGrupo.setFechaFin(miGrupo.getFechaFinGrupo()+"");
+				grupo.add(miGrupo);
+			}
+			
+			conexion.desconectar();
+			
+		} catch (SQLException e) {
+			System.out.println("error al obtener el profesor: "+e.getMessage());
+			grupo=null;
+		}
+		return grupo;
+	}
 
 	public void cargarDatosHasgMap(ArrayList<GrupoVo> listaGrupos) {
 		for (int i = 0; i < listaGrupos.size(); i++) {

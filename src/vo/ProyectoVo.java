@@ -8,6 +8,7 @@ public class ProyectoVo {
 	private String descripcionProyecto;
 	private String CodigoGrupo;
 	private boolean editar;
+	private String nombreGrupo;
 	
 	public ProyectoVo(){
 		
@@ -59,6 +60,14 @@ public class ProyectoVo {
 
 	public void setEditar(boolean editar) {
 		this.editar = editar;
+	}
+	
+	public String getNombreGrupo() {
+		return nombreGrupo;
+	}
+
+	public void setNombreGrupo(String nombreGrupo) {
+		this.nombreGrupo = nombreGrupo;
 	}
 	
 	
