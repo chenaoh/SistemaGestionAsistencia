@@ -395,5 +395,38 @@ public class EstudianteDao {
 		return listaEstudiantes;
 	}
 
-	
+	public ArrayList<String> obtenerNombresAsistencia(String grupo) {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		Conexion conexion = new Conexion();
+		EstudianteVo miEstudiante;
+		ArrayList<String> listaNombres = new ArrayList<>();
+		
+		conn = conexion.getConnection();
+		
+		String consulta = "SELECT * FROM estudiante WHERE grupo = ?";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			statement.setString(1, grupo);
+			result = statement.executeQuery();
+			
+			while(result.next()==true){
+				miEstudiante = new EstudianteVo();
+				miEstudiante.setNombre(result.getString("nombre"));
+				listaNombres.add(miEstudiante.getNombre());
+				
+			}
+			
+			conexion.desconectar();
+			
+		} catch (SQLException e) {
+			System.out.println("Error en la lista de los nombres de los estudiantes: "+e.getMessage());
+			listaNombres = null;
+		}
+		
+		return listaNombres;
+	}
 }

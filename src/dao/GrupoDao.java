@@ -234,7 +234,7 @@ public class GrupoDao {
 	}
 
 	public String obtenerId(String grupo) {
-		
+		System.err.println("MAPA GRUPOS*******: "+mapaGrupos);
 		GrupoVo grupoVo = mapaGrupos.get(grupo);
 		String codigo = grupoVo.getCodigoGrupo();
 		
