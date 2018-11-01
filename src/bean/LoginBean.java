@@ -34,6 +34,9 @@ public class LoginBean {
 	private String tipoUser;
 	private static boolean ver;
 	private String rutaImagenUser;
+	
+	private AsistenciaBean asistenciaBean;
+	
 	FacesContext context = FacesContext.getCurrentInstance();
 	HttpSession session = (HttpSession)context.getExternalContext().getSession(true);
 	
@@ -46,7 +49,8 @@ public class LoginBean {
 		
 		miProfesorDao=new ProfesorDao();
 		miProfesorVo=new ProfesorVo();
-				
+
+		asistenciaBean=new AsistenciaBean();
 	}
 	
 	public String validarIngreso(){
@@ -55,9 +59,12 @@ public class LoginBean {
 		System.out.println("*****************************************************");
 		System.out.println("Documento: "+miPersonaVo.getDocumento());
 		System.out.println("Nombre: "+miPersonaVo.getPassword());
+		
 		PersonaVo persona=null;
 		
 		if (tipoUsuario.equals("profesor")) {
+			
+			asistenciaBean.recibirDocumento(miPersonaVo.getDocumento());
 			
 			System.out.println("Profesor");
 			persona=miProfesorDao.consultarProfesorLogin(miPersonaVo.getDocumento(), miPersonaVo.getPassword());

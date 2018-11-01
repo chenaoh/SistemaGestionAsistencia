@@ -12,45 +12,35 @@
 
 <ui:define name="tabAsistencia">
         
-	<form>
+	<h:form>
 		<div class="row">
 			<div class="col s12 m12 red accent-4">
           		<div class="tarjetas-text">Registro de Asistencias</div>
-          	</div>
+          	</div>  
+        </div> 
+        <div class="row">
+        	<div class="input-field col s6">
+        		<h:selectOneMenu value="#{asistenciaBean.grupo}">
+        			<f:selectItems value="#{asistenciaBean.grupos}"/>
+        		</h:selectOneMenu>
+        	</div>
+        	<div class="input-field col s6">
+        		<h:commandButton action="#{asistenciaBean.filtrarGrupo()}" value="Buscar" class="btn"/>
+        	</div>
         </div>
-            
-            <div class="card-panel">
-                <table>
-			        <thead>
-			          <tr>
-			              <th>Name</th>
-			              <th>Item Name</th>
-			              <th>Item Price</th>
-			          </tr>
-			        </thead>
-			
-			        <tbody>
-			          <tr>
-			            <td>Alvin</td>
-			            <td>Eclair</td>
-			            <td>$0.87</td>
-			          </tr>
-			          <tr>
-			            <td>Alan</td>
-			            <td>Jellybean</td>
-			            <td>$3.76</td>
-			          </tr>
-			          <tr>
-			            <td>Jonathan</td>
-			            <td>Lollipop</td>
-			            <td>$7.00</td>
-			          </tr>
-			        </tbody>
-			      </table>	
-            
-            </div>                 
-
-            </form> 
+        <div class="row">
+        	<div class="input-field col m6">
+	   			<h:selectManyListbox value="#{asistenciaBean.asistenciaNombres}">
+	   				<f:selectItems value="#{asistenciaBean.nombres}"/>
+	   			</h:selectManyListbox>
+   			</div>
+   			<div class="input-field col m6">
+                <input id="observacion" type="text" class="validate" jsf:value="#{asistenciaBean.observacion}" />
+                <label for="observacion">Observacion</label>
+              </div>
+   			<h:commandButton actionListener="#{asistenciaBean.registrarAsistencias()}" class="btn" value="registrar" />
+        </div>
+            </h:form> 
 
 	</ui:define>
 
