@@ -429,4 +429,50 @@ public class EstudianteDao {
 		
 		return listaNombres;
 	}
+	
+	
+	public EstudianteVo obtenerEstudiante(String documento) {
+		Connection connection = null;
+		Conexion miConexion = new Conexion();
+		PreparedStatement statement = null;
+		ResultSet result = null;
+
+		EstudianteVo estudiante=null;
+
+		connection = miConexion.getConnection();
+		
+		String consulta = "SELECT * FROM estudiante where documento = '"+documento+"'";
+		System.out.println("***************************************");
+		System.out.println(consulta);
+		try {
+			if (connection != null) {
+				
+				statement = connection.prepareStatement(consulta);
+
+				result = statement.executeQuery();
+				if (result.next() == true) {
+					estudiante = new EstudianteVo();
+					estudiante.setDocumento(result.getString("documento"));
+					estudiante.setNombre(result.getString("nombre"));
+					estudiante.setDireccion(result.getString("direccion"));
+					estudiante.setTelefono(result.getString("telefono"));
+					estudiante.setEmail(result.getString("email"));
+					estudiante.setGrupo(result.getString("grupo"));
+					estudiante.setFechaNacimiento(result.getDate("fecha_nacimiento"));
+					estudiante.setSexo(result.getString("sexo"));
+					estudiante.setEstado(result.getString("estado"));
+					estudiante.setPassword(result.getString("password"));
+					estudiante.setTipo(result.getString("tipo"));
+					estudiante.setFecha(estudiante.getFechaNacimiento()+"");
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("Error en la consulta del Profesor: " + e.getMessage());
+		} finally {
+			miConexion.desconectar();
+		}
+		return estudiante;
+
+	}
+
 }
