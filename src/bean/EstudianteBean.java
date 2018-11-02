@@ -69,6 +69,7 @@ public class EstudianteBean {
 	}
 	
 	public void consultarEstudiantesGrupos(){
+		cargarDatosHashMap();
 		String codigo = grupoDao.obtenerId(getGrupo());
 		System.out.println("Grupo*****: "+codigo);
 		setListaEstudiantes(estudianteDao.consultarEstudianteGrupos(codigo));
