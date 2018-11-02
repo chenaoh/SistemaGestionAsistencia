@@ -35,13 +35,13 @@
             	<h:dataTable value="#{grupoBean.listaGrupos}" var="datos" class="striped  ">
             		<h:column>
 						<f:facet name="header">Codigo</f:facet>
-						<h:inputText value="#{datos.codigoGrupo}" rendered="#{datos.editar}" disabled="true"/>
-						<h:outputLabel value="#{datos.codigoGrupo}" rendered="#{not datos.editar}" />
+						<h:inputText value="#{datos.codigo}" rendered="#{datos.editar}" disabled="true"/>
+						<h:outputLabel value="#{datos.codigo}" rendered="#{not datos.editar}" />
             		</h:column>
             		<h:column>
 						<f:facet name="header">Nombre</f:facet>
-						<h:inputText value="#{datos.nombreGrupo}" rendered="#{datos.editar}" />
-						<h:outputLabel value="#{datos.nombreGrupo}" rendered="#{not datos.editar}" />            		
+						<h:inputText value="#{datos.nombre}" rendered="#{datos.editar}" />
+						<h:outputLabel value="#{datos.nombre}" rendered="#{not datos.editar}" />            		
             		</h:column>
             		<h:column>
 						<f:facet name="header">Director</f:facet>
@@ -78,6 +78,7 @@
 						<h:commandLink action="#{grupoBean.editarGrupo(datos)}" rendered="#{not datos.editar}" ><i class="material-icons s12">create</i></h:commandLink>
 						<h:commandLink action="#{grupoBean.guardarGrupo(datos)}" rendered="#{datos.editar}" ><i class="material-icons s12">save</i></h:commandLink> 
 						<h:commandLink action="#{grupoBean.eliminarGrupo(datos)}" ><i class="material-icons s12">delete</i></h:commandLink>
+						<h:commandLink action="#{grupoBean.perfilGrupo(datos.codigo)}" ><i class="material-icons s12">account_circle</i></h:commandLink>
 					<!--  	<a class="waves-effect waves-light modal-trigger" href="#modal2"  ><i class="material-icons left">help_outline</i></a>-->
 					</h:column>
             	

@@ -31,8 +31,8 @@ public class GrupoDao {
 
 		try {
 			preStatement = connection.prepareStatement(consulta);
-			preStatement.setString(1, grupoVo.getCodigoGrupo());
-			preStatement.setString(2, grupoVo.getNombreGrupo());
+			preStatement.setString(1, grupoVo.getCodigo());
+			preStatement.setString(2, grupoVo.getNombre());
 			preStatement.setString(3, grupoVo.getDirectorGrupo());
 			preStatement.setDate(4, grupoVo.getFechaInicioGrupo());
 			preStatement.setDate(5, grupoVo.getFechaFinGrupo());
@@ -75,8 +75,8 @@ public class GrupoDao {
 
 				while (result.next() == true) {
 					miGrupo = new GrupoVo();
-					miGrupo.setCodigoGrupo(result.getString("codigo"));
-					miGrupo.setNombreGrupo(result.getString("nombre"));
+					miGrupo.setCodigo(result.getString("codigo"));
+					miGrupo.setNombre(result.getString("nombre"));
 					miGrupo.setDirectorGrupo(result.getString("director_grupo"));
 					miGrupo.setFechaInicioGrupo(result.getDate("fecha_inicio"));
 					miGrupo.setFechaFinGrupo(result.getDate("fecha_fin"));
@@ -108,13 +108,13 @@ public class GrupoDao {
 					+ " WHERE codigo= ? ";
 			PreparedStatement preStatement = connection.prepareStatement(consulta);
 
-			preStatement.setString(1, grupo.getNombreGrupo());
+			preStatement.setString(1, grupo.getNombre());
 			preStatement.setString(2, grupo.getDirectorGrupo());
 			preStatement.setDate(3, grupo.getFechaInicioGrupo());
 			preStatement.setDate(4, grupo.getFechaFinGrupo());
 			preStatement.setString(5, grupo.getObservacion());
 			preStatement.setString(6, grupo.getEstado());
-			preStatement.setString(7, grupo.getCodigoGrupo());
+			preStatement.setString(7, grupo.getCodigo());
 			preStatement.executeUpdate();
 
 			resultado = "Se ha Actualizado el grupo satisfactoriamente";
@@ -138,7 +138,7 @@ public class GrupoDao {
 			String sentencia = "DELETE FROM grupo WHERE codigo= ? ";
 
 			PreparedStatement statement = connection.prepareStatement(sentencia);
-			statement.setString(1, grupo.getCodigoGrupo());
+			statement.setString(1, grupo.getCodigo());
 
 			statement.executeUpdate();
 
@@ -152,7 +152,48 @@ public class GrupoDao {
 		}
 		return resp;
 	}
+	
+	public GrupoVo obtenerGrupo(String codigo) {
+		Connection connection = null;
+		Conexion miConexion = new Conexion();
+		PreparedStatement statement = null;
+		ResultSet result = null;
 
+		GrupoVo miGrupo = null;
+
+		connection = miConexion.getConnection();
+		
+		String consulta = "SELECT g.codigo, g.nombre, p.nombre as nombreP, g.fecha_inicio, g.fecha_fin,g.observacion,g.estado FROM grupo g, profesor p where g.codigo = ? AND g.director_grupo = p.documento";
+		System.out.println("***************************************");
+		System.out.println(consulta);
+		try {
+			if (connection != null) {
+				
+				statement = connection.prepareStatement(consulta);
+				statement.setString(1, codigo);
+				result = statement.executeQuery();
+				if (result.next() == true) {
+					miGrupo = new GrupoVo();
+					miGrupo.setCodigo(result.getString("codigo"));
+					miGrupo.setNombre(result.getString("nombre"));
+					miGrupo.setDirectorGrupo(result.getString("nombreP"));
+					miGrupo.setFechaInicioGrupo(result.getDate("fecha_inicio"));
+					miGrupo.setFechaFinGrupo(result.getDate("fecha_fin"));
+					miGrupo.setObservacion(result.getString("observacion"));
+					miGrupo.setEstado(result.getString("estado"));
+					miGrupo.setFechaIni(miGrupo.getFechaInicioGrupo()+"");
+					miGrupo.setFechaFin(miGrupo.getFechaFinGrupo()+"");
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("Error en la consulta del Grupo: " + e.getMessage());
+		} finally {
+			miConexion.desconectar();
+		}
+		
+		return miGrupo;
+
+	}
 	public ArrayList<String> cargarGrupos() {
 		Connection connection = null;
 		Conexion miConexion = new Conexion();
@@ -171,8 +212,8 @@ public class GrupoDao {
 		
 			while(result.next()==true){
 				grupoVo= new GrupoVo();
-				grupoVo.setNombreGrupo(result.getString("nombre"));
-				grupos.add(grupoVo.getNombreGrupo());
+				grupoVo.setNombre(result.getString("nombre"));
+				grupos.add(grupoVo.getNombre());
 			}
 			
 			miConexion.desconectar();
@@ -205,8 +246,8 @@ public class GrupoDao {
 			
 			while (result.next()== true) {
 				miGrupo = new GrupoVo();
-				miGrupo.setCodigoGrupo(result.getString("codigo"));
-				miGrupo.setNombreGrupo(result.getString("nombre"));
+				miGrupo.setCodigo(result.getString("codigo"));
+				miGrupo.setNombre(result.getString("nombre"));
 				miGrupo.setDirectorGrupo(result.getString("director_grupo"));
 				miGrupo.setFechaInicioGrupo(result.getDate("fecha_inicio"));
 				miGrupo.setFechaFinGrupo(result.getDate("fecha_fin"));
@@ -228,7 +269,7 @@ public class GrupoDao {
 
 	public void cargarDatosHasgMap(ArrayList<GrupoVo> listaGrupos) {
 		for (int i = 0; i < listaGrupos.size(); i++) {
-			mapaGrupos.put(listaGrupos.get(i).getNombreGrupo(), listaGrupos.get(i));
+			mapaGrupos.put(listaGrupos.get(i).getNombre(), listaGrupos.get(i));
 		}
 		
 	}
@@ -236,7 +277,7 @@ public class GrupoDao {
 	public String obtenerId(String grupo) {
 		System.err.println("MAPA GRUPOS*******: "+mapaGrupos);
 		GrupoVo grupoVo = mapaGrupos.get(grupo);
-		String codigo = grupoVo.getCodigoGrupo();
+		String codigo = grupoVo.getCodigo();
 		
 		return codigo;
 	}
