@@ -8,8 +8,8 @@ import java.text.SimpleDateFormat;
 
 public class GrupoVo {
 	
-	private String codigoGrupo;
-	private String nombreGrupo;
+	private String codigo;
+	private String nombre;
 	private String directorGrupo;
 	private Date fechaInicioGrupo;
 	private Date fechaFinGrupo;
@@ -19,11 +19,11 @@ public class GrupoVo {
 	private String estado;
 	private boolean editar;
 	
-	public GrupoVo(String codigoGrupo, String nombreGrupo, String directorGrupo, String fechaIni,
+	public GrupoVo(String codigo, String nombre, String directorGrupo, String fechaIni,
 			String fechaFin, String observacion, String estado, boolean editar) {
 		super();
-		this.codigoGrupo = codigoGrupo;
-		this.nombreGrupo = nombreGrupo;
+		this.codigo = codigo;
+		this.nombre = nombre;
 		this.directorGrupo = directorGrupo;
 		this.fechaIni=fechaIni;
 		this.fechaFin=fechaFin;
@@ -50,20 +50,20 @@ public class GrupoVo {
 		return fechaSql;
 	}
 
-	public String getCodigoGrupo() {
-		return codigoGrupo;
+	public String getCodigo() {
+		return codigo;
 	}
 
-	public void setCodigoGrupo(String codigoGrupo) {
-		this.codigoGrupo = codigoGrupo;
+	public void setCodigo(String codigoGrupo) {
+		this.codigo = codigoGrupo;
 	}
 
-	public String getNombreGrupo() {
-		return nombreGrupo;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setNombreGrupo(String nombreGrupo) {
-		this.nombreGrupo = nombreGrupo;
+	public void setNombre(String nombreGrupo) {
+		this.nombre = nombreGrupo;
 	}
 
 	public String getDirectorGrupo() {

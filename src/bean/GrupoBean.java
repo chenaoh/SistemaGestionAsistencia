@@ -11,9 +11,11 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpSession;
 
 import dao.EstudianteDao;
 import dao.GrupoDao;
@@ -33,6 +35,8 @@ public class GrupoBean implements Serializable{
 	private String mensajeConfirmacion;
 	private GrupoDao grupoDao;
 	private String grupoId;
+	FacesContext context = FacesContext.getCurrentInstance();
+	HttpSession session = (HttpSession)context.getExternalContext().getSession(true);
 	
 	private ArrayList<GrupoVo> listaGrupos=new ArrayList<>();
 	private ArrayList<GrupoVo> listaGrupoSeleccionado=new ArrayList<>();
@@ -151,8 +155,8 @@ public class GrupoBean implements Serializable{
 		
 		if (listaGrupos!=null) {
 			for (int i = 0; i < listaGrupos.size(); i++) {
-				itemGrupos.add(new SelectItem(listaGrupos.get(i).getCodigoGrupo(),listaGrupos.get(i).getNombreGrupo()));
-				mapaGrupos.put(listaGrupos.get(i).getCodigoGrupo(),listaGrupos.get(i));
+				itemGrupos.add(new SelectItem(listaGrupos.get(i).getCodigo(),listaGrupos.get(i).getNombre()));
+				mapaGrupos.put(listaGrupos.get(i).getCodigo(),listaGrupos.get(i));
 			}			
 			
 		}else{
@@ -170,8 +174,8 @@ public class GrupoBean implements Serializable{
 			grupo=mapaGrupos.get(grupoId);
 			listaGrupoSeleccionado.clear();
 			listaGrupoSeleccionado.add(grupo);
-			System.out.println("CODIGO: "+grupo.getCodigoGrupo());
-			System.out.println("NOMBRE: "+grupo.getNombreGrupo());
+			System.out.println("CODIGO: "+grupo.getCodigo());
+			System.out.println("NOMBRE: "+grupo.getNombre());
 			System.out.println("OBSERVACION : "+grupo.getObservacion());		
 			System.out.println("ITEM ASOCIADOSSSS");
 			
@@ -229,8 +233,8 @@ public class GrupoBean implements Serializable{
 
 	public void registrarGrupo(){
 		System.out.println("VA A REGISTRAR GRUPO");
-		System.out.println(grupo.getCodigoGrupo());
-		System.out.println(grupo.getNombreGrupo());
+		System.out.println(grupo.getCodigo());
+		System.out.println(grupo.getNombre());
 		System.out.println(grupo.getDirectorGrupo());
 		System.out.println(grupo.getObservacion());
 		System.out.println(fechaInicio);
@@ -238,13 +242,13 @@ public class GrupoBean implements Serializable{
 
 		grupo.setEstado("Activo");
 		mensajeConfirmacion=grupoDao.registrarGrupo(grupo);
-		//grupo=new GrupoVo();
+		grupo=new GrupoVo();
 	}
 
 	public void eliminarGrupo(GrupoVo grupo){
 		System.out.println("VA A ELIMINAR GRUPO");
-		System.out.println("codigo - "+grupo.getCodigoGrupo());
-		System.out.println("Nombre - "+grupo.getCodigoGrupo());
+		System.out.println("codigo - "+grupo.getCodigo());
+		System.out.println("Nombre - "+grupo.getCodigo());
 		mensajeConfirmacion=grupoDao.eliminarGrupo(grupo);
 		listaGrupos.remove(grupo);
 	}
@@ -252,19 +256,40 @@ public class GrupoBean implements Serializable{
 	public void editarGrupo(GrupoVo grupo){
 		grupo.setEditar(true);
 		System.out.println("VA A EDITAR GRUPO");
-		System.out.println("codigo - "+grupo.getCodigoGrupo());
-		System.out.println("Nombre - "+grupo.getCodigoGrupo());
+		System.out.println("codigo - "+grupo.getCodigo());
+		System.out.println("Nombre - "+grupo.getCodigo());
 		
 	}
 	
 	public void guardarGrupo(GrupoVo grupo){
 		System.out.println("VA A GUARDAR GRUPO");
-		System.out.println("codigo - "+grupo.getCodigoGrupo());
-		System.out.println("Nombre - "+grupo.getCodigoGrupo());
+		System.out.println("codigo - "+grupo.getCodigo());
+		System.out.println("Nombre - "+grupo.getCodigo());
 		mensajeConfirmacion=grupoDao.actualizarGrupo(grupo);
 		grupo.setEditar(false);
 		
 	}
+	
+	public String perfilGrupo(String codigo){
+		System.out.println("Codigo de grupo: "+codigo);
+		System.out.println("VA A CONSULTAR EL PERFIL DEL GRUPO");
+		
+		grupo=grupoDao.obtenerGrupo(codigo);
+		System.out.println("***********************Grupos*****************");
+		System.out.println("Fecha i: "+grupo.getFechaIni());
+		System.out.println("Fecha F: "+grupo.getFechaFin());
+		System.out.println("Director de grupo: "+grupo.getDirectorGrupo());
+		System.out.println("Observacion: "+grupo.getObservacion());
+		System.out.println("Estado: "+grupo.getEstado());
+		
+		System.out.println("codigo - "+grupo.getCodigo());
+		System.out.println("Nombre - "+grupo.getNombre());
+		
+		session.setAttribute("grupo", grupo);
+		
+		return "Perfil_Grupo.jsf";
+	}
+	
 	
 	public GrupoVo getGrupo() {
 		return grupo;

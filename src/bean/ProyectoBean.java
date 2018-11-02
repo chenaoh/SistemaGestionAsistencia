@@ -87,9 +87,9 @@ public class ProyectoBean {
 		if (listaGrupos.size()>0) {
 				
 			for (int i = 0; i < listaGrupos.size(); i++) {
-				itemGrupos.add(new SelectItem(listaGrupos.get(i).getCodigoGrupo(),listaGrupos.get(i).getNombreGrupo()));
-				mapaGrupos.put(listaGrupos.get(i).getCodigoGrupo(),listaGrupos.get(i));
-				System.out.println(listaGrupos.get(i).getCodigoGrupo()+" - "+listaGrupos.get(i).getNombreGrupo());
+				itemGrupos.add(new SelectItem(listaGrupos.get(i).getCodigo(),listaGrupos.get(i).getNombre()));
+				mapaGrupos.put(listaGrupos.get(i).getCodigo(),listaGrupos.get(i));
+				System.out.println(listaGrupos.get(i).getCodigo()+" - "+listaGrupos.get(i).getNombre());
 			}
 			
 		}else{
@@ -104,7 +104,7 @@ public class ProyectoBean {
 		System.out.println("Mapa: "+mapaGrupos);
 		
 		if (mapaGrupos.get(codigoGrupo)!=null) {
-			nombreGrupo=mapaGrupos.get(codigoGrupo).getNombreGrupo();	
+			nombreGrupo=mapaGrupos.get(codigoGrupo).getNombre();	
 		}else{
 			nombreGrupo="El grupo no Existe";
 		}
