@@ -64,7 +64,9 @@
 						<h:commandButton action="#{asistenciaBean.editarAsistencia(datos)}" value="create" rendered = "#{not datos.editar}" class="material-icons red-text darken-1
 						no-btn"/>
 						<h:commandButton action="#{asistenciaBean.guardarAsistencia(datos)}" value="save" rendered = "#{datos.editar}" class="material-icons red-text darken-1
-						 no-btn"/>					
+						 no-btn"/>
+						<h:commandButton action="#{asistenciaBean.eliminarAsistencia(datos)}" value="delete" class="material-icons red-text darken-1
+						 no-btn"/>						 				
 					</h:column>
             	
             	</h:dataTable>

@@ -156,6 +156,15 @@ public class AsistenciaBean {
 			System.out.println("YEAH");
 		}
 	}
+	
+	
+	public void eliminarAsistencia(AsistenciaVo asistencia){
+		//System.out.println("VA A ELIMINAR ESTUDIANTE");
+		//System.out.println("codigo - "+estudiante.getDocumento());
+		//System.out.println("Nombre - "+estudiante.getNombre());
+		mensajeConfirmacion=asistenciaDao.eliminarAsistencia(asistencia.getCodigo());
+		listaAsistencias.remove(asistencia);
+	}
 
 	public ProfesorVo getProfesor() {
 		return profesor;

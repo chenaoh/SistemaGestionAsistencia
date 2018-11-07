@@ -49,7 +49,6 @@ public class EstudianteBean {
 		cargarDatosHashMapEstudiantes();
 		cargarEstudiantesAsociados();
 		cargarGrupos();
-		cargarDatosHashMap();
 	}
 	
 	public void cargarEstudiante(){

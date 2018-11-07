@@ -121,4 +121,28 @@ public class AsistenciaDao {
 		return resultado;
 
 	}
+	public String eliminarAsistencia(String codigo) {
+		Connection connection = null;
+		Conexion miConexion = new Conexion();
+		connection = miConexion.getConnection();
+
+		String resp = "";
+		try {
+			String sentencia = "DELETE FROM asistencia WHERE codigo= ? ";
+
+			PreparedStatement statement = connection.prepareStatement(sentencia);
+			statement.setString(1, codigo);
+
+			statement.executeUpdate();
+
+			resp = "Se ha eliminado el estudiante exitosamente";
+			statement.close();
+			miConexion.desconectar();
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			resp = "No se pudo eliminar el estudiante";
+		}
+		return resp;
+	}
 }
