@@ -1,6 +1,5 @@
 package bean;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,8 +48,6 @@ public class GrupoBean implements Serializable{
 		setListaGrupos(grupoDao.consultarGrupoNombre(getNombreGrupo()));
 	}
 	
-	
-
 	public List<String> getListaSeleccionados() {
 		return listaSeleccionados;
 	}
@@ -91,8 +88,7 @@ public class GrupoBean implements Serializable{
 	}
 	
 	public void cargarLista(){
-		
-		
+			
 	}
 	
 	private void cargarProfesores() {
@@ -186,7 +182,6 @@ public class GrupoBean implements Serializable{
 			listaDias.add("Opcion4");
 			listaDias.add("Opcion5");
 			
-	
 			for (int i = 0; i < listaEstudiantes.size(); i++) {
 				if (listaEstudiantes.get(i).getGrupo().equals(grupoId)) {
 					itemEstudiantesAsociados.add(new SelectItem(listaEstudiantes.get(i).getDocumento(),listaEstudiantes.get(i).getNombre()));
@@ -194,20 +189,16 @@ public class GrupoBean implements Serializable{
 					System.out.println("TAMAÑO ITEM ASOCIADOS: "+itemEstudiantesAsociados.size());
 				}
 			}
-			
 		}
-	}
-		
+	}	
 		
 	public ArrayList<GrupoVo> getListaGrupoSeleccionado() {
 		return listaGrupoSeleccionado;
 	}
 
-
 	public void setListaGrupoSeleccionado(ArrayList<GrupoVo> listaGrupoSeleccionado) {
 		this.listaGrupoSeleccionado = listaGrupoSeleccionado;
 	}
-
 
 	public void asociarEstudiantes(){
 		System.out.println("VA A ASOCIAR ESTUDIANTES");
@@ -220,14 +211,12 @@ public class GrupoBean implements Serializable{
 		for (int i = 0; i < listaEstudiantesAsociados.size(); i++) {
 			System.out.println(listaEstudiantesDisponibles.get(i));
 		}
-		
 	}
 	
 	public void quitarEstudiantes(){
 		System.out.println("VA A QUITAR ESTUDIANTES");
 		for (int i = 0; i < listaEstudiantesDisponibles.size(); i++) {
 			System.out.println(listaEstudiantesDisponibles.get(i));
-			
 		}
 	}
 
@@ -267,7 +256,6 @@ public class GrupoBean implements Serializable{
 		System.out.println("Nombre - "+grupo.getCodigo());
 		mensajeConfirmacion=grupoDao.actualizarGrupo(grupo);
 		grupo.setEditar(false);
-		
 	}
 	
 	public String perfilGrupo(String codigo){
@@ -371,21 +359,17 @@ public class GrupoBean implements Serializable{
 		this.itemGrupos = itemGrupos;
 	}
 
-
 	public String getGrupoId() {
 		return grupoId;
 	}
-
 
 	public void setGrupoId(String grupoId) {
 		this.grupoId = grupoId;
 	}
 
-
 	public List<String> getListaEstudiantesAsociados() {
 		return listaEstudiantesAsociados;
 	}
-
 
 	public void setListaEstudiantesAsociados(List<String> listaEstudiantesAsociados) {
 		this.listaEstudiantesAsociados = listaEstudiantesAsociados;

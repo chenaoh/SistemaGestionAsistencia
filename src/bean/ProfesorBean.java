@@ -1,6 +1,5 @@
 package bean;
 
-
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -32,7 +31,6 @@ public class ProfesorBean {
 		cargarProfesores();
 	}
 	
-	
 	public void filtrarProfesor(){
 		System.out.println("nombre: "+nomProf);
 		setListaProfesores(profesorDao.filtrarProfesor(getNomProf()));
@@ -61,8 +59,7 @@ public class ProfesorBean {
 			System.out.println("Nombre - "+profesor.getNombre());	
 		}else{
 			System.out.println("PROFESOR= "+profesor);
-		}
-		
+		}	
 	}
 	
 	public void registrarProfesor(){
@@ -107,6 +104,19 @@ public class ProfesorBean {
 		mensajeConfirmacion=profesorDao.eliminarProfesor(profesor.getDocumento());
 		listaProfesores.remove(profesor);
 	}
+	
+	public String perfilProfesor(String documento){
+		System.out.println("VA A CONSULTAR PERFIL DE UN PROFESOR");
+		
+		profesor=profesorDao.obtenerProfesor(documento);
+		
+		System.out.println("codigo - "+profesor.getDocumento());
+		System.out.println("Nombre - "+profesor.getNombre());
+		
+		session.setAttribute("profesor", profesor);
+		
+		return "perfil_profesor.jsf";
+	}
 
 	public ArrayList<ProfesorVo> getListaProfesores() {
 		return listaProfesores;
@@ -116,7 +126,6 @@ public class ProfesorBean {
 		this.listaProfesores = listaProfesores;
 	}
 
-	
 	public ProfesorVo getProfesor() {
 		return profesor;
 	}
@@ -141,7 +150,4 @@ public class ProfesorBean {
 	public void setNomProf(String nomProf) {
 		this.nomProf = nomProf;
 	}
-	
-	
-
 }

@@ -77,7 +77,7 @@
 						<f:facet name="header">Acciones</f:facet>
 						<h:commandLink action="#{profesorBean.editarProfesor(datos.documento)}"><i class="material-icons s12">create</i></h:commandLink>
 						<h:commandLink action="#{profesorBean.eliminarProfesor(datos)}" ><i class="material-icons s12">delete</i></h:commandLink>
-					
+						<h:commandLink action="#{profesorBean.perfilProfesor(datos.documento)}" ><i class="material-icons s12">account_circle</i></h:commandLink>
 					</h:column>
             	
             	</h:dataTable>
