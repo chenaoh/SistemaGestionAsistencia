@@ -9,8 +9,11 @@ public class AsistenciaVo {
 	private String documentoProfesor;
 	private String novedad;
 	private Date fechaFalta;
+	private String fecha;
 	private Integer tiempoFalta;
 	private String observacionFalta;
+	private String codigo;
+	private boolean editar;
 	
 	public AsistenciaVo(){
 		
@@ -70,6 +73,30 @@ public class AsistenciaVo {
 
 	public void setObservacionFalta(String observacionFalta) {
 		this.observacionFalta = observacionFalta;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+
+	public boolean isEditar() {
+		return editar;
+	}
+
+	public void setEditar(boolean editar) {
+		this.editar = editar;
 	}
 	
 	

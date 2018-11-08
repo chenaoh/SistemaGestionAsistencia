@@ -12,9 +12,7 @@
 <ui:param name="nombrePagina" value="Gestión de Asistencia - Consulta" />	
 
 <ui:define name="tabAsistencia">
-        
-	<h:form>
-		<div class="row">
+   		<div class="row">
 			<div class="col s12 m12 red accent-4">
           		<div class="tarjetas-text">Consulta Reporte de Asistencias</div>
           	</div>
@@ -30,56 +28,51 @@
                     <label for="apellido">Apellido</label>
                   </div>  
             </div>
-            
-            <div class="card-panel">
-				
-				<p:dataTable value="#{estudianteBean.listaEstudiantes}" var="datos" >
-            		<p:column headerText="Documento">
-						<p:inputText value="#{datos.documento}" rendered="#{datos.editar}" disabled="true"/>
-						<p:outputLabel value="#{datos.documento}" rendered="#{not datos.editar}" />
-            		</p:column>
-            		<p:column headerText="Nombre">
-						<p:inputText value="#{datos.nombre}" rendered="#{datos.editar}" />
-						<p:outputLabel value="#{datos.nombre}" rendered="#{not datos.editar}"/>            		
-            		</p:column>
-            		<p:column headerText="Email">
-						<p:inputText value="#{datos.email}" rendered="#{datos.editar}" />
-						<p:outputLabel value="#{datos.email}" rendered="#{not datos.editar}"/>
-            		</p:column>
-            		<p:column headerText="Direccion">
-						<p:inputText value="#{datos.direccion}" rendered="#{datos.editar}" />
-						<p:outputLabel value="#{datos.direccion}" rendered="#{not datos.editar}"/>
-            		</p:column>
-            		<p:column headerText="Telefono">
-						<p:inputText value="#{datos.telefono}" rendered="#{datos.editar}" />
-						<p:outputLabel value="#{datos.telefono}" rendered="#{not datos.editar}"/>
-            		</p:column>
-            		<p:column headerText="Fecha Nacimiento">
+            			
+			<div class="card-panel">
+				<h:form>
+					<h:dataTable value="#{asistenciaBean.listaAsistencias}" var="datos" class="striped  ">
+            		<h:column>
+						<f:facet name="header">Estudiante</f:facet>
+						<h:selectOneMenu value="#{datos.documentoEstudiante}" rendered="#{datos.editar}">
+							<f:selectItems value="#{asistenciaBean.nombres}"/>
+						</h:selectOneMenu>
+						<h:outputLabel value="#{datos.documentoEstudiante}" rendered="#{not datos.editar}" />
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Grupo</f:facet>
+						<h:inputText value="#{datos.codigoGrupo}" rendered="#{datos.editar}" disabled="true"/>
+						<h:outputLabel value="#{datos.codigoGrupo}" rendered="#{not datos.editar}"/>            		
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Profesor</f:facet>
+						<h:inputText value="#{datos.documentoProfesor}" rendered="#{datos.editar}" disabled = "true"/>
+						<h:outputLabel value="#{datos.documentoProfesor}" rendered="#{not datos.editar}"/>
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Fecha Falta</f:facet>
 						<input  id="fecha" type = "date" class = "datepicker" jsf:value="#{datos.fecha}" jsf:rendered="#{datos.editar}" />
-						<p:outputLabel value="#{datos.fecha}" rendered="#{not datos.editar}"/>
-            		</p:column>
-            		<p:column headerText="Sexo">
-						<p:selectOneMenu value="#{datos.sexo}" rendered="#{datos.editar}">
-		                   	<f:selectItem itemValue="M" itemLabel="Masculino"/>
-		                <f:selectItem itemValue="F" itemLabel="Femenino"/>
-	                   </p:selectOneMenu>
-						<p:outputLabel value="#{datos.sexo}" rendered="#{not datos.editar}"/>
-            		</p:column>
-            		<p:column headerText="Estado">
-						<p:selectOneMenu value="#{datos.estado}" rendered="#{datos.editar}">
-		                   	<f:selectItem itemValue="activo" itemLabel="Activo"/>
-		                <f:selectItem itemValue="inactivo" itemLabel="Inactivo"/>
-	                   </p:selectOneMenu>
-						<p:outputLabel value="#{datos.estado}" rendered="#{not datos.editar}"/>
-            		</p:column>
-            		
-            	</p:dataTable>
-            
-            </div>                 
-
-            </h:form> 
-
-	</ui:define>
+						<h:outputLabel value="#{datos.fecha}" rendered="#{not datos.editar}"/>
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Observacion</f:facet>
+						<h:inputText value="#{datos.observacionFalta}" rendered="#{datos.editar}"/>
+						<h:outputLabel value="#{datos.observacionFalta}" rendered="#{not datos.editar}"/>
+            		</h:column>
+            		<h:column>
+						<f:facet name="header">Acciones</f:facet>
+						<h:commandButton action="#{asistenciaBean.editarAsistencia(datos)}" value="create" rendered = "#{not datos.editar}" class="material-icons red-text darken-1
+						no-btn"/>
+						<h:commandButton action="#{asistenciaBean.guardarAsistencia(datos)}" value="save" rendered = "#{datos.editar}" class="material-icons red-text darken-1
+						 no-btn"/>
+						<h:commandButton action="#{asistenciaBean.eliminarAsistencia(datos)}" value="delete" class="material-icons red-text darken-1
+						 no-btn"/>						 				
+					</h:column>
+            	
+            	</h:dataTable>
+				</h:form>
+			</div>            			
+</ui:define>
 
 
 </ui:composition>

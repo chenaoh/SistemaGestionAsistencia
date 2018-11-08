@@ -16,6 +16,7 @@ import dao.AsistenciaDao;
 import dao.EstudianteDao;
 import dao.GrupoDao;
 import dao.ProfesorDao;
+import vo.AsistenciaVo;
 import vo.EstudianteVo;
 import vo.GrupoVo;
 import vo.PersonaVo;
@@ -35,11 +36,13 @@ public class AsistenciaBean {
 
 	private static ArrayList<String> nombres;
 	private static ArrayList<String> asistenciaNombres;
+	private ArrayList<AsistenciaVo> listaAsistencias;
 	private ArrayList<String> grupos;
 	private String grupo;
 	private static String documento;
 	private String codGrupo="";
 	private String observacion;
+	private String idGrupo;
 	
 	public void setCodGrupo(String codGrupo) {
 		this.codGrupo = codGrupo;
@@ -60,12 +63,62 @@ public class AsistenciaBean {
 		asistenciaDao = new AsistenciaDao();
 		nombres = new ArrayList<>();
 		grupoDao = new GrupoDao();
-		
+		setListaAsistencias(new ArrayList<>());
+		cargarListaAsistencias();
 		cargarGrupos();
 	}
 	
+	public void editarAsistencia(AsistenciaVo asistenciaVo) {
+		System.out.println("***ENTRA AL METODO PARA EDITAR LA ASISTENCIA****");
+		cargarDatosHashMapGrupos();
+		System.out.println("Grupo: "+asistenciaVo.getCodigoGrupo());
+		idGrupo = grupoDao.obtenerId(asistenciaVo.getCodigoGrupo());
+		setNombres(estudianteDao.obtenerNombresAsistencia(idGrupo));
+		asistenciaVo.setEditar(true);
+	}
 	
+	private void cargarDatosHashMapGrupos() {
+		ArrayList<GrupoVo> listGrupos = grupoDao.obtenerListaGrupos();
+		grupoDao.cargarDatosHasgMap(listGrupos);
+		
+	}
+
+	public void guardarAsistencia(AsistenciaVo asistenciaVo) {
+		System.out.println("Fecha asistencia: "+asistenciaVo.getFecha());
+		cargarDatosHashMapProfesores();
+		cargarDatosHashMapEstudiantes();
+		String idEstudiante = estudianteDao.obtenerIdUnEstudiante(asistenciaVo.getDocumentoEstudiante());
+		String idProfesor = profesorDao.obtenerIDProfesor(asistenciaVo.getDocumentoProfesor());
+		String res = asistenciaDao.actualizarAsistencia(asistenciaVo.getCodigo(), idGrupo, idProfesor, idEstudiante, asistenciaVo);
+		if(res.equals("ok")) {
+			cargarListaAsistencias();
+		}
+	}
 	
+
+	private void cargarDatosHashMapEstudiantes() {
+		ArrayList<EstudianteVo> listEstudiantes = estudianteDao.obtenerListaEstudiantes();
+		estudianteDao.cargarDatosHashMapEstudiantes(listEstudiantes);
+		
+	}
+
+
+
+	private void cargarDatosHashMapProfesores() {
+		ArrayList<ProfesorVo> listProfesores = profesorDao.obtenerListaProfesores();
+		profesorDao.cargarDatosHashMapProfesores(listProfesores);
+		
+	}
+
+
+
+	private void cargarListaAsistencias() {
+		setListaAsistencias(asistenciaDao.obtenerListaAsistencias());
+		
+	}
+
+
+
 	private void cargarGrupos() {
 		setGrupos(grupoDao.cargarGrupos());	
 	}
@@ -102,6 +155,15 @@ public class AsistenciaBean {
 		if(res.equals("ok")){
 			System.out.println("YEAH");
 		}
+	}
+	
+	
+	public void eliminarAsistencia(AsistenciaVo asistencia){
+		//System.out.println("VA A ELIMINAR ESTUDIANTE");
+		//System.out.println("codigo - "+estudiante.getDocumento());
+		//System.out.println("Nombre - "+estudiante.getNombre());
+		mensajeConfirmacion=asistenciaDao.eliminarAsistencia(asistencia.getCodigo());
+		listaAsistencias.remove(asistencia);
 	}
 
 	public ProfesorVo getProfesor() {
@@ -187,6 +249,18 @@ public class AsistenciaBean {
 
 	public void setObservacion(String observacion) {
 		this.observacion = observacion;
+	}
+
+
+
+	public ArrayList<AsistenciaVo> getListaAsistencias() {
+		return listaAsistencias;
+	}
+
+
+
+	public void setListaAsistencias(ArrayList<AsistenciaVo> listaAsistencias) {
+		this.listaAsistencias = listaAsistencias;
 	}
 	
 }

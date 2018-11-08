@@ -8,6 +8,8 @@ import java.util.Date;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import dao.EstudianteDao;
 import dao.GrupoDao;
@@ -33,6 +35,10 @@ public class EstudianteBean {
 	private ArrayList<String> grupos=new ArrayList<>();
 	private static ArrayList<EstudiantesPtoyectosVo>  listaEstudiantesAsociados = new ArrayList<>();
 	
+	FacesContext context = FacesContext.getCurrentInstance();
+	HttpSession session = (HttpSession)context.getExternalContext().getSession(true);
+	
+	
 	public EstudianteBean(){
 		estudiante=new EstudianteVo();
 		estuProyectoVo  = new EstudiantesPtoyectosVo();
@@ -43,10 +49,26 @@ public class EstudianteBean {
 		cargarDatosHashMapEstudiantes();
 		cargarEstudiantesAsociados();
 		cargarGrupos();
-		cargarDatosHashMap();
+	}
+	
+	public void cargarEstudiante(){
+		System.out.println("INGRESA A CARGAR PROFESOR!!!");
+		//FacesContext context = FacesContext.getCurrentInstance();	
+		//profesor= (ProfesorVo) context.getExternalContext().getSessionMap().get("profesor");
+		
+		EstudianteVo estudiante= (EstudianteVo) session.getAttribute("estudiante");
+		
+		System.out.println("OBTIENE EL PROFESOR");
+		if (estudiante!=null) {
+			System.out.println("codigo - "+estudiante.getDocumento());
+			System.out.println("Nombre - "+estudiante.getNombre());	
+		}else{
+			System.out.println("ESTUDIANTE= "+estudiante);
+		}	
 	}
 	
 	public void consultarEstudiantesGrupos(){
+		cargarDatosHashMap();
 		String codigo = grupoDao.obtenerId(getGrupo());
 		System.out.println("Grupo*****: "+codigo);
 		setListaEstudiantes(estudianteDao.consultarEstudianteGrupos(codigo));
@@ -152,6 +174,20 @@ public class EstudianteBean {
 		mensajeConfirmacion=estudianteDao.eliminarEstudiante(estudiante);
 		listaEstudiantes.remove(estudiante);
 	}
+	
+	public String perfilEstudiante(String documento){
+		System.out.println("VA A CONSULTAR PERFIL DE UN ESTUDIANTE");
+		
+		estudiante=estudianteDao.obtenerEstudiante(documento);
+		
+		System.out.println("codigo - "+estudiante.getDocumento());
+		System.out.println("Nombre - "+estudiante.getNombre());
+		
+		session.setAttribute("estudiante", estudiante);
+		
+		return "perfil_estudiante.jsf";
+	}
+	
 	
 	public void consultarEstudiante(){
 		setListaEstudiantes(estudianteDao.consultarEstudianteNombre(getNombreEstu()));

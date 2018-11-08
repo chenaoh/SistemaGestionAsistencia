@@ -5,12 +5,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import conexion.Conexion;
 import vo.EstudianteVo;
 import vo.ProfesorVo;
 
 public class ProfesorDao {
+	
+	private HashMap<String, ProfesorVo> mapaProfesores;
+
+	public ProfesorDao() {
+		mapaProfesores = new HashMap<>();
+	}
 
 	public ProfesorVo consultarProfesorLogin(String documento, String password) {
 		Connection connection = null;
@@ -289,6 +296,20 @@ public class ProfesorDao {
 		
 		
 		return profesor;
+	}
+
+	public void cargarDatosHashMapProfesores(ArrayList<ProfesorVo> listProfesores) {
+		for (int i = 0; i < listProfesores.size(); i++) {
+			mapaProfesores.put(listProfesores.get(i).getNombre(), listProfesores.get(i));
+		}
+		
+		System.out.println("***MAPA PROFESORES***: "+mapaProfesores);
+	}
+
+	public String obtenerIDProfesor(String documentoProfesor) {
+		ProfesorVo profesorVo = mapaProfesores.get(documentoProfesor);
+		String idProf = profesorVo.getDocumento();
+		return idProf;
 	}
 
 }
