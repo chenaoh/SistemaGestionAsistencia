@@ -1,0 +1,120 @@
+<!DOCTYPE html> 
+	  <ui:composition
+	  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      template="/templates/gestion_profesores.xhtml"> 
+      
+<ui:param name="tituloPagina" value="Perfil Profesor" />
+<ui:param name="nombrePagina" value="Gestión de Profesores - Perfil Profesor" />
+
+<ui:define name="infoProfesor">
+
+	<form jsf:id="informacion">
+		<div class="row">
+			<div class="col s12 m12 orange">
+				<div class="tarjetas-text">Perfil Profesor</div>
+			</div>
+		</div>
+		
+			<h5>#{profesorBean.mensajeConfirmacion}</h5>
+			
+		<div class="card-panel ">
+                 <div class="row">                  
+                  
+                  <div class="input-field col m3">
+                    <input id="documento" type="text" class="validate" jsf:value="#{profesor.documento}" disabled="true"/>
+                    <label for="documento">Documento</label>
+              	  </div>
+              	  
+              	  <div class="input-field col m9">
+                    <input id="nombre" type="text" class="validate" jsf:value="#{profesor.nombre}" />
+                    <label for="nombre">Nombre</label>
+                  </div>
+
+                  <div class="input-field col m3">
+                    <input id="telefono" type="text" class="validate" jsf:value="#{profesor.telefono}" />
+                    <label for="telefono">Telefono</label>
+                  </div>  
+
+                  <div class="input-field col m4">
+                    <input id="profesion" type="text" class="validate" jsf:value="#{profesor.profesion}" />
+                    <label for="profesion">Profesion</label>
+                  </div>  
+                  <div class="input-field col m5">
+                    <input id="email" type="text" class="validate" jsf:value="#{profesor.email}" />
+                    <label for="email">Email</label>
+                  </div>  
+
+                  <div class="input-field col m4">
+	                  <div class="input-field col m2">
+	                  	 <label>Sexo</label>
+	                  </div>
+	                  
+	                  <div class="input-field col m5">
+	                  	<h:selectOneMenu value="#{profesor.sexo}">
+	                   	<f:selectItem itemValue="M" itemLabel="Masculino"/>
+	                   	<f:selectItem itemValue="F" itemLabel="Femenino"/>
+	                   </h:selectOneMenu>
+	                  </div>
+                  </div>
+
+                  <div class="input-field col m4">
+	                  <div class="input-field col m2">
+	                  	 <label>Tipo</label>
+	                  </div>
+	                  
+	                  <div class="input-field col m7">
+	                  	<h:selectOneMenu value="#{profesor.tipo}">
+	                   	<f:selectItem itemValue="admin" itemLabel="Administrador"/>
+	                   	<f:selectItem itemValue="profesor" itemLabel="Profesor"/>
+	                   </h:selectOneMenu>
+	                  </div>
+                  </div>
+                  
+                  <div class="input-field col m4">
+	                  <div class="input-field col m2">
+	                  	 <label>Tipo</label>
+	                  </div>
+	                  
+	                  <div class="input-field col m5">
+                  		<h:selectOneMenu value="#{profesor.estado}" >
+		                   	<f:selectItem itemValue="activo" itemLabel="Activo"/>
+		                <f:selectItem itemValue="inactivo" itemLabel="Inactivo"/>
+	                   </h:selectOneMenu>
+	                  </div>
+                  </div>                  
+                  
+                  <div class="input-field col m6">
+                    <textarea id="textarea1" class="materialize-textarea" data-length="250" jsf:value="#{profesor.perfil}" ></textarea>
+            		<label for="textarea1">Perfil</label>
+                  </div>
+                  
+                  <div class="input-field col m6">
+                    <textarea id="textarea1" class="materialize-textarea" data-length="250" jsf:value="#{profesor.asesoria}" ></textarea>
+            		<label for="textarea1">Horarios Asesoria</label>
+                  </div> 
+              	</div>
+              	
+              <div class="row right">	 
+	  	  		<div class="col s6 m5 ">
+	  	  				<a class="waves-effect waves-light btn" href="consultar_grupos_asociados.jsf" style="width: 270%">Consultar Grupos Asociados</a>
+				</div>	 
+        	</div>
+                           
+              <div class="row">	 
+	  	  		<div class="col s6 m5 ">
+	  	  				<a class="waves-effect waves-light btn" href="consulta_profesores.jsf" style="width: 40%">Regresar</a>
+				</div>	 
+        	</div>
+              
+         </div>   
+
+	</form>
+	
+</ui:define>
+	
+</ui:composition>
+
