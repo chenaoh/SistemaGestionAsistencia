@@ -145,4 +145,34 @@ public class AsistenciaDao {
 		}
 		return resp;
 	}
+	public String cantidadFaltas() {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		Conexion conexion = new Conexion();
+		String cantidad = "";
+		
+		conn = conexion.getConnection();
+		
+		String consulta = "SELECT COUNT(*) as cantidad FROM asistencia";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			result = statement.executeQuery();
+			
+			while(result.next()){
+				cantidad = result.getString("cantidad");
+			}
+			
+			System.out.println("CANT_ASISTENCIAS: "+cantidad);
+			
+			conexion.desconectar();
+			
+		} catch (SQLException e) {
+			System.out.println("Error al obtener la cantidad de asistencias: "+e.getMessage());
+		}
+		
+		return cantidad;
+	}
 }

@@ -9,9 +9,12 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import dao.AsistenciaDao;
 import dao.EstudianteDao;
+import dao.GrupoDao;
 import dao.PersonaDao;
 import dao.ProfesorDao;
+import dao.ProyectoDao;
 import utilidades.LogicaSession;
 import vo.EstudianteVo;
 import vo.PersonaVo;
@@ -22,10 +25,11 @@ import vo.ProfesorVo;
 public class LoginBean {
 	
 	private PersonaVo miPersonaVo;
-	private EstudianteVo miEstudianteVo;
-	private ProfesorVo miProfesorVo;
 	private EstudianteDao miEstudianteDao;
 	private ProfesorDao miProfesorDao;
+	private GrupoDao miGrupoDao;
+	private ProyectoDao miProyectoDao;
+	private AsistenciaDao miAsistenciaDao;
 	PersonaDao miPersonaDao;
 	private String mensaje;
 	private String navegacion;
@@ -34,6 +38,11 @@ public class LoginBean {
 	private String tipoUser;
 	private static boolean ver;
 	private String rutaImagenUser;
+	private String cantProfesores;
+	private String cantGrupos;
+	private String cantEstudiantes;
+	private String cantFaltas;
+	private String cantProyectos;
 	
 	private AsistenciaBean asistenciaBean;
 	
@@ -45,15 +54,17 @@ public class LoginBean {
 		miPersonaDao=new PersonaDao();
 		
 		miEstudianteDao=new EstudianteDao();
-		miEstudianteVo=new EstudianteVo();
+		miAsistenciaDao = new AsistenciaDao();
+		miGrupoDao = new GrupoDao();
+		miProyectoDao = new ProyectoDao();
 		
 		miProfesorDao=new ProfesorDao();
-		miProfesorVo=new ProfesorVo();
 
 		asistenciaBean=new AsistenciaBean();
 	}
 	
 	public String validarIngreso(){
+		calcularPanelEstadisticas();
 		String resp="";
 		
 		System.out.println("*****************************************************");
@@ -126,6 +137,38 @@ public class LoginBean {
 		return resp;	
 	}
 	
+	public void calcularPanelEstadisticas() {
+		calcularCantidadEstudiantes();	
+		calcularCantidadProfesores();	
+		calcularCantidadGrupos();	
+		calcularCantidadProyectos();	
+		calcularCantidadFaltas();	
+	}
+
+	private void calcularCantidadFaltas() {
+		setCantFaltas(miAsistenciaDao.cantidadFaltas());
+		
+	}
+
+	private void calcularCantidadProyectos() {
+		setCantProyectos(miProyectoDao.cantidadProyectos());
+		
+	}
+
+	private void calcularCantidadGrupos() {
+		setCantGrupos(miGrupoDao.cantidadGrupos());
+	}
+
+	private void calcularCantidadProfesores() {
+		setCantProfesores(miProfesorDao.cantidadProfesores());
+		
+	}
+
+	private void calcularCantidadEstudiantes() {
+		setCantEstudiantes(miEstudianteDao.cantidadEstudiantes());
+		
+	}
+
 	public String cerrarSesion(){
 		System.out.println("******************************************************");
 		String ruta="", tipo="";
@@ -215,6 +258,46 @@ public class LoginBean {
 
 	public void setVer(boolean ver) {
 		this.ver = ver;
+	}
+
+	public String getCantProfesores() {
+		return cantProfesores;
+	}
+
+	public void setCantProfesores(String cantProfesores) {
+		this.cantProfesores = cantProfesores;
+	}
+
+	public String getCantGrupos() {
+		return cantGrupos;
+	}
+
+	public void setCantGrupos(String cantGrupos) {
+		this.cantGrupos = cantGrupos;
+	}
+
+	public String getCantEstudiantes() {
+		return cantEstudiantes;
+	}
+
+	public void setCantEstudiantes(String cantEstudiantes) {
+		this.cantEstudiantes = cantEstudiantes;
+	}
+
+	public String getCantFaltas() {
+		return cantFaltas;
+	}
+
+	public void setCantFaltas(String cantFaltas) {
+		this.cantFaltas = cantFaltas;
+	}
+
+	public String getCantProyectos() {
+		return cantProyectos;
+	}
+
+	public void setCantProyectos(String cantProyectos) {
+		this.cantProyectos = cantProyectos;
 	}
 
 	

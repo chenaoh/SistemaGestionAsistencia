@@ -36,6 +36,7 @@ public class ProyectoBean {
 	private String filtro;
 	private String nombreGrupo;
 	private boolean consultaGrupo;
+	private LoginBean login;
 	
 	public ProyectoBean(){
 		proyecto=new ProyectoVo();
@@ -43,6 +44,7 @@ public class ProyectoBean {
 		estudianteDAO = new EstudianteDao();
 		itemGrupos=new ArrayList<SelectItem>();
 		estudianteBean = new EstudianteBean();
+		login = new LoginBean();
 		setProyectos(new ArrayList<>());
 		setEstudiantes(new ArrayList<>());
 		cargarGrupos();
@@ -129,6 +131,7 @@ public class ProyectoBean {
 		System.out.println(proyecto.getCodigoProyecto());
 		
 		mensajeConfirmacion=proyectoDao.registrarProyecto(proyecto);
+		login.calcularPanelEstadisticas();
 		proyecto=new ProyectoVo();
 	}
 	
@@ -159,7 +162,7 @@ public class ProyectoBean {
 			registrarAsociacionDeEstudiantes(idEstudiante,idProyecto);
 			estudianteBean.cargarEstudiantesAsociados();
 		}else {
-			setMensaje("Uno o los estudiantes ya se encuentras asociados a un proyecto");
+			setMensaje("Uno o los estudiantes ya se encuentra asociados a un proyecto");
 		}
 	}
 	

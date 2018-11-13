@@ -52,6 +52,7 @@
  </header>
 	<main>
 	 <section>
+	 	<h:form>
 	 		  <ul id="slide-out" class="side-nav fixed">
                         <li>
 	                        <div class="user-view">
@@ -63,7 +64,7 @@
 	                        </div>
 	                        
 	                     </li>
-                        <li><a href="inicio.jsf"><img class="icono4" src="../resources/img/inicio.png"/><a href="inicio.jsf" style="margin-top: -14%; margin-left: 10%;">Inicio</a></a></li>
+                        <li><a href="inicio.jsf" jsf:action="#{loginBean.calcularPanelEstadisticas()}"><img class="icono4" src="../resources/img/inicio.png"/><a href="inicio.jsf" style="margin-top: -14%; margin-left: 10%;">Inicio</a></a></li>
                        <li><div class="divider"></div></li>
                         <li><a class="subheader">Gestionar</a></li>
 
@@ -153,7 +154,7 @@
                     	</div>
  					</div>
                   </div>
-          
+          </h:form>
         </section>
 
 	<div class="row">
