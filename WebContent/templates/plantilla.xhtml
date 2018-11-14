@@ -18,6 +18,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 		<title>#{tituloPagina}</title>
+		<style>
+			.btn-inicio{
+				position: relative;
+			}
+			.text-inicio{
+				position: absolute;
+				top: 6px;
+			}
+		</style>
 	</h:head>
 <body style="background-color:rgb(236,239,241)">
 
@@ -64,7 +73,7 @@
 	                        </div>
 	                        
 	                     </li>
-                        <li><h:commandLink action="inicio.jsf" actionListener="#{loginBean.calcularPanelEstadisticas()}"><img class="icono4" src="../resources/img/inicio.png"/>Inicio</h:commandLink></li>
+                        <li><h:commandLink action="inicio.jsf" actionListener="#{loginBean.calcularPanelEstadisticas()}" class="btn-inicio"><img class="icono4" src="../resources/img/inicio.png"/><span class="text-inicio">Inicio</span></h:commandLink></li>
                         <li><div class="divider"></div></li>
                         <li><a class="subheader">Gestionar</a></li>
 
