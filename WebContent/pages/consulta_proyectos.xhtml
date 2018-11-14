@@ -70,9 +70,9 @@
 							<h:outputLabel value="#{proyectoBean.obtenerNombreGrupo(datos.codigoGrupo)}" rendered="#{not proyectoBean.consultaGrupo}"/>
 							<h:outputLabel value="#{datos.nombreGrupo}" rendered="#{proyectoBean.consultaGrupo}"/>
             		</h:column>
-            		<h:column>
+            		<h:column rendered="#{loginBean.ver}">
 						<f:facet name="header">Acciones</f:facet>
-						<h:commandLink action="#{proyectoBean.editarProyecto(datos)}" rendered="#{not datos.editar}"><i class="material-icons s12">create</i></h:commandLink>
+						<h:commandLink action="#{proyectoBean.editarProyecto(datos)}" rendered="#{not datos.editar}"><i class="material-icons s12" >create</i></h:commandLink>
 						<h:commandLink action="#{proyectoBean.guardarProyecto(datos)}" rendered="#{datos.editar}" ><i class="material-icons s12">save</i></h:commandLink>
 						<h:commandLink action="#{proyectoBean.eliminarProyecto(datos)}" ><i class="material-icons s12">delete</i></h:commandLink>
 					</h:column>

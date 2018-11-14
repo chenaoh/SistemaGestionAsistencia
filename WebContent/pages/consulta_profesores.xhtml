@@ -21,7 +21,7 @@
            <h6>#{profesorBean.mensajeConfirmacion}</h6>  
             <div class="card-panel">
 
-            <form jsf:id="formulario">
+            <form jsf:id="formulario" >
             	<div class="row">
             		<div class="input-field col s4">
             		<label>Nombre Profesor</label>
@@ -32,7 +32,7 @@
 		             </div>
             	</div>
             
-            	<h:dataTable value="#{profesorBean.listaProfesores}" var="datos" class="striped  ">
+            	<h:dataTable value="#{profesorBean.listaProfesores}" var="datos" class="striped  " >
             		<h:column>
 						<f:facet name="header">Documento</f:facet>
 						<h:outputLabel value="#{datos.documento}" />
@@ -75,8 +75,8 @@
             		</h:column>
             		<h:column>
 						<f:facet name="header">Acciones</f:facet>
-						<h:commandLink action="#{profesorBean.editarProfesor(datos.documento)}"><i class="material-icons s12">create</i></h:commandLink>
-						<h:commandLink action="#{profesorBean.eliminarProfesor(datos)}" ><i class="material-icons s12">delete</i></h:commandLink>
+						<h:commandLink action="#{profesorBean.editarProfesor(datos.documento)}"><i class="material-icons s12" jsf:rendered="#{loginBean.verAdmin}">create</i></h:commandLink>
+						<h:commandLink action="#{profesorBean.eliminarProfesor(datos)}" ><i class="material-icons s12" jsf:rendered="#{loginBean.verAdmin}">delete</i></h:commandLink>
 						<h:commandLink action="#{profesorBean.perfilProfesor(datos.documento)}" ><i class="material-icons s12">account_circle</i></h:commandLink>
 					</h:column>
             	

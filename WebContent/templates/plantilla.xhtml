@@ -72,9 +72,9 @@
                                <div class="collapsible-header"><img class="icono3" src="../resources/img/grupo3.png"/>Grupos</div>
                                 <div class="collapsible-body">
                                   <ul>
-                                   <li><a href="registro_grupos.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
+                                   <li jsf:rendered="#{loginBean.ver}"><a href="registro_grupos.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
                                    <li><a href="consulta_grupos.jsf"><i class="material-icons">search</i>Consultar</a></li>
-                                   <li><a href="asociacion_grupo_estudiantes.jsf"><i class="material-icons">compare_arrows</i>Asociar Estudiantes</a></li>
+                                   <li jsf:rendered="#{loginBean.ver}"><a href="asociacion_grupo_estudiantes.jsf"><i class="material-icons">compare_arrows</i>Asociar Estudiantes</a></li>
                                    </ul>
                                 </div>
                               </li>
@@ -82,7 +82,7 @@
                                 <div class="collapsible-header"><img class="icono3" src="../resources/img/iconoEstudiantes.png"/>Estudiantes</div>
                                 <div class="collapsible-body">
                                   <ul>
-                                   <li><a href="registro_estudiante.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
+                                   <li jsf:rendered="#{loginBean.ver}"><a href="registro_estudiante.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
                                    <li><a href="consulta_estudiantes.jsf"><i class="material-icons">search</i>Consultar</a></li>
                                    </ul>
                                 </div>
@@ -91,7 +91,7 @@
                                 <div class="collapsible-header"><img class="icono3" src="../resources/img/iconoProfesor.png"/>Profesores</div>
                                 <div class="collapsible-body">
                                   <ul>
-                                   <li><a href="registro_profesor.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
+                                   <li jsf:rendered="#{loginBean.verAdmin}"><a href="registro_profesor.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
                                    <li><a href="consulta_profesores.jsf"><i class="material-icons">search</i>Consultar</a></li>
                                    </ul>
                                 </div>
@@ -100,14 +100,14 @@
                                 <div class="collapsible-header"><img class="icono3" src="../resources/img/proyecto.png"/>Proyectos</div>
                                 <div class="collapsible-body">
                                   <ul>
-                                   <li><a href="registro_proyectos.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
+                                   <li jsf:rendered="#{loginBean.ver}"><a href="registro_proyectos.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
                                    <li><a href="consulta_proyectos.jsf"><i class="material-icons">search</i>Consultar</a></li>
-                                   <li><a href="asociacion_proyecto_estudiantes.jsf"><i class="material-icons">compare_arrows</i>Asociar Estudiantes</a></li>
+                                   <li jsf:rendered="#{loginBean.ver}"><a href="asociacion_proyecto_estudiantes.jsf"><i class="material-icons">compare_arrows</i>Asociar Estudiantes</a></li>
                                    </ul>
                                 </div>
                               </li>
                               <li>
-                                <div class="collapsible-header"><img class="icono3" src="../resources/img/asistencia1.png"/>Asistencia</div>
+                                <div class="collapsible-header" jsf:rendered="#{loginBean.ver}"><img class="icono3" src="../resources/img/asistencia1.png"/>Asistencia</div>
                                 <div class="collapsible-body">
                                   <ul>
                                    <li><a href="registro_asistencia.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
@@ -115,6 +115,9 @@
                                    </ul>
                                 </div>
                               </li>
+                              
+                              
+                              
                                <li>
                                 <div class="collapsible-header"><img class="icono3" src="../resources/img/notificacion.png"/>Archivos</div>
                                 <div class="collapsible-body">

@@ -95,8 +95,29 @@
 				        </a>  
 				     </div>		
 				     
-				     <div class="col s6 m4  offset-m1">
+				     <div class="col s6 m4  offset-m1" jsf:rendered="#{loginBean.ver}">
+				     
 				     	<a href="consulta_asistencia.jsf">
+				          <div class="card red accent-4" >
+				            <div class="card-content white-text">
+				              <span class="card-title"><div class="tarjetas-text">Faltas</div></span>
+				            </div>
+				            <div class="card-action grey lighten-5">
+				              <div class="row">
+					              	<div class="col s10 m10">
+					              		<img class="icono2" src="../resources/img/asistencia1.png"/>
+					              	</div>
+					              	<div class="col s2 m2">
+					              		<h5 class="cant">5</h5>
+					              	</div>
+				            	</div>
+				          </div>
+				          </div>
+				         </a> 
+				        </div>
+				     	
+				     <div class="col s6 m4  offset-m1" jsf:rendered="#{loginBean.verEstudiante}">
+				     	<a >
 				          <div class="card red accent-4" >
 				            <div class="card-content white-text">
 				              <span class="card-title"><div class="tarjetas-text">Faltas</div></span>
