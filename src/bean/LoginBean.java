@@ -21,7 +21,7 @@ import vo.PersonaVo;
 import vo.ProfesorVo;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class LoginBean {
 	
 	private PersonaVo miPersonaVo;

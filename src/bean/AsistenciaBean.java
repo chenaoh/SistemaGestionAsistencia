@@ -153,6 +153,8 @@ public class AsistenciaBean {
 		String res = asistenciaDao.registrarAsistencia(documentos, documento, getCodGrupo(),getObservacion());	
 		
 		if(res.equals("ok")){
+			LoginBean login = new LoginBean();
+			login.calcularPanelEstadisticas();
 			System.out.println("YEAH");
 		}
 	}

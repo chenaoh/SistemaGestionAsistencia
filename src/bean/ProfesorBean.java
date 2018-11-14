@@ -70,7 +70,9 @@ public class ProfesorBean {
 		profesor.setPassword(profesor.getDocumento());
 		profesor.setEstado("Activo");
 		mensajeConfirmacion=profesorDao.registrarProfesor(profesor);
-		login.calcularPanelEstadisticas();
+		if(mensajeConfirmacion!=null){
+			login.calcularPanelEstadisticas();
+		}
 		profesor=new ProfesorVo();
 	}
 	

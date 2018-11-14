@@ -131,7 +131,9 @@ public class ProyectoBean {
 		System.out.println(proyecto.getCodigoProyecto());
 		
 		mensajeConfirmacion=proyectoDao.registrarProyecto(proyecto);
-		login.calcularPanelEstadisticas();
+		if(mensajeConfirmacion!=null){
+			login.calcularPanelEstadisticas();
+		}
 		proyecto=new ProyectoVo();
 	}
 	

@@ -232,7 +232,9 @@ public class GrupoBean implements Serializable{
 
 		grupo.setEstado("Activo");
 		mensajeConfirmacion=grupoDao.registrarGrupo(grupo);
-		login.calcularPanelEstadisticas();
+		if(mensajeConfirmacion!=null){
+			login.calcularPanelEstadisticas();
+		}
 		grupo=new GrupoVo();
 	}
 
