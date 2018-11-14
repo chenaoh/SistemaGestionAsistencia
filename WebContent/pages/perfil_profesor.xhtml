@@ -30,21 +30,21 @@
               	  </div>
               	  
               	  <div class="input-field col m9">
-                    <input id="nombre" type="text" class="validate" jsf:value="#{profesor.nombre}" />
+                    <input id="nombre" type="text" class="validate" jsf:value="#{profesor.nombre}" disabled="true"/>
                     <label for="nombre">Nombre</label>
                   </div>
 
                   <div class="input-field col m3">
-                    <input id="telefono" type="text" class="validate" jsf:value="#{profesor.telefono}" />
+                    <input id="telefono" type="text" class="validate" jsf:value="#{profesor.telefono}" disabled="true"/>
                     <label for="telefono">Telefono</label>
                   </div>  
 
                   <div class="input-field col m4">
-                    <input id="profesion" type="text" class="validate" jsf:value="#{profesor.profesion}" />
+                    <input id="profesion" type="text" class="validate" jsf:value="#{profesor.profesion}" disabled="true"/>
                     <label for="profesion">Profesion</label>
                   </div>  
                   <div class="input-field col m5">
-                    <input id="email" type="text" class="validate" jsf:value="#{profesor.email}" />
+                    <input id="email" type="text" class="validate" jsf:value="#{profesor.email}" disabled="true"/>
                     <label for="email">Email</label>
                   </div>  
 
@@ -54,7 +54,7 @@
 	                  </div>
 	                  
 	                  <div class="input-field col m5">
-	                  	<h:selectOneMenu value="#{profesor.sexo}">
+	                  	<h:selectOneMenu value="#{profesor.sexo}" disabled="true">
 	                   	<f:selectItem itemValue="M" itemLabel="Masculino"/>
 	                   	<f:selectItem itemValue="F" itemLabel="Femenino"/>
 	                   </h:selectOneMenu>
@@ -66,8 +66,8 @@
 	                  	 <label>Tipo</label>
 	                  </div>
 	                  
-	                  <div class="input-field col m7">
-	                  	<h:selectOneMenu value="#{profesor.tipo}">
+	                  <div class="input-field col m7" >
+	                  	<h:selectOneMenu value="#{profesor.tipo}" disabled="true">
 	                   	<f:selectItem itemValue="admin" itemLabel="Administrador"/>
 	                   	<f:selectItem itemValue="profesor" itemLabel="Profesor"/>
 	                   </h:selectOneMenu>
@@ -80,7 +80,7 @@
 	                  </div>
 	                  
 	                  <div class="input-field col m5">
-                  		<h:selectOneMenu value="#{profesor.estado}" >
+                  		<h:selectOneMenu value="#{profesor.estado}" disabled="true">
 		                   	<f:selectItem itemValue="activo" itemLabel="Activo"/>
 		                <f:selectItem itemValue="inactivo" itemLabel="Inactivo"/>
 	                   </h:selectOneMenu>
@@ -88,12 +88,12 @@
                   </div>                  
                   
                   <div class="input-field col m6">
-                    <textarea id="textarea1" class="materialize-textarea" data-length="250" jsf:value="#{profesor.perfil}" ></textarea>
+                    <textarea id="textarea1" class="materialize-textarea" data-length="250" jsf:value="#{profesor.perfil}" disabled="true"></textarea>
             		<label for="textarea1">Perfil</label>
                   </div>
                   
                   <div class="input-field col m6">
-                    <textarea id="textarea1" class="materialize-textarea" data-length="250" jsf:value="#{profesor.asesoria}" ></textarea>
+                    <textarea id="textarea1" class="materialize-textarea" data-length="250" jsf:value="#{profesor.asesoria}" disabled="true"></textarea>
             		<label for="textarea1">Horarios Asesoria</label>
                   </div> 
               	</div>
