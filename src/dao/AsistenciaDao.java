@@ -175,7 +175,9 @@ public class AsistenciaDao {
 		
 		return cantidad;
 	}
-	public ArrayList<AsistenciaVo> filtrarListaFecha(String fecha) {
+	
+	@SuppressWarnings("unused")
+	public ArrayList<AsistenciaVo> filtrarListaFecha(String fecha, String grupo) {
 		System.out.println("ESTA FILTRANDO POR FECHA");
 		Connection conn = null;
 		PreparedStatement statement = null;
@@ -186,12 +188,31 @@ public class AsistenciaDao {
 		
 		conn = conexion.getConnection();
 		
-		String consulta = "SELECT a.codigo, e.nombre as nombre_estu, g.nombre as grupo, p.nombre as nom_prof, a.fecha_falta, a.observacion_falta FROM asistencia a, estudiante e, profesor p, grupo g WHERE a.doc_est_ = e.documento AND a.cod_grupo = g.codigo AND a.doc_prof = p.documento AND (a.fecha_falta = ? OR a.cod_grupo = ?) GROUP BY a.codigo";
 		try {
 			
-			statement = conn.prepareStatement(consulta);
-			statement.setString(1, fecha);
-			result = statement.executeQuery();
+			if(fecha.equals("") && !(grupo.equals("Seleccione")) ){
+				System.out.println("Entra A");
+				String consulta = "SELECT a.codigo, e.nombre as nombre_estu, g.nombre as grupo, p.nombre as nom_prof, a.fecha_falta, a.observacion_falta FROM asistencia a, estudiante e, profesor p, grupo g WHERE a.doc_est_ = e.documento AND a.cod_grupo = g.codigo AND a.doc_prof = p.documento AND a.cod_grupo = ? GROUP BY a.codigo";
+				statement = conn.prepareStatement(consulta);
+				statement.setString(1, grupo);
+				result = statement.executeQuery();
+			}else if(fecha!=null && grupo==null){
+				System.out.println("Entra C");
+				String consulta = "SELECT a.codigo, e.nombre as nombre_estu, g.nombre as grupo, p.nombre as nom_prof, a.fecha_falta, a.observacion_falta FROM asistencia a, estudiante e, profesor p, grupo g WHERE a.doc_est_ = e.documento AND a.cod_grupo = g.codigo AND a.doc_prof = p.documento AND a.fecha_falta = ? GROUP BY a.codigo";
+				statement = conn.prepareStatement(consulta);
+				statement.setString(1, fecha);
+				result = statement.executeQuery();
+			}else if(fecha!=null && !(grupo.equals("Seleccione"))){
+				System.out.println("Entra B");
+				System.out.println("Fecha: "+fecha);
+				System.out.println("Grupo: "+grupo);
+				String consulta = "SELECT a.codigo, e.nombre as nombre_estu, g.nombre as grupo, p.nombre as nom_prof, a.fecha_falta, a.observacion_falta FROM asistencia a, estudiante e, profesor p, grupo g WHERE a.doc_est_ = e.documento AND a.cod_grupo = g.codigo AND a.doc_prof = p.documento AND a.fecha_falta = ? AND a.cod_grupo = ? GROUP BY a.codigo";
+				statement = conn.prepareStatement(consulta);
+				statement.setString(1, fecha);
+				statement.setString(2, grupo);
+				result = statement.executeQuery();
+			}
+			
 			
 			
 			while(result.next()) {

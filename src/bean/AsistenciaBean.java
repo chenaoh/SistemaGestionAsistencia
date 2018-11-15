@@ -39,10 +39,12 @@ public class AsistenciaBean {
 	private ArrayList<AsistenciaVo> listaAsistencias;
 	private ArrayList<String> grupos;
 	private String grupo;
+	private String filtroGrupo;
 	private static String documento;
 	private String codGrupo="";
 	private String observacion;
 	private String idGrupo;
+
 	
 	public void setCodGrupo(String codGrupo) {
 		this.codGrupo = codGrupo;
@@ -168,8 +170,28 @@ public class AsistenciaBean {
 		listaAsistencias.remove(asistencia);
 	}
 	
-	public void filtrarAsistenciasFecha() {
-		setListaAsistencias(asistenciaDao.filtrarListaFecha(getFecha()));
+	public void filtrarAsistenciasFechaYGrupo() {
+		String grupo="";
+		System.out.println("Grupo: "+getFiltroGrupo());
+		if(getFecha().equals("") && getFiltroGrupo()==null){
+			setListaAsistencias(asistenciaDao.obtenerListaAsistencias());
+		}else if(getFecha().equals("") && !(getFiltroGrupo().equals("Seleccione"))){
+			cargarDatosHashMapGrupos();
+			grupo = grupoDao.obtenerId(getFiltroGrupo());
+			System.out.println("GRUPO: "+grupo);
+			setListaAsistencias(asistenciaDao.filtrarListaFecha("",grupo));
+		}else if(getFecha()!=null && getFiltroGrupo()==null){
+			setListaAsistencias(asistenciaDao.filtrarListaFecha(getFecha(), ""));
+		}else if(getFecha()!=null && getFiltroGrupo()!=null){
+			cargarDatosHashMapGrupos();
+			grupo = grupoDao.obtenerId(getFiltroGrupo());
+			setListaAsistencias(asistenciaDao.filtrarListaFecha(getFecha(), grupo));
+			
+		}
+		
+		
+		
+		
 	}
 
 	public ProfesorVo getProfesor() {
@@ -267,6 +289,18 @@ public class AsistenciaBean {
 
 	public void setListaAsistencias(ArrayList<AsistenciaVo> listaAsistencias) {
 		this.listaAsistencias = listaAsistencias;
+	}
+
+
+
+	public String getFiltroGrupo() {
+		return filtroGrupo;
+	}
+
+
+
+	public void setFiltroGrupo(String filtroGrupo) {
+		this.filtroGrupo = filtroGrupo;
 	}
 	
 }

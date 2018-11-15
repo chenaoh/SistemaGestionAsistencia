@@ -24,10 +24,14 @@
 						<label>Fecha Asistencia </label>
 		             </div>
 		             <div class="input-field col m3">
-		             	<h:selectOneMenu value=""></h:selectOneMenu>
+		             	<h:selectOneMenu value="#{asistenciaBean.filtroGrupo}">
+		             		<f:selectItem noSelectionOption="false" itemLabel="Seleccione" itemValue="#{null}"/>
+		             		<f:selectItems value="#{asistenciaBean.grupos}"/>
+		             	</h:selectOneMenu>
+		             	<label>Grupo</label>
 		             </div>
 		             <div class="input-field col m3">
-		                 <h:commandButton  value="search" class="material-icons no-btn" action="#{asistenciaBean.filtrarAsistenciasFecha()}"/>
+		                 <h:commandButton  value="search" class="material-icons no-btn" action="#{asistenciaBean.filtrarAsistenciasFechaYGrupo()}"/>
 		             </div>  
 	            </div>
    		</h:form>            			
