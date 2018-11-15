@@ -167,6 +167,10 @@ public class AsistenciaBean {
 		mensajeConfirmacion=asistenciaDao.eliminarAsistencia(asistencia.getCodigo());
 		listaAsistencias.remove(asistencia);
 	}
+	
+	public void filtrarAsistenciasFecha() {
+		setListaAsistencias(asistenciaDao.filtrarListaFecha(getFecha()));
+	}
 
 	public ProfesorVo getProfesor() {
 		return profesor;

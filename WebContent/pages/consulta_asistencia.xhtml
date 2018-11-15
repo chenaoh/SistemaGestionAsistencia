@@ -12,23 +12,25 @@
 <ui:param name="nombrePagina" value="Gestión de Asistencia - Consulta" />	
 
 <ui:define name="tabAsistencia">
-   		<div class="row">
-			<div class="col s12 m12 red accent-4">
-          		<div class="tarjetas-text">Consulta Reporte de Asistencias</div>
-          	</div>
-        </div>
-          <div class="row">  
-            <div class="input-field col m6">
-                    <input id="nombre" type="text" class="validate" />
-                    <label for="nombre">Nombre</label>
-                  </div>
-
-                  <div class="input-field col m6">
-                    <input id="apellido" type="text" class="validate" />
-                    <label for="apellido">Apellido</label>
-                  </div>  
-            </div>
-            			
+   		<h:form>
+   			<div class="row">
+				<div class="col s12 m12 red accent-4">
+	          		<div class="tarjetas-text">Consulta Reporte de Asistencias</div>
+	          	</div>
+	        </div>
+	          <div class="row">  
+		            <div class="input-field col m3">
+						<input type = "date" class = "datepicker" jsf:value="#{asistenciaBean.fecha}"/>
+						<label>Fecha Asistencia </label>
+		             </div>
+		             <div class="input-field col m3">
+		             	<h:selectOneMenu value=""></h:selectOneMenu>
+		             </div>
+		             <div class="input-field col m3">
+		                 <h:commandButton  value="search" class="material-icons no-btn" action="#{asistenciaBean.filtrarAsistenciasFecha()}"/>
+		             </div>  
+	            </div>
+   		</h:form>            			
 			<div class="card-panel">
 				<h:form>
 					<h:dataTable value="#{asistenciaBean.listaAsistencias}" var="datos" class="striped  ">
