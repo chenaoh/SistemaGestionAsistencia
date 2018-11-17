@@ -173,21 +173,22 @@ public class AsistenciaBean {
 	public void filtrarAsistenciasFechaYGrupo() {
 		String grupo="";
 		System.out.println("Grupo: "+getFiltroGrupo());
+		
 		if(getFecha().equals("") && getFiltroGrupo()==null){
 			setListaAsistencias(asistenciaDao.obtenerListaAsistencias());
-		}else if(getFecha().equals("") && !(getFiltroGrupo().equals("Seleccione"))){
+		}else if(!(getFecha().equals("")) && getFiltroGrupo()==null) {
+			System.out.println("ESTA FILTRANDO SOLO POR FECHA: "+getFecha());
+			setListaAsistencias(asistenciaDao.filtrarListaFecha(getFecha(), "", 1));
+		}else if(getFecha().equals("") && getFiltroGrupo()!=null) {
 			cargarDatosHashMapGrupos();
 			grupo = grupoDao.obtenerId(getFiltroGrupo());
-			System.out.println("GRUPO: "+grupo);
-			setListaAsistencias(asistenciaDao.filtrarListaFecha("",grupo));
-		}else if(getFecha()!=null && getFiltroGrupo()==null){
-			setListaAsistencias(asistenciaDao.filtrarListaFecha(getFecha(), ""));
-		}else if(getFecha()!=null && getFiltroGrupo()!=null){
+			setListaAsistencias(asistenciaDao.filtrarListaFecha("", grupo, 2));
+		}else {
 			cargarDatosHashMapGrupos();
 			grupo = grupoDao.obtenerId(getFiltroGrupo());
-			setListaAsistencias(asistenciaDao.filtrarListaFecha(getFecha(), grupo));
-			
+			setListaAsistencias(asistenciaDao.filtrarListaFecha(getFecha(), grupo, 3));
 		}
+		
 		
 		
 		
