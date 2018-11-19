@@ -37,6 +37,8 @@ public class LoginBean {
 	private String tipoUsuario;
 	private String tipoUser;
 	private static boolean ver;
+	private static boolean verEstudiante;
+	private static boolean verAdmin;
 	private String rutaImagenUser;
 	private String cantProfesores;
 	private String cantGrupos;
@@ -80,11 +82,14 @@ public class LoginBean {
 			System.out.println("Profesor");
 			persona=miProfesorDao.consultarProfesorLogin(miPersonaVo.getDocumento(), miPersonaVo.getPassword());
 			setVer(true);
-			
+			setVerAdmin(false);
+			setVerEstudiante(false);
 		}else{
 			System.out.println("Estudiante");
 			persona=miEstudianteDao.consultarEstudianteLogin(miPersonaVo.getDocumento(), miPersonaVo.getPassword());
 			setVer(false);
+			setVerAdmin(false);
+			setVerEstudiante(true);
 		}
 	
 		if (persona!=null) {
@@ -99,6 +104,8 @@ public class LoginBean {
 				if (miPersonaVo.getTipo().equals("admin")) {
 					setRutaImagenUser("../resources/img/administrator.png");
 					setTipoUser("Administrador");	
+					setVerAdmin(true);
+					
 				}else{
 					if (miPersonaVo.getTipo().equals("profesor")) {
 						setRutaImagenUser("../resources/img/hombreUser.png");
@@ -112,6 +119,7 @@ public class LoginBean {
 				setRutaImagenUser("../resources/img/administradora.png");
 				if (miPersonaVo.getTipo().equals("admin")) {
 					setTipoUser("Administradora");	
+					setVerAdmin(true);
 				}else{
 					if (miPersonaVo.getTipo().equals("profesor")) {
 						setRutaImagenUser("../resources/img/profesora.png");
@@ -260,6 +268,22 @@ public class LoginBean {
 		this.ver = ver;
 	}
 
+	public boolean isVerEstudiante() {
+		return verEstudiante;
+	}
+
+	public void setVerEstudiante(boolean verEstudiante) {
+		this.verEstudiante = verEstudiante;
+	}
+	
+	public boolean isVerAdmin() {
+		return verAdmin;
+	}
+
+	public void setVerAdmin(boolean verAdmin) {
+		this.verAdmin = verAdmin;
+	}
+	
 	public String getCantProfesores() {
 		return cantProfesores;
 	}
@@ -299,6 +323,5 @@ public class LoginBean {
 	public void setCantProyectos(String cantProyectos) {
 		this.cantProyectos = cantProyectos;
 	}
-
 	
 }
