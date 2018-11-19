@@ -27,23 +27,23 @@
             			<h:outputLabel value="Nombre Estudiante"  rendered="#{loginBean.ver}"/>
             			<h:inputText value="#{estudianteBean.nombreEstu}" rendered="#{loginBean.ver}"/>
             		</div>
-            		<div class="input-field col s4">
+            		<div class="input-field col s4" >
             			<h:commandButton action="#{estudianteBean.consultarEstudiante()}" value="search" class="material-icons no-btn"  rendered="#{loginBean.ver}"/>
             		</div>
             	</div>
             	<div class="row">
-            		<div class="input-field col s4">
-            			<h:selectOneMenu value="#{estudianteBean.grupo}">
+            		<div class="input-field col s4" >
+            			<h:selectOneMenu value="#{estudianteBean.grupo}" rendered="#{loginBean.ver}">
             				<f:selectItems value="#{estudianteBean.grupos}"/>
             			</h:selectOneMenu>
             		</div>
-            		<div class="input-field col s4">
-            		  	<h:commandButton value="search" action="#{estudianteBean.consultarEstudiantesGrupos()}" class="material-icons no-btn"/>
+            		<div class="input-field col s4" >
+            		  	<h:commandButton value="search" action="#{estudianteBean.consultarEstudiantesGrupos()}" class="material-icons no-btn" rendered="#{loginBean.ver}"/>
             		</div>
             	</div> 
             			
 		       	
-            	<h:dataTable value="#{estudianteBean.listaEstudiantes}" var="datos" class="striped  ">
+            	<h:dataTable value="#{estudianteBean.listaEstudiantes}" var="datos" class="striped  " rendered="#{loginBean.ver}">
             		<h:column>
 						<f:facet name="header">Documento</f:facet>
 						<h:inputText value="#{datos.documento}" rendered="#{datos.editar}" disabled="true"/>
@@ -92,9 +92,9 @@
             		</h:column>
             		<h:column>
 						<f:facet name="header">Acciones</f:facet>
-						<h:commandLink action="#{estudianteBean.editarEstudiante(datos)}" rendered="#{not datos.editar}"><i class="material-icons s12">create</i></h:commandLink>
+						<h:commandLink action="#{estudianteBean.editarEstudiante(datos)}" rendered="#{not datos.editar}"><i class="material-icons s12"  jsf:rendered="#{loginBean.ver}">create</i></h:commandLink>
 					<h:commandLink action="#{estudianteBean.guardarEstudiante(datos)}" rendered="#{datos.editar}" ><i class="material-icons s12">save</i></h:commandLink>
-						<h:commandLink action="#{estudianteBean.eliminarEstudiante(datos)}" ><i class="material-icons s12">delete</i></h:commandLink>
+						<h:commandLink action="#{estudianteBean.eliminarEstudiante(datos)}" ><i class="material-icons s12" jsf:rendered="#{loginBean.ver}">delete</i></h:commandLink>
 					<h:commandLink action="#{estudianteBean.perfilEstudiante(datos.documento)}" ><i class="material-icons s12">visibility</i></h:commandLink>
 					
 					
