@@ -4,10 +4,18 @@ package bean;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import dao.EstudianteDao;
 import dao.GrupoDao;
@@ -158,16 +166,68 @@ public class ProyectoBean {
 	
 	public void asociarEstudiantes(){
 		ArrayList<String> idEstudiante = estudianteDAO.obtenerIdEstudiante(getNombresEstudiantes());
+		ArrayList<String> correos = estudianteDAO.obtenerCorreosEstudiantes(getNombresEstudiantes());
 		String res = proyectoDao.consultarAsociacion(idEstudiante);
 		if(res.equals("no existe")) {
 			int idProyecto = proyectoDao.obtenerIdProyecto(getNombreProyecto());
 			registrarAsociacionDeEstudiantes(idEstudiante,idProyecto);
+			enviarCorreos(correos, getNombreProyecto(), getNombresEstudiantes(), idProyecto, idEstudiante);
 			estudianteBean.cargarEstudiantesAsociados();
 		}else {
 			setMensaje("Uno o los estudiantes ya se encuentra asociados a un proyecto");
 		}
 	}
 	
+	private void enviarCorreos(ArrayList<String> correos, String nombreProyecto, ArrayList<String> estudiantes, int idProyecto, ArrayList<String> idEstudiante) {
+		for (int i = 0; i < correos.size(); i++) {
+			Properties propiedad = new Properties();
+			propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
+			propiedad.setProperty("mail.smtp.starttls.enable", "true");
+	        propiedad.setProperty("mail.smtp.port", "587");
+	        propiedad.setProperty("mail.smtp.auth", "true");
+			
+			Session sesion = Session.getDefaultInstance(propiedad);
+			
+			String correoEnvia = "adsisga@gmail.com";
+			String contraseña = "adsi1598667";
+			String destinatario = correos.get(i); 
+			String asunto = "Asociacion de Proyecto";
+			String mensaje = "Estimado(a)  "+estudiantes.get(i)+"\n";
+			mensaje+="Usted fue añadido al proyecto "+getNombreProyecto()+"\n\n";
+			mensaje+="A continuacion encontará los datos de la asociación: "+"\n\n";
+			mensaje+="    Código del proyecto: "+idProyecto+"\n\n";
+			mensaje+="    Nombre del Proyecto: "+getNombreProyecto()+"\n\n";
+			mensaje+="    Documento del Estudiante: "+idEstudiante.get(i)+"\n\n";
+			mensaje+="    Nombre del Estudiante: "+estudiantes.get(i)+"\n\n";
+			mensaje+="Para verificar su asociación ingrese a http://localhost:8080/SistemaGestionAsistencia/pages/login.jsf"+"\n\n\n	";
+			mensaje+="********NO RESPONDER - Mensaje Generado Automáticamente********";
+			
+			MimeMessage mail = new MimeMessage(sesion);
+			try {
+				mail.setFrom(new InternetAddress(correoEnvia));
+				mail.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
+				mail.setSubject(asunto);
+				mail.setText(mensaje);
+				
+				Transport transporte = sesion.getTransport("smtp");
+				transporte.connect(correoEnvia,contraseña);
+				transporte.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
+				transporte.close();
+				
+				System.out.println("Correos enviados exitosamente: "+correos.get(i));
+			
+			} catch (AddressException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+	}
+
 	public void desasociarEstudiantes(String nombre){
 		String doc = estudianteDAO.obtenerIdUnEstudiante(nombre);
 		System.out.println("Documento estudiante***: "+doc);

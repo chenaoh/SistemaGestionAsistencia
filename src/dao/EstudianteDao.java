@@ -508,4 +508,15 @@ public class EstudianteDao {
 		return cantidad;
 	}
 
+	public ArrayList<String> obtenerCorreosEstudiantes(ArrayList<String> nombresEstudiantes) {
+		EstudianteVo estudianteVo;
+		ArrayList<String> correos = new ArrayList<>();
+		for(int i = 0; i<nombresEstudiantes.size(); i++){
+			estudianteVo = mapaEstudiantes.get(nombresEstudiantes.get(i));
+			correos.add(estudianteVo.getEmail());
+			
+		}
+		return correos;
+	}
+
 }
