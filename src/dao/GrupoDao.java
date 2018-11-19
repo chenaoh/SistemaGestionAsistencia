@@ -282,4 +282,35 @@ public class GrupoDao {
 		return codigo;
 	}
 
+	public String cantidadGrupos() {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		Conexion conexion = new Conexion();
+		String cantidad = "";
+		
+		conn = conexion.getConnection();
+		
+		String consulta = "SELECT COUNT(*) as cantidad FROM grupo";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			result = statement.executeQuery();
+			
+			while(result.next()){
+				cantidad = result.getString("cantidad");
+			}
+			
+			System.out.println("CANT_GRUPOS: "+cantidad);
+			
+			conexion.desconectar();
+			
+		} catch (SQLException e) {
+			System.out.println("Error al obtener la cantidad de grupos: "+e.getMessage());
+		}
+		
+		return cantidad;
+	}
+
 }

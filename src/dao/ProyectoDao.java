@@ -378,5 +378,36 @@ public class ProyectoDao {
 		return listaProyectos;
 	}
 
+	public String cantidadProyectos() {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		Conexion conexion = new Conexion();
+		String cantidad = "";
+		
+		conn = conexion.getConnection();
+		
+		String consulta = "SELECT COUNT(*) as cantidad FROM proyecto";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			result = statement.executeQuery();
+			
+			while(result.next()){
+				cantidad = result.getString("cantidad");
+			}
+			
+			System.out.println("CANT_PROYECTOS: "+cantidad);
+			
+			conexion.desconectar();
+			
+		} catch (SQLException e) {
+			System.out.println("Error al obtener la cantidad de proyectos: "+e.getMessage());
+		}
+		
+		return cantidad;
+	}
+
 
 }

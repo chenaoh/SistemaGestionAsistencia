@@ -24,6 +24,7 @@ public class ProfesorBean {
 	private ArrayList<ProfesorVo> listaProfesores=new ArrayList<>();
 	FacesContext context = FacesContext.getCurrentInstance();
 	HttpSession session = (HttpSession)context.getExternalContext().getSession(true);
+	LoginBean login  = new LoginBean();
 
 	public ProfesorBean(){
 		profesor=new ProfesorVo();
@@ -69,6 +70,9 @@ public class ProfesorBean {
 		profesor.setPassword(profesor.getDocumento());
 		profesor.setEstado("Activo");
 		mensajeConfirmacion=profesorDao.registrarProfesor(profesor);
+		if(mensajeConfirmacion!=null){
+			login.calcularPanelEstadisticas();
+		}
 		profesor=new ProfesorVo();
 	}
 	

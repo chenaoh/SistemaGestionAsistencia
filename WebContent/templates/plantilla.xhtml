@@ -18,6 +18,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 		<title>#{tituloPagina}</title>
+		<style>
+			.btn-inicio{
+				position: relative;
+			}
+			.text-inicio{
+				position: absolute;
+				top: 6px;
+			}
+		</style>
 	</h:head>
 <body style="background-color:rgb(236,239,241)">
 
@@ -32,7 +41,7 @@
               <nav>
                   <div class="nav-wrapper #263238 blue-grey darken-4">
                     <ul class="right hide-on-med-and-down">
-                      <li><a href="inicio.jsf"><i class="material-icons left">home</i>Inicio</a></li>
+                      <li><h:commandLink action="inicio.jsf" actionListener="#{loginBean.calcularPanelEstadisticas()}"><i class="material-icons left">home</i>Inicio</h:commandLink></li>
                         <li><a class="waves-effect waves-light modal-trigger" href="#modal1" ><i class="material-icons left">help_outline</i>Ayuda</a></li>
                          <li><h:commandLink action="#{loginBean.cerrarSesion()}" value="Close" /></li>
                     </ul>
@@ -52,6 +61,7 @@
  </header>
 	<main>
 	 <section>
+	 	<h:form>
 	 		  <ul id="slide-out" class="side-nav fixed">
                         <li>
 	                        <div class="user-view">
@@ -63,8 +73,8 @@
 	                        </div>
 	                        
 	                     </li>
-                        <li><a href="inicio.jsf"><img class="icono4" src="../resources/img/inicio.png"/><a href="inicio.jsf" style="margin-top: -14%; margin-left: 10%;">Inicio</a></a></li>
-                       <li><div class="divider"></div></li>
+                        <li><h:commandLink action="inicio.jsf" actionListener="#{loginBean.calcularPanelEstadisticas()}" class="btn-inicio"><img class="icono4" src="../resources/img/inicio.png"/><span class="text-inicio">Inicio</span></h:commandLink></li>
+                        <li><div class="divider"></div></li>
                         <li><a class="subheader">Gestionar</a></li>
 
                          <ul class="collapsible" data-collapsible="accordion">
@@ -156,7 +166,7 @@
                     	</div>
  					</div>
                   </div>
-          
+          </h:form>
         </section>
 
 	<div class="row">

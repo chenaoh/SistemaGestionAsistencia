@@ -271,6 +271,7 @@ public class EstudianteDao {
 				miEstudiante.setEmail(result.getString("email"));
 				miEstudiante.setGrupo(result.getString("grupo"));
 				miEstudiante.setFechaNacimiento(result.getDate("fecha_nacimiento"));
+				miEstudiante.setFecha(miEstudiante.getFechaNacimiento()+"");
 				miEstudiante.setSexo(result.getString("sexo"));
 				miEstudiante.setEstado(result.getString("estado"));
 				estudiante.add(miEstudiante);
@@ -472,7 +473,39 @@ public class EstudianteDao {
 			miConexion.desconectar();
 		}
 		return estudiante;
+		
 
+	}
+
+	public String cantidadEstudiantes() {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		Conexion conexion = new Conexion();
+		String cantidad = "";
+		
+		conn = conexion.getConnection();
+		
+		String consulta = "SELECT COUNT(*) as cantidad FROM estudiante";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			result = statement.executeQuery();
+			
+			while(result.next()){
+				cantidad = result.getString("cantidad");
+			}
+			
+			System.out.println("CANT_ESTUDIANTES: "+cantidad);
+			
+			conexion.desconectar();
+			
+		} catch (SQLException e) {
+			System.out.println("Error al obtener la cantidad de estudiantes: "+e.getMessage());
+		}
+		
+		return cantidad;
 	}
 
 }

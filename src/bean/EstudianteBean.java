@@ -34,6 +34,7 @@ public class EstudianteBean {
 	private static ArrayList<EstudianteVo> listaEstudiantes=new ArrayList<>();
 	private ArrayList<String> grupos=new ArrayList<>();
 	private static ArrayList<EstudiantesPtoyectosVo>  listaEstudiantesAsociados = new ArrayList<>();
+	LoginBean login = new LoginBean();
 	
 	FacesContext context = FacesContext.getCurrentInstance();
 	HttpSession session = (HttpSession)context.getExternalContext().getSession(true);
@@ -147,6 +148,9 @@ public class EstudianteBean {
 		estudiante.setEstado("Activo");
 		estudiante.setGrupo("0");
 		mensajeConfirmacion=estudianteDao.registrarEstudiante(estudiante);
+		if(mensajeConfirmacion!=null){
+			login.calcularPanelEstadisticas();
+		}
 		estudiante=new EstudianteVo();
 	}
 	

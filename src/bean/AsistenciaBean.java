@@ -39,10 +39,12 @@ public class AsistenciaBean {
 	private ArrayList<AsistenciaVo> listaAsistencias;
 	private ArrayList<String> grupos;
 	private String grupo;
+	private String filtroGrupo;
 	private static String documento;
 	private String codGrupo="";
 	private String observacion;
 	private String idGrupo;
+
 	
 	public void setCodGrupo(String codGrupo) {
 		this.codGrupo = codGrupo;
@@ -153,6 +155,8 @@ public class AsistenciaBean {
 		String res = asistenciaDao.registrarAsistencia(documentos, documento, getCodGrupo(),getObservacion());	
 		
 		if(res.equals("ok")){
+			LoginBean login = new LoginBean();
+			login.calcularPanelEstadisticas();
 			System.out.println("YEAH");
 		}
 	}
@@ -164,6 +168,31 @@ public class AsistenciaBean {
 		//System.out.println("Nombre - "+estudiante.getNombre());
 		mensajeConfirmacion=asistenciaDao.eliminarAsistencia(asistencia.getCodigo());
 		listaAsistencias.remove(asistencia);
+	}
+	
+	public void filtrarAsistenciasFechaYGrupo() {
+		String grupo="";
+		System.out.println("Grupo: "+getFiltroGrupo());
+		
+		if(getFecha().equals("") && getFiltroGrupo()==null){
+			setListaAsistencias(asistenciaDao.obtenerListaAsistencias());
+		}else if(!(getFecha().equals("")) && getFiltroGrupo()==null) {
+			System.out.println("ESTA FILTRANDO SOLO POR FECHA: "+getFecha());
+			setListaAsistencias(asistenciaDao.filtrarListaFecha(getFecha(), "", 1));
+		}else if(getFecha().equals("") && getFiltroGrupo()!=null) {
+			cargarDatosHashMapGrupos();
+			grupo = grupoDao.obtenerId(getFiltroGrupo());
+			setListaAsistencias(asistenciaDao.filtrarListaFecha("", grupo, 2));
+		}else {
+			cargarDatosHashMapGrupos();
+			grupo = grupoDao.obtenerId(getFiltroGrupo());
+			setListaAsistencias(asistenciaDao.filtrarListaFecha(getFecha(), grupo, 3));
+		}
+		
+		
+		
+		
+		
 	}
 
 	public ProfesorVo getProfesor() {
@@ -261,6 +290,18 @@ public class AsistenciaBean {
 
 	public void setListaAsistencias(ArrayList<AsistenciaVo> listaAsistencias) {
 		this.listaAsistencias = listaAsistencias;
+	}
+
+
+
+	public String getFiltroGrupo() {
+		return filtroGrupo;
+	}
+
+
+
+	public void setFiltroGrupo(String filtroGrupo) {
+		this.filtroGrupo = filtroGrupo;
 	}
 	
 }

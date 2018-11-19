@@ -41,6 +41,7 @@ public class GrupoBean implements Serializable{
 	private ArrayList<GrupoVo> listaGrupoSeleccionado=new ArrayList<>();
 	HashMap<String, ProfesorVo> mapaProfesores=new HashMap<>();
 	HashMap<String, GrupoVo> mapaGrupos=new HashMap<>();
+	LoginBean login = new LoginBean();
 	
 	List<String> listaDias, listaSeleccionados;
 	
@@ -231,6 +232,9 @@ public class GrupoBean implements Serializable{
 
 		grupo.setEstado("Activo");
 		mensajeConfirmacion=grupoDao.registrarGrupo(grupo);
+		if(mensajeConfirmacion!=null){
+			login.calcularPanelEstadisticas();
+		}
 		grupo=new GrupoVo();
 	}
 

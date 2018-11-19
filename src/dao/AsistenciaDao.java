@@ -145,4 +145,101 @@ public class AsistenciaDao {
 		}
 		return resp;
 	}
+	public String cantidadFaltas() {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		Conexion conexion = new Conexion();
+		String cantidad = "";
+		
+		conn = conexion.getConnection();
+		
+		String consulta = "SELECT COUNT(*) as cantidad FROM asistencia";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			result = statement.executeQuery();
+			
+			while(result.next()){
+				cantidad = result.getString("cantidad");
+			}
+			
+			System.out.println("CANT_ASISTENCIAS: "+cantidad);
+			
+			conexion.desconectar();
+			
+		} catch (SQLException e) {
+			System.out.println("Error al obtener la cantidad de asistencias: "+e.getMessage());
+		}
+		
+		return cantidad;
+	}
+	
+	public ArrayList<AsistenciaVo> filtrarListaFecha(String fecha, String grupo, int i) {
+		System.out.println("ESTA FILTRANDO POR FECHA");
+		System.out.println("CODIGO: "+i);
+		String consulta = "";
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		Conexion conexion = new Conexion();
+		AsistenciaVo asistenciaVo;
+		ArrayList<AsistenciaVo> listaAsistencias = new ArrayList<>();
+		
+		conn = conexion.getConnection();
+		
+		try {
+			
+			switch (i) {
+			case 1:
+				System.out.println("FECHA LLEGADA: "+fecha);
+				consulta = "SELECT a.codigo, e.nombre as nombre_estu, g.nombre as grupo, p.nombre as nom_prof, a.fecha_falta, a.observacion_falta FROM asistencia a, estudiante e, profesor p, grupo g WHERE a.doc_est_ = e.documento AND a.cod_grupo = g.codigo AND a.doc_prof = p.documento AND a.fecha_falta = ? GROUP BY a.codigo";
+				statement = conn.prepareStatement(consulta);
+				statement.setString(1, fecha);
+				result = statement.executeQuery();
+				break;
+			case 2:
+				System.out.println("**CODIGO**: "+i);
+				System.out.println("GRUPO: "+grupo);
+				consulta = "SELECT a.codigo, e.nombre as nombre_estu, g.nombre as grupo, p.nombre as nom_prof, a.fecha_falta, a.observacion_falta FROM asistencia a, estudiante e, profesor p, grupo g WHERE a.doc_est_ = e.documento AND a.cod_grupo = g.codigo AND a.doc_prof = p.documento AND a.cod_grupo = ? GROUP BY a.codigo";
+				statement = conn.prepareStatement(consulta);
+				statement.setString(1, grupo);
+				result = statement.executeQuery();
+				break;
+			case 3:
+				consulta = "SELECT a.codigo, e.nombre as nombre_estu, g.nombre as grupo, p.nombre as nom_prof, a.fecha_falta, a.observacion_falta FROM asistencia a, estudiante e, profesor p, grupo g WHERE a.doc_est_ = e.documento AND a.cod_grupo = g.codigo AND a.doc_prof = p.documento AND a.cod_grupo = ? AND a.fecha_falta = ? GROUP BY a.codigo";
+				statement = conn.prepareStatement(consulta);
+				statement.setString(1, grupo);
+				statement.setString(2, fecha);
+				result = statement.executeQuery();
+				break;
+			default:
+				break;
+			}
+			
+			
+			while(result.next()) {
+				asistenciaVo = new AsistenciaVo();
+				asistenciaVo.setCodigo(result.getString("codigo"));
+				asistenciaVo.setDocumentoEstudiante(result.getString("nombre_estu"));
+				asistenciaVo.setCodigoGrupo(result.getString("grupo"));
+				asistenciaVo.setDocumentoProfesor(result.getString("nom_prof"));
+				asistenciaVo.setFechaFalta(result.getDate("fecha_falta"));
+				asistenciaVo.setFecha(asistenciaVo.getFechaFalta()+"");
+				asistenciaVo.setObservacionFalta(result.getString("observacion_falta"));
+				listaAsistencias.add(asistenciaVo);
+			}
+			
+			
+			conexion.desconectar();
+			
+		} catch (SQLException e) {
+			System.out.println("Error al obtener la lista de asistencias con el filtro por fecha: "+e.getMessage());
+			listaAsistencias = null;
+		}
+		
+		
+		return listaAsistencias;
+	}
 }
