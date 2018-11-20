@@ -260,53 +260,6 @@ public class EstudianteBean {
 		estudiante.setEditar(false);
 		
 	}
-	
-	/*private void enviarCorreoCambioEstado(EstudianteVo estudiante2) {
-		Properties propiedad = new Properties();
-		propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
-		propiedad.setProperty("mail.smtp.starttls.enable", "true");
-        propiedad.setProperty("mail.smtp.port", "587");
-        propiedad.setProperty("mail.smtp.auth", "true");
-		
-		Session sesion = Session.getDefaultInstance(propiedad);
-		
-		String correoEnvia = "adsisga@gmail.com";
-		String contraseña = "adsi1598667";
-		String destinatario = estudiante2.getEmail(); 
-		String asunto = "Cambio de Estado";
-		String mensaje = "Estimado(a)  "+estudiante2.getNombre()+"\n";
-		mensaje+="Su estado a sido cambiado a:  "+estudiante2.getEstado()+"\n\n";
-		mensaje+="A continuacion encontará los datos del cambio de estado: "+"\n\n";
-		mensaje+="    	Documento: "+estudiante2.getDocumento()+"\n\n";
-		mensaje+="    	Nombre: "+estudiante2.getNombre()+"\n\n";
-		mensaje+="    	Telefono: "+estudiante2.getTelefono()+"\n\n";
-		mensaje+="    	Estado: "+estudiante2.getEstado()+"\n\n";
-		mensaje+="Para verificar el cambio de estado ingrese a http://localhost:8080/SistemaGestionAsistencia/pages/login.jsf"+"\n\n\n	";
-		mensaje+="********NO RESPONDER - Mensaje Generado Automáticamente********";
-		
-		MimeMessage mail = new MimeMessage(sesion);
-		try {
-			mail.setFrom(new InternetAddress(correoEnvia));
-			mail.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
-			mail.setSubject(asunto);
-			mail.setText(mensaje);
-			
-			Transport transporte = sesion.getTransport("smtp");
-			transporte.connect(correoEnvia,contraseña);
-			transporte.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
-			transporte.close();
-			
-			System.out.println("Correos enviados exitosamente: "+destinatario);
-		
-		} catch (AddressException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}*/
 
 	public void eliminarEstudiante(EstudianteVo estudiante){
 		System.out.println("VA A ELIMINAR ESTUDIANTE");
