@@ -11,10 +11,9 @@ import javax.faces.model.SelectItem;
 
 import dao.EstudianteDao;
 import dao.GrupoDao;
-import dao.ProfesorDao;
+
 import dao.ProyectoDao;
 import vo.GrupoVo;
-import vo.ProfesorVo;
 import vo.ProyectoVo;
 @ManagedBean
 @ViewScoped
@@ -258,6 +257,7 @@ public class ProyectoBean {
 	public void setNombresEstudiantes(ArrayList<String> nombresEstudiantes) {
 		this.nombresEstudiantes = nombresEstudiantes;
 	}
+	
 	public boolean isConsultaGrupo() {
 		return consultaGrupo;
 	}

@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 public class GrupoVo {
 	
 	private String codigo;
+	private Integer codigoGrupo;
 	private String nombre;
 	private String directorGrupo;
 	private Date fechaInicioGrupo;
@@ -18,11 +19,12 @@ public class GrupoVo {
 	private String observacion;
 	private String estado;
 	private boolean editar;
-	
-	public GrupoVo(String codigo, String nombre, String directorGrupo, String fechaIni,
+		
+	public GrupoVo(String codigo, Integer codigoGrupo, String nombre, String directorGrupo, String fechaIni,
 			String fechaFin, String observacion, String estado, boolean editar) {
 		super();
 		this.codigo = codigo;
+		this.codigoGrupo = codigoGrupo;
 		this.nombre = nombre;
 		this.directorGrupo = directorGrupo;
 		this.fechaIni=fechaIni;
@@ -53,10 +55,19 @@ public class GrupoVo {
 	public String getCodigo() {
 		return codigo;
 	}
-
-	public void setCodigo(String codigoGrupo) {
-		this.codigo = codigoGrupo;
+	
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
+
+	public void setCodigoGrupo(Integer codigoGrupo) {
+		this.codigoGrupo = codigoGrupo;
+	}
+	
+	public Integer getCodigoGrupo() {
+		return codigoGrupo;
+	}
+	
 
 	public String getNombre() {
 		return nombre;
