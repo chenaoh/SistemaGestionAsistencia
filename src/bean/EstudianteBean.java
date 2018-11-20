@@ -158,13 +158,13 @@ public class EstudianteBean {
 		mensajeConfirmacion=estudianteDao.registrarEstudiante(estudiante);
 		if(mensajeConfirmacion!=null){
 			login.calcularPanelEstadisticas();
-			enviarCorreoDeRegistro(estudiante);
+			enviarCorreo(estudiante, 1);
 		}
 		estudiante=new EstudianteVo();
 	}
 	
 
-	private void enviarCorreoDeRegistro(EstudianteVo estudiante2) {
+	private void enviarCorreo(EstudianteVo estudiante2, int cod) {
 		Properties propiedad = new Properties();
 		propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
 		propiedad.setProperty("mail.smtp.starttls.enable", "true");
@@ -176,20 +176,42 @@ public class EstudianteBean {
 		String correoEnvia = "adsisga@gmail.com";
 		String contraseña = "adsi1598667";
 		String destinatario = estudiante2.getEmail(); 
-		String asunto = "Registro de Estudiante";
-		String mensaje = "Estimado(a)  "+estudiante2.getNombre()+"\n";
-		mensaje+="Usted fue registrado en la plataforma SGA(Sistema Gestion de Asistencias) \n\n";
-		mensaje+="A continuación encontará los datos del Registro: "+"\n\n";
-		mensaje+="    	Documento: "+estudiante2.getDocumento()+"\n\n";
-		mensaje+="    	Nombre: "+estudiante2.getNombre()+"\n\n";
-		mensaje+="    	Teléfono: "+estudiante2.getTelefono()+"\n\n";
-		mensaje+="    	Fecha de Nacimiento: "+estudiante2.getFecha()+"\n\n";
-		mensaje+="    	Sexo: "+estudiante2.getSexo()+"\n\n";
-		mensaje+="    	Email: "+estudiante2.getEmail()+"\n\n";
-		mensaje+="    	Dirección: "+estudiante2.getDireccion()+"\n\n";
-		mensaje+="    	Estado: "+estudiante2.getEstado()+"\n\n";
-		mensaje+="Para verificar su registro ingrese a http://localhost:8080/SistemaGestionAsistencia/pages/login.jsf"+"\n\n\n	";
-		mensaje+="********NO RESPONDER - Mensaje Generado Automáticamente********";
+		String asunto = "";
+		String mensaje="";
+		
+		switch (cod) {
+		case 1:
+			asunto = "Registro de Estudiante";
+			mensaje = "Estimado(a)  "+estudiante2.getNombre()+"\n";
+			mensaje+="Usted fue registrado en la plataforma SGA(Sistema Gestion de Asistencias) \n\n";
+			mensaje+="A continuación encontará los datos del Registro: "+"\n\n";
+			mensaje+="    	Documento: "+estudiante2.getDocumento()+"\n\n";
+			mensaje+="    	Nombre: "+estudiante2.getNombre()+"\n\n";
+			mensaje+="    	Teléfono: "+estudiante2.getTelefono()+"\n\n";
+			mensaje+="    	Fecha de Nacimiento: "+estudiante2.getFecha()+"\n\n";
+			mensaje+="    	Sexo: "+estudiante2.getSexo()+"\n\n";
+			mensaje+="    	Email: "+estudiante2.getEmail()+"\n\n";
+			mensaje+="    	Dirección: "+estudiante2.getDireccion()+"\n\n";
+			mensaje+="    	Estado: "+estudiante2.getEstado()+"\n\n";
+			mensaje+="Para verificar su registro ingrese a http://localhost:8080/SistemaGestionAsistencia/pages/login.jsf"+"\n\n\n	";
+			mensaje+="********NO RESPONDER - Mensaje Generado Automáticamente********";
+			break;
+		case 2:
+			asunto = "Cambio de Estado";
+			mensaje = "Estimado(a)  "+estudiante2.getNombre()+"\n";
+			mensaje+="Su estado a sido cambiado a:  "+estudiante2.getEstado()+"\n\n";
+			mensaje+="A continuacion encontará los datos del cambio de estado: "+"\n\n";
+			mensaje+="    	Documento: "+estudiante2.getDocumento()+"\n\n";
+			mensaje+="    	Nombre: "+estudiante2.getNombre()+"\n\n";
+			mensaje+="    	Telefono: "+estudiante2.getTelefono()+"\n\n";
+			mensaje+="    	Estado: "+estudiante2.getEstado()+"\n\n";
+			mensaje+="Para verificar el cambio de estado ingrese a http://localhost:8080/SistemaGestionAsistencia/pages/login.jsf"+"\n\n\n	";
+			mensaje+="********NO RESPONDER - Mensaje Generado Automáticamente********";
+			break;
+
+		default:
+			break;
+		}
 		
 		MimeMessage mail = new MimeMessage(sesion);
 		try {
@@ -230,16 +252,16 @@ public class EstudianteBean {
 		if(mensajeConfirmacion!=null){
 			if(estudiante.getEstado().equals("inactivo")){
 				System.out.println("ESTA PREGUNTANDO EL ESTADO");
-				enviarCorreoCambioEstado(estudiante);
+				enviarCorreo(estudiante, 2);
 			}else if(estudiante.getEstado().equals("activo")){
-				enviarCorreoCambioEstado(estudiante);
+				enviarCorreo(estudiante, 2);
 			}
 		}
 		estudiante.setEditar(false);
 		
 	}
 	
-	private void enviarCorreoCambioEstado(EstudianteVo estudiante2) {
+	/*private void enviarCorreoCambioEstado(EstudianteVo estudiante2) {
 		Properties propiedad = new Properties();
 		propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
 		propiedad.setProperty("mail.smtp.starttls.enable", "true");
@@ -284,7 +306,7 @@ public class EstudianteBean {
 			e.printStackTrace();
 		}
 		
-	}
+	}*/
 
 	public void eliminarEstudiante(EstudianteVo estudiante){
 		System.out.println("VA A ELIMINAR ESTUDIANTE");
