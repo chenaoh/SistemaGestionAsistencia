@@ -10,6 +10,7 @@ import java.util.HashMap;
 import conexion.Conexion;
 import vo.EstudianteVo;
 import vo.ProfesorVo;
+import vo.ProfesoresGruposVo;
 
 public class ProfesorDao {
 	
@@ -341,6 +342,94 @@ public class ProfesorDao {
 		}
 		
 		return cantidad;
+	}
+	
+	public ArrayList<String> obtenerIdProfesor(ArrayList<String> nombresProfesores) {
+		System.out.println("Nombres profesores: "+nombresProfesores);
+		System.out.println("*****Mapa profesores****: "+mapaProfesores);
+		ArrayList<String> listDocumentosProf = new ArrayList<>();
+		for (int i = 0; i < nombresProfesores.size(); i++) {
+			ProfesorVo miProfesor = mapaProfesores.get(nombresProfesores.get(i));
+			listDocumentosProf.add(miProfesor.getDocumento());
+		}
+		
+		return listDocumentosProf;
+	}
+	
+	public ArrayList<ProfesoresGruposVo> consultarProfesoresAsociados() {
+		
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		ProfesoresGruposVo profGrupos;
+		ArrayList<ProfesoresGruposVo> listaProfesoresGrupos = new ArrayList<>();
+		Conexion conexion = new Conexion();
+		
+		conn = conexion.getConnection();
+		
+		String consulta = "SELECT p.nombre as nombre, g.nombre as nombreG FROM grupo_profesores gp, profesor p, grupo g WHERE gp.cod_grupo = g.codigo AND gp.doc_profesor = p.documento ";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			result = statement.executeQuery();
+			
+			while(result.next()){
+				profGrupos = new ProfesoresGruposVo();
+				profGrupos.setCod_grupo(result.getString("nombreG"));
+				profGrupos.setDocProfesor(result.getString("nombre"));
+				listaProfesoresGrupos.add(profGrupos);
+			}
+			
+			conexion.desconectar();
+			
+			
+		} catch (SQLException e) {
+			System.out.println("Error al traer la lista de profesores asociados: "+e.getMessage());
+			listaProfesoresGrupos = null;
+		}
+		
+		return listaProfesoresGrupos;
+	}
+	
+	public String obtenerIdUnProfesor(String nombre) {
+		ProfesorVo miProfesor = mapaProfesores.get(nombre);
+		String doc = miProfesor.getDocumento();
+		return doc;
+	}
+
+	public ArrayList<String> obtenerNombres() {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		Conexion conexion = new Conexion();
+		ProfesorVo miProfesor;
+		ArrayList<String> listaNombres = new ArrayList<>();
+		
+		conn = conexion.getConnection();
+		
+		String consulta = "SELECT * FROM profesor";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			result = statement.executeQuery();
+			
+			while(result.next()==true){
+				miProfesor = new ProfesorVo();
+				miProfesor.setNombre(result.getString("nombre"));
+				listaNombres.add(miProfesor.getNombre());
+				
+			}
+			
+			conexion.desconectar();
+			
+		} catch (SQLException e) {
+			System.out.println("Error en la lista de los nombres de los profesores: "+e.getMessage());
+			listaNombres = null;
+		}
+		
+		return listaNombres;
 	}
 
 }
