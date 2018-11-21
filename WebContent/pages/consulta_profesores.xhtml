@@ -76,15 +76,35 @@
             		<h:column>
 						<f:facet name="header">Acciones</f:facet>
 						<h:commandLink action="#{profesorBean.editarProfesor(datos.documento)}"><i class="material-icons s12" jsf:rendered="#{loginBean.verAdmin}">create</i></h:commandLink>
-						<h:commandLink action="#{profesorBean.eliminarProfesor(datos)}" ><i class="material-icons s12" jsf:rendered="#{loginBean.verAdmin}">delete</i></h:commandLink>
+						<a class="waves-effect waves-light modal-trigger" href="#modal2" jsf:action="#{profesorBean.mandarObjeto(datos)}"><i class="material-icons s12" jsf:rendered="#{loginBean.verAdmin}">delete</i></a>
 						<h:commandLink action="#{profesorBean.perfilProfesor(datos.documento)}" ><i class="material-icons s12">account_circle</i></h:commandLink>
 					</h:column>
-            	
             	</h:dataTable>
+            	
              </form> 
-            </div>                 
-
+         </div> 
+         <h:form>
+         <div id="modal2" class="modal">
+                <div class="modal-content blue-grey lighten-5">
+                  <div class="card">
+                        <div class="card-action  lighten-1 white-text #263238 blue-grey darken-4">
+                            <h4>Eliminar</h4>
+                        </div>
+	                      <div class="row">
+	                        <div class="input-field col s12">
+	                       		 <i class="material-icons left">delete</i>
+	                            <p>¿Estas seguro que deseas eliminar el Profesor?</p>
+	                        </div>
+	                      </div>
+            
+		                 <div class="modal-footer">
+		                   <h:commandLink action="#{profesorBean.eliminarObjeto(1)}" value="SI" class="btn"/>
+		                   <h:commandLink action="#" value="NO" class="btn"/>
+		                 </div>
+	                </div>
+				</div>
+            </div>
+        </h:form>
+            
 	</ui:define>
-
-
 </ui:composition>
