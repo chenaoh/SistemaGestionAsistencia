@@ -312,5 +312,107 @@ public class GrupoDao {
 		
 		return cantidad;
 	}
+	
+	public String registrarAsociacionDeProfesores(ArrayList<String> idProfesor, String idGrupo) {
+		String resultado = "";
+		Connection conn = null;
+		PreparedStatement statement = null;
+		Conexion conexion  = new Conexion();
+		
+		conn = conexion.getConnection();
+		
+		
+		
+		try {
+			
+			for (int i = 0; i < idProfesor.size(); i++) {
+				System.out.println("Profesor "+i+"-"+idProfesor.get(i));
+				String consulta = "INSERT INTO grupo_profesores VALUES (?,?)";
+				statement = conn.prepareStatement(consulta);
+				statement.setString(1, idGrupo);
+				statement.setString(2, idProfesor.get(i));
+				statement.execute();
+			}
+			
+			resultado = "ok";
+			
+			
+		} catch (SQLException e) {
+			System.out.println("Error al registrar la asociacion: "+e.getMessage());
+			resultado = "error";
+		}
+		
+		conexion.desconectar();
+		
+		return resultado;
+		
+	}
+	
+	public String consultarAsociacion(ArrayList<String> idProfesor) {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		Conexion conexion = new Conexion();
+		ResultSet result = null;
+		String res="";
+		
+		conn = conexion.getConnection();
+		
+		try {
+			
+			for (int i = 0; i < idProfesor.size(); i++) {
+				String consulta = "SELECT * FROM grupo_profesores WHERE doc_profesor = ?";
+				statement = conn.prepareStatement(consulta);
+				statement.setString(1, idProfesor.get(i));
+				result = statement.executeQuery();
+				
+				if(result.next()==true) {
+					res="existe";
+					break;
+				}else {
+					res="no existe";
+				}
+				
+				System.out.println("REspuesta de asocicacion: ******jjsdfhsdjfd"+res);
+				
+			}
+			
+			conexion.desconectar();
+			
+		} catch (SQLException e) {
+			System.out.println("Error al verificar la existencia de la asociacion: "+e.getMessage());
+		}
+		
+		return res;
+	}
+	
+	public String desasociarProfesores(String doc) {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		Conexion conexion = new Conexion();
+		String res ="";
+		
+		conn = conexion.getConnection();
+		
+		String consulta = "DELETE FROM grupo_profesores WHERE doc_profesor = ?";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			statement.setString(1, doc);
+			statement.execute();
+		
+			res = "ok";
+			
+			
+			
+		} catch (SQLException e) {
+			System.out.println("Error al desasociar al profesor: "+e.getMessage());
+			res = "error";
+		}
+		
+		conexion.desconectar();
+		
+		return res;
+	}
 
 }
