@@ -34,6 +34,11 @@ public class GrupoBean implements Serializable{
 	private String mensajeConfirmacion;
 	private GrupoDao grupoDao;
 	private String grupoId;
+	private ProfesorDao profesorDAO;
+	private String mensaje;
+	private ArrayList<String>profesores;
+	private ArrayList<String> nombresProfesores;
+	ProfesorBean profesorBean;
 	FacesContext context = FacesContext.getCurrentInstance();
 	HttpSession session = (HttpSession)context.getExternalContext().getSession(true);
 	
@@ -84,6 +89,10 @@ public class GrupoBean implements Serializable{
 		itemGrupos=new ArrayList<SelectItem>();
 		listaEstudiantesDisponibles=new ArrayList<>();
 		listaEstudiantesAsociados=new ArrayList<>();
+		profesores = new ArrayList<>();
+		nombresProfesores = new ArrayList<>();
+		profesorDAO = new ProfesorDao();
+		profesorBean = new ProfesorBean();
 		cargarGrupos();	
 		cargarProfesores();
 	}
@@ -92,22 +101,14 @@ public class GrupoBean implements Serializable{
 			
 	}
 	
-	private void cargarProfesores() {
-		ProfesorDao profesorDao=new ProfesorDao();
-		ArrayList<ProfesorVo> listaProfesores;
-		listaProfesores=profesorDao.obtenerListaProfesores();
-		
-		if (listaProfesores.size()>0) {
-				
-			for (int i = 0; i < listaProfesores.size(); i++) {
-				itemProfesores.add(new SelectItem(listaProfesores.get(i).getDocumento(),listaProfesores.get(i).getNombre()));
-				mapaProfesores.put(listaProfesores.get(i).getDocumento(),listaProfesores.get(i));
-			}
-			
-		}else{
-			listaProfesores=new ArrayList<>();
-			mensajeConfirmacion="Actualmente no existen profesores registrados para asociarlos al grupo";
-		}
+	public void cargarProfesores(){
+		System.out.println("ESTA Cargando los profesores");
+		setProfesores(profesorDAO.obtenerNombres());
+		System.out.println("PROFESORES: "+getProfesores());
+		ArrayList<ProfesorVo> listProf = profesorDAO.obtenerListaProfesores();
+		ArrayList<GrupoVo> listGrupos = grupoDao.obtenerListaGrupos();
+		profesorDAO.cargarDatosHashMapProfesores(listProf);
+		grupoDao.cargarDatosHasgMap(listGrupos);
 	}
 	
 	private void cargarEstudiantes() {
@@ -282,6 +283,40 @@ public class GrupoBean implements Serializable{
 		return "Perfil_Grupo.jsf";
 	}
 	
+	public void asociarProfesores(){
+		ArrayList<String> idProfesor=profesorDAO.obtenerIdProfesor(getNombresProfesores());
+		System.out.println("IDS: "+idProfesor);
+		String res = grupoDao.consultarAsociacion(idProfesor);	
+		if(res.equals("no existe")) {
+			registrarAsociacionDeProfesores(idProfesor,getGrupoId());
+			profesorBean.cargarProfesoresAsociados();
+		}else {
+			setMensaje("Uno o los profesores ya se encuentras asociados a un grupo");
+		}
+	}
+	
+	public void desasociarProfesores(String nombre){
+		String doc = profesorDAO.obtenerIdUnProfesor(nombre);
+		System.out.println("Documento profesor***: "+doc);
+		
+		String res = grupoDao.desasociarProfesores(doc);
+		
+		if(res.equals("ok")){
+			profesorBean.cargarProfesoresAsociados();
+		}
+	}
+	
+
+	private void registrarAsociacionDeProfesores(ArrayList<String> idProfesor, String idGrupo) {
+		String res = grupoDao.registrarAsociacionDeProfesores(idProfesor,idGrupo);
+		if(res.equals("ok")){
+			setMensaje("Registro Exitoso!!!");
+		}else{
+			setMensaje("Registro Erroneo");
+		}
+		
+	}
+	
 	
 	public GrupoVo getGrupo() {
 		return grupo;
@@ -384,6 +419,29 @@ public class GrupoBean implements Serializable{
 
 	public void setNombreGrupo(String nombreGrupo) {
 		this.nombreGrupo = nombreGrupo;
+	}
+	
+	public ArrayList<String> getNombresProfesores() {
+		return nombresProfesores;
+	}
+	
+	public void setNombresProfesores(ArrayList<String> nombresProfesores) {
+		this.nombresProfesores = nombresProfesores;
+	}
+	
+	public String getMensaje() {
+		return mensaje;
+	}
+	private void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+	
+	public ArrayList<String> getProfesores() {
+		return profesores;
+	}
+	
+	public void setProfesores(ArrayList<String>profesores) {
+		this.profesores = profesores;
 	}
 	
 }

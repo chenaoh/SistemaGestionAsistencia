@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 import dao.ProfesorDao;
 import vo.EstudianteVo;
 import vo.ProfesorVo;
+import vo.ProfesoresGruposVo;
 @ManagedBean
 @ViewScoped
 public class ProfesorBean {
@@ -35,11 +36,16 @@ public class ProfesorBean {
 	FacesContext context = FacesContext.getCurrentInstance();
 	HttpSession session = (HttpSession)context.getExternalContext().getSession(true);
 	LoginBean login  = new LoginBean();
+	
+	private ArrayList<String> nombresProfesores = new ArrayList<>();
+	private static ArrayList<ProfesoresGruposVo> listaProfesoresAsociados = new ArrayList<>();
 
 	public ProfesorBean(){
 		profesor=new ProfesorVo();
 		profesorDao=new ProfesorDao();
 		cargarProfesores();
+		cargarNombres();
+		cargarProfesoresAsociados();
 	}
 	
 	public void filtrarProfesor(){
@@ -71,6 +77,19 @@ public class ProfesorBean {
 		}else{
 			System.out.println("PROFESOR= "+profesor);
 		}	
+	}
+	
+	public void cargarProfesoresAsociados(){
+		setListaProfesoresAsociados(profesorDao.consultarProfesoresAsociados());
+	}
+	
+	public void cargarNombres() {
+		nombresProfesores.clear();
+		nombresProfesores = profesorDao.obtenerNombres();
+		
+		if (listaProfesores==null) {
+			mensajeConfirmacion="No se pudo conectar, verifique que la BD esté iniciada.";
+		}
 	}
 	
 	public void registrarProfesor(){
@@ -233,5 +252,13 @@ public class ProfesorBean {
 
 	public void setNomProf(String nomProf) {
 		this.nomProf = nomProf;
+	}
+	
+	public ArrayList<ProfesoresGruposVo> getListaProfesoresAsociados() {
+		return listaProfesoresAsociados;
+	}
+	
+	private void setListaProfesoresAsociados(ArrayList<ProfesoresGruposVo> listaProfesoresAsociados) {
+		this.listaProfesoresAsociados = listaProfesoresAsociados;		
 	}
 }
