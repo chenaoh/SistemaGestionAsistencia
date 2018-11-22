@@ -32,7 +32,7 @@
                   </div>
 
                   <div class="input-field col m6">
-                    <input id="telefono" type="text" class="validate" jsf:value="#{profesor.telefono}" />
+                    <input id="telefono" type="number" class="validate" jsf:value="#{profesor.telefono}" />
                     <label for="telefono">Telefono</label>
                   </div>  
 
@@ -41,8 +41,9 @@
                     <label for="profesion">Profesion</label>
                   </div>  
                   <div class="input-field col m6">
-                    <input id="email" type="text" class="validate" jsf:value="#{profesor.email}" />
-                    <label for="email">Email</label>
+                     <input id="email_inline" type="email" class="validate" jsf:value="#{profesor.email}" />
+                     <label for="email">Email</label>
+                     <span class="helper-text" data-error="Error" data-success="Correcto"></span>
                   </div>  
 
                   <div class="input-field col m4">
