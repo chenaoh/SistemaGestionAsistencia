@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<ui:composition
+	  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      template="/templates/plantilla.xhtml"> 
+
+<ui:param name="tituloPagina" value="Perfil Usuario" />	
+<ui:param name="nombrePagina" value="Perfil Usuario." />	
+
+<ui:define name="contenido">
+			<br></br>
+          	<div class="card-panel">
+          		<div class="row">       
+                 
+                  <div class="input-field col m3">
+                    <input id="documento" type="text" style="color: black;" class="validate" jsf:value="#{perfilBean.perfil.documento}" disabled="true"/>
+                    <label for="documento" style="color: black;">Documento</label>
+              	  </div>
+              	  
+              	  <div class="input-field col m9">
+                    <input id="nombre" type="text" style="color: black;" class="validate" jsf:value="#{perfilBean.perfil.nombre}" disabled="true"/>
+                    <label for="nombre" style="color: black;">Nombre</label>
+                  </div>
+
+                  <div class="input-field col m3">
+                    <input id="telefono" type="text" style="color: black;" class="validate" jsf:value="#{perfilBean.perfil.email}" disabled="true"/>
+                    <label for="telefono" style="color: black;">Email</label>
+                  </div>  
+
+                  <div class="input-field col m5">
+                    <input id="email" type="text" style="color: black;" class="validate" jsf:value="#{perfilBean.perfil.telefono}" disabled="true"/>
+                    <label for="email" style="color: black;">Telefono</label>
+                  </div>  
+
+                  <div class="input-field col m4">
+	                  <div class="input-field col m2" >
+	                  	 <label style="color: black;">Sexo</label>
+	                  </div>
+	                  
+	                  <div class="input-field col m5" >
+	                  	<h:selectOneMenu value="#{perfilBean.perfil.sexo}"  disabled="true">
+	                   	<f:selectItem itemValue="M" itemLabel="Masculino" />
+	                   	<f:selectItem itemValue="F" itemLabel="Femenino"/>
+	                   </h:selectOneMenu>
+	                  </div>
+                  </div>
+                  
+
+                  <div class="input-field col m5">
+                    <input id="text" type="text" style="color: black;" class="validate" jsf:value="#{perfilBean.perfil.tipo}" disabled="true"/>
+                    <label for="text" style="color: black;">Tipo</label>
+                  </div> 
+
+                  
+                  <div class="input-field col m4">
+	                  <div class="input-field col m2">
+	                  	 <label style="color: black;">Estado</label>
+	                  </div>
+	                  
+	                  <div class="input-field col m5">
+                  		<h:selectOneMenu value="#{perfilBean.perfil.estado}" disabled="true" >
+		                <f:selectItem itemValue="activo" itemLabel="Activo" />
+		                <f:selectItem itemValue="inactivo" itemLabel="Inactivo"/>
+	                   </h:selectOneMenu>
+	                  </div>
+                  </div> 
+                  
+                  <div class="input-field col m4">
+                  	<a href="#!" class="btn">Cambiar Contraseña</a>
+                  </div>         
+                      
+    			
+   			</div>  
+   			</div>   			                    
+	
+
+	</ui:define>
+
+
+</ui:composition>

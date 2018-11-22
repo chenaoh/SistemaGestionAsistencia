@@ -43,6 +43,8 @@ public class LoginBean {
 	private String cantEstudiantes;
 	private String cantFaltas;
 	private String cantProyectos;
+	private String documento;
+	private PerfilBean perfilBean;
 	
 	private AsistenciaBean asistenciaBean;
 	
@@ -61,6 +63,7 @@ public class LoginBean {
 		miProfesorDao=new ProfesorDao();
 
 		asistenciaBean=new AsistenciaBean();
+		perfilBean=new PerfilBean();
 	}
 	
 	public String validarIngreso(){
@@ -70,8 +73,11 @@ public class LoginBean {
 		System.out.println("*****************************************************");
 		System.out.println("Documento: "+miPersonaVo.getDocumento());
 		System.out.println("Nombre: "+miPersonaVo.getPassword());
+		setDocumento(miPersonaVo.getDocumento());
 		
 		PersonaVo persona=null;
+		
+		perfilBean.recibirDocumento(miPersonaVo.getDocumento(), tipoUsuario);
 		
 		if (tipoUsuario.equals("profesor")) {
 			
@@ -298,6 +304,14 @@ public class LoginBean {
 
 	public void setCantProyectos(String cantProyectos) {
 		this.cantProyectos = cantProyectos;
+	}
+
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
 	}
 
 	
