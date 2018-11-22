@@ -82,9 +82,10 @@
                                <div class="collapsible-header"><img class="icono3" src="../resources/img/grupo3.png"/>Grupos</div>
                                 <div class="collapsible-body">
                                   <ul>
-                                   <li><a href="registro_grupos.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
+                                   <li jsf:rendered="#{loginBean.ver}"><a href="registro_grupos.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
                                    <li><a href="consulta_grupos.jsf"><i class="material-icons">search</i>Consultar</a></li>
-                                   <li><a href="asociacion_grupo_estudiantes.jsf"><i class="material-icons">compare_arrows</i>Asociar Estudiantes</a></li>
+                                   <li jsf:rendered="#{loginBean.ver}"><a href="asociacion_grupo_estudiantes.jsf"><i class="material-icons">compare_arrows</i>Asociar Estudiantes</a></li>
+                                   <li><a href="asociacion_grupo_profesores.jsf"><i class="material-icons">compare_arrows</i>Asociar Profesores</a></li>
                                    </ul>
                                 </div>
                               </li>
@@ -92,7 +93,7 @@
                                 <div class="collapsible-header"><img class="icono3" src="../resources/img/iconoEstudiantes.png"/>Estudiantes</div>
                                 <div class="collapsible-body">
                                   <ul>
-                                   <li><a href="registro_estudiante.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
+                                   <li jsf:rendered="#{loginBean.ver}"><a href="registro_estudiante.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
                                    <li><a href="consulta_estudiantes.jsf"><i class="material-icons">search</i>Consultar</a></li>
                                    </ul>
                                 </div>
@@ -101,7 +102,7 @@
                                 <div class="collapsible-header"><img class="icono3" src="../resources/img/iconoProfesor.png"/>Profesores</div>
                                 <div class="collapsible-body">
                                   <ul>
-                                   <li><a href="registro_profesor.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
+                                   <li jsf:rendered="#{loginBean.verAdmin}"><a href="registro_profesor.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
                                    <li><a href="consulta_profesores.jsf"><i class="material-icons">search</i>Consultar</a></li>
                                    </ul>
                                 </div>
@@ -110,14 +111,14 @@
                                 <div class="collapsible-header"><img class="icono3" src="../resources/img/proyecto.png"/>Proyectos</div>
                                 <div class="collapsible-body">
                                   <ul>
-                                   <li><a href="registro_proyectos.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
+                                   <li jsf:rendered="#{loginBean.ver}"><a href="registro_proyectos.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
                                    <li><a href="consulta_proyectos.jsf"><i class="material-icons">search</i>Consultar</a></li>
-                                   <li><a href="asociacion_proyecto_estudiantes.jsf"><i class="material-icons">compare_arrows</i>Asociar Estudiantes</a></li>
+                                   <li jsf:rendered="#{loginBean.ver}"><a href="asociacion_proyecto_estudiantes.jsf"><i class="material-icons">compare_arrows</i>Asociar Estudiantes</a></li>
                                    </ul>
                                 </div>
                               </li>
                               <li>
-                                <div class="collapsible-header"><img class="icono3" src="../resources/img/asistencia1.png"/>Asistencia</div>
+                                <div class="collapsible-header" jsf:rendered="#{loginBean.ver}"><img class="icono3" src="../resources/img/asistencia1.png"/>Asistencia</div>
                                 <div class="collapsible-body">
                                   <ul>
                                    <li><a href="registro_asistencia.jsf"><i class="material-icons">add_circle</i>Registrar</a></li>
@@ -125,6 +126,9 @@
                                    </ul>
                                 </div>
                               </li>
+                              
+                              
+                              
                                <li>
                                 <div class="collapsible-header"><img class="icono3" src="../resources/img/notificacion.png"/>Archivos</div>
                                 <div class="collapsible-body">
@@ -140,8 +144,66 @@
                       <a href="#" data-activates="slide-out" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
 	 
 	 
-               <!-- Modal Structure -->
+                <!-- Modal Structure -->
                   <div id="modal1" class="modal">
+                    <div class="modal-content blue-grey lighten-5">
+                      <div class="card">
+                            <div class="card-action  lighten-1 white-text #263238 blue-grey darken-4">
+                                <h4>Menu de Ayuda</h4>
+                            </div>
+                          
+                        
+                          <div class="row">
+                            <div class="input-field col s12">
+                           		 <i class="material-icons left">help_outline</i>
+                                <p>Aqui encontraras la ayuda necesaria para poder utilizar adecuadamente el programa de asistencia</p>
+                                <HR />
+                                 <p>A continuacion veremeos las diferentes opciones y funcionalidades que nos ofrece </p>
+                                
+                            </div>
+                          </div>
+                          
+                           <div class="row">
+                            <div class="input-field col s12">
+                            <li><h5>Grupos</h5><a class="waves-effect #37474f blue-grey darken-3 btn modal-trigger" href="#modal2" ><i class="material-icons left">help_outline</i>Descripcion</a></li>
+                            </div>
+                          </div>
+                          
+                           <div class="row">
+                            <div class="input-field col s12">
+                            <li><h5>Estudiantes</h5><a class="waves-effect #37474f blue-grey darken-3 btn modal-trigger" href="#modal3" ><i class="material-icons left">help_outline</i>Descripcion</a></li>
+                            </div>
+                          </div>
+                          
+                           <div class="row">
+                            <div class="input-field col s12">
+                            <li><h5>Profesores</h5><a class="waves-effect #37474f blue-grey darken-3 btn modal-trigger" href="#modal4" ><i class="material-icons left">help_outline</i>Descripcion</a></li>
+                            </div>
+                          </div>
+                          
+                           <div class="row">
+                            <div class="input-field col s12">
+                            <li><h5>Proyectos</h5><a class="waves-effect #37474f blue-grey darken-3 btn modal-trigger" href="#modal5" ><i class="material-icons left">help_outline</i>Descripcion</a></li>
+                            </div>
+                          </div>
+                          
+                           <div class="row">
+                            <div class="input-field col s12">
+                            <li><h5>Asistencia</h5><a class="waves-effect #37474f blue-grey darken-3 btn modal-trigger" href="#modal6" ><i class="material-icons left">help_outline</i>Descripcion</a></li>
+                            </div>
+                          </div>
+                          
+                          
+                
+	                    <div class="modal-footer">
+	                      <a class="modal-action modal-close waves-effect #37474f blue-grey darken-3 btn" href="#">OK</a>
+	                    </div>
+
+                    	</div>
+ 					</div>
+                  </div>
+                   
+                   <div id="modal2" class="modal">
                     <div class="modal-content blue-grey lighten-5">
                       <div class="card">
                             <div class="card-action  lighten-1 white-text #263238 blue-grey darken-4">
@@ -151,13 +213,195 @@
                         
                           <div class="row">
                             <div class="input-field col s12">
-                           		 <i class="material-icons left">help_outline</i>
-                                <p>Navegue por el menú lateral o directamente desde la página de inicio para acceder a las diferentes opciones</p>
+                           		 <i class="medium material-icons left">help_outline</i>
+                                <h5>Grupos</h5>
+                                <HR />
+                                 <p>En grupos podras</p>
+                                 <li>registrar</li>
+                                 <li>actualizar</li>
+                                 <li>consultar</li>
+                                 <li>asociar estudiantes</li>
+                                 <p>-En grupos tendremos tres botones en los cuales podremos visualizar las diferentes acciones que podemos realizar</p>
+                                 <h5>1.Registrar grupo</h5>
+                                  <p>En registrar grupo visualizaremos los campos correspondientes para ingresar la informacion que vamos a utilizar
+                                  para el regisro de grupo. Tendremos 5 campos, el primer campo es 'NOMBRE' aqui escrbimos el nombre del grupo que quremos. el segundo campo es 'codigo' aqui escribimos el codigo idendificador del grupo en cual debe ser unico. el tercer campo es 'fecha inicio' aqui escribimos la fecha cunado se creo el grupo y el tercer campo es 'fecha fin' aqui escribimos cuando el grupo termina su funcionalidad.
+                                  y por ultimo tendremos un campo opcion 'director' donde elegimos a donde dirigo el grupo </p>
+                             
+                                 <h5>2.Consulta grupos</h5>
+                                  <p>En consultar grupo visualizaremos una tabla donde podremos consultar los grupos. En esta tabla tendremos varias opciones representados con iconos, en estos podemos editar que es un icono de un lapiz, el otro el eliminar un icono de un bote de basura y el otro de guardar que aparece cuando queremos editar y es un icono de un disco </p>
+                             
+                              <h5>3.Asociar estudiantes</h5>
+                               <p>En asociar visualizaremos los campos correspondientes para ingresar la informacion que vamos a utilizar
+                                  para la asociacion del estudiante al grupo. Tendremos 3 campos y una tabla donde se mostara la asociacion, el primer campo es 'proyectos' donde puedes elegir a que proyecto quieres asociar el estudiante y el segundo 'estudiantes' donde podras elegir el estudiante que vas asociar al proyecto.</p>
+                       
+                             
+                                
+                              
+                                 
+                               
+                             
+                                
                             </div>
                           </div>
-                
 	                    <div class="modal-footer">
-	                      <a class="modal-action modal-close waves-effect #37474f blue-grey darken-3 btn" href="#">Aceptar</a>
+	                      <a class="modal-action modal-close waves-effect #37474f blue-grey darken-3 btn" href="#">OK</a>
+	                    </div>
+
+                    	</div>
+ 					</div>
+                  </div>
+                  
+                    <div id="modal3" class="modal">
+                    <div class="modal-content blue-grey lighten-5">
+                      <div class="card">
+                            <div class="card-action  lighten-1 white-text #263238 blue-grey darken-4">
+                                <h4>Ayuda</h4>
+                            </div>
+                          
+                        
+                          <div class="row">
+                            <div class="input-field col s12">
+                           		 <i class="medium material-icons left">help_outline</i>
+                                <h5>Estudiantes</h5>
+                                <HR />
+                                 <p>En estudiantes podras</p>
+                                 <li>registrar</li>
+                                 <li>actualizar</li>
+                                 <li>consultar</li>
+                                  <p>-En estudiantes tendremos dos botones en los cuales podremos visualizar las diferentes acciones que podemos realizar</p>
+                                 <h5>1.Registrar estudiantes</h5>
+                                  <p>En registrar estudiante visualizaremos los campos correspondientes para ingresar la informacion que vamos a utilizar
+                                  para el regisro del estudiante. Tendremos 7 campos, el primer campo es 'Documento' aqui escribimos el documento del estudiante a registrar. el segundo campo es 'Nombre' aqui escribimos nombre completo del estudiante. el tercer campo es 'email' aqui escribimos el correo electronico del estudiante.el cuarto campo es 'Direccion' aqui escribimos lugar donde vive el estudiante.
+                                  el quinto campo es 'Telefono' aqui escrbimos el telefono del estudiante. el sesto campo es 'fecha de nacimiento' aqui escribimos la fecha de nacimiento del estudiante, y el ultimo campo 'sexo' es de selecion multiple aqui eleGimos el sexo correspondiente al estudiante.</p>
+                             
+                                 <h5>2.Consulta estudiantes</h5>
+                                  <p>En consultar estudiante visualizaremos una tabla donde podremos consultar los estudinates registrados. En esta tabla tendremos varias opciones representados con iconos, en estos podemos editar estudiante que es un icono de un lapiz,podemos eliminar estudiante que es un icono de un bote de basura y por ultimo guardar estudiante que aparece cuando queremos editar y es un icono de un disco.</p>
+                 
+
+                            </div>
+                          </div>
+	                    <div class="modal-footer">
+	                      <a class="modal-action modal-close waves-effect #37474f blue-grey darken-3 btn" href="#">OK</a>
+	                    </div>
+
+                    	</div>
+ 					</div>
+                  </div>
+                  
+                   <div id="modal4" class="modal">
+                    <div class="modal-content blue-grey lighten-5">
+                      <div class="card">
+                            <div class="card-action  lighten-1 white-text #263238 blue-grey darken-4">
+                                <h4>Ayuda</h4>
+                            </div>
+                          
+                        
+                          <div class="row">
+                            <div class="input-field col s12">
+                           		 <i class="medium material-icons left">help_outline</i>
+                                <h5>Profesores</h5>
+                                <HR />
+                                 <p>En profesores podras</p>
+                                 <li>registrar</li>
+                                 <li>actualizar</li>
+                                 <li>consultar</li>
+                                   <p>-En profesores tendremos dos botones en los cuales podremos visualizar las diferentes acciones que podemos realizar</p>
+                                 <h5>1.Registrar profesor</h5>
+                                  <p>En registrar profesor visualizaremos los campos correspondientes para ingresar la informacion que vamos a utilizar
+                                  para el regisro del profesor. Tendremos 9 campos, el primer campo es 'Documento' aqui escribimos el documento del profesor a registrar. el segundo campo es 'Nombre' aqui escribimos nombre completo del profesor.el tercer campo es 'profesion' aqui escribimos la profesion del profesor .el cuarto campo es 'email' aqui escribimos el correo electronico del profesor.el quinto campo es 'Telefono' aqui escrbimos el telefono del estudiante. el sesto campo es 'sexo' aqui econtraras la opciones sexo done debes elegir una de acuerdo al usuario. el septimo campo es 'tipo' aqui elegiras que tipo de usuario eres. el octavo campo 'perfil' aqui escribimos una pequeña descripcion del profesor.
+                                  y por ultimo el campo 'horarios asesorias' aqui escribimos el horario de disponibilidad del profesor.
+                                  </p>
+                             
+                                 <h5>2.Consulta profesores</h5>
+                                  <p>En consultar estudiante visualizaremos una tabla donde podremos consultar los profesores registrados. En esta tabla tendremos varias opciones representados con iconos, en estos podemos editar el profesor que es un icono de un lapiz,podemos eliminar el profesor que es un icono de un bote de basura y por ultimo guardar el profesor que aparece cuando queremos editar y es un icono de un disco.</p>
+                 
+                                 
+
+                            </div>
+                          </div>
+	                    <div class="modal-footer">
+	                      <a class="modal-action modal-close waves-effect #37474f blue-grey darken-3 btn" href="#">OK</a>
+	                    </div>
+
+                    	</div>
+ 					</div>
+                  </div>
+                  
+                    <div id="modal5" class="modal">
+                    <div class="modal-content blue-grey lighten-5">
+                      <div class="card">
+                            <div class="card-action  lighten-1 white-text #263238 blue-grey darken-4">
+                                <h4>Ayuda</h4>
+                            </div>
+                          
+                        
+                          <div class="row">
+                            <div class="input-field col s12">
+                           		 <i class="medium material-icons left">help_outline</i>
+                                <h5>Proyectos</h5>
+                                <HR />
+                                 <p>En proyectos podras</p>
+                                 <li>registrar</li>
+                                 <li>actualizar</li>
+                                 <li>consultar</li>
+                                 <li>asociar estudiantes</li>
+                                   <p>-En profesores tendremos tres botones en los cuales podremos visualizar las diferentes acciones que podemos realizar</p>
+                                 <h5>1.Registrar</h5>
+                                  <p>En registrar proyecto visualizaremos los campos correspondientes para ingresar la informacion que vamos a utilizar
+                                  para el regisro del proyecto. Tendremos 4 campos, el primer campo es 'numero' aqui escribimos el numero identidicador del proyecto. el segundo es 'nombre' pondremos nombre del proyecto. el tercer es 'grupo' aqui elegimos a que grupo pertenecera el proyecto y por ultimo 'descripcion' aqui escribimos descripcion corta del proyecto.</p>
+                             
+                                 <h5>2.Consultar</h5>
+                                  <p>En consultar proyecto visualizaremos una tabla donde podremos consultar los profesores registrados. En esta tabla tendremos varias opciones representados con iconos, en estos podemos editar el profesor que es un icono de un lapiz,podemos eliminar el profesor que es un icono de un bote de basura y por ultimo guardar el profesor que aparece cuando queremos editar y es un icono de un disco.</p>
+                 
+                                  <h5>3.Asociar</h5>
+                                  <p>En asociar visualizaremos los campos correspondientes para ingresar la informacion que vamos a utilizar
+                                  para la asociacion del estudiante al proyecto. Tendremos 3 campos y una tabla donde se mostara la asociacion, el primer campo es 'proyectos' donde puedes elegir a que proyecto quieres asociar el estudiante y el segundo 'estudiantes' donde podras elegir el estudiante que vas asociar al proyecto.</p>
+                       
+                 
+
+                            </div>
+                          </div>
+	                    <div class="modal-footer">
+	                      <a class="modal-action modal-close waves-effect #37474f blue-grey darken-3 btn" href="#">OK</a>
+	                    </div>
+
+                    	</div>
+ 					</div>
+                  </div>
+                  
+                  <div id="modal6" class="modal">
+                    <div class="modal-content blue-grey lighten-5">
+                      <div class="card">
+                            <div class="card-action  lighten-1 white-text #263238 blue-grey darken-4">
+                                <h4>Ayuda</h4>
+                            </div>
+                          
+                        
+                          <div class="row">
+                            <div class="input-field col s12">
+                           		 <i class="medium material-icons left">help_outline</i>
+                                <h5>Asistencia</h5>
+                                <HR />
+                                 <p>En asistencia podras</p>
+                                 <li>registrar</li>
+                                 <li>consultar</li>
+                                   <p>-En Asitencia tendremos dos botones en los cuales podremos visualizar las diferentes acciones que podemos realizar</p>
+                                 <h5>1.Registrar asistencia</h5>
+                                  <p>En registrar asistencia visualizaremos los campos correspondientes para ingresar la informacion que vamos a utilizar
+                                  para el regisro del profesor. Tendremos 3 campos, el primer campo esta todos los grupos registrados y podremos elegir un para realizar el registro de asistencia.
+                                  el segundo campo es observacion donde podemos escrbir alguna observacion de la asistencia </p>
+                             
+                                 <h5>2.Consultar asistencia</h5>
+                                  <p>En consultar estudiante visualizaremos una tabla donde podremos consultar los profesores registrados. En esta tabla tendremos varias opciones representados con iconos, en estos podemos editar el profesor que es un icono de un lapiz,podemos eliminar el profesor que es un icono de un bote de basura y por ultimo guardar el profesor que aparece cuando queremos editar y es un icono de un disco.</p>
+                 
+                                 
+                                
+                                 
+
+                            </div>
+                          </div>
+	                    <div class="modal-footer">
+	                      <a class="modal-action modal-close waves-effect #37474f blue-grey darken-3 btn" href="#">OK</a>
 	                    </div>
 
                     	</div>

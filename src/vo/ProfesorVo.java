@@ -5,7 +5,7 @@ public class ProfesorVo extends PersonaVo{
 	private String profesion;
 	private String perfil;
 	private String asesoria;	
-	
+	private String x;
 	public ProfesorVo(){
 		
 	}
@@ -32,6 +32,14 @@ public class ProfesorVo extends PersonaVo{
 
 	public void setAsesoria(String asesoria) {
 		this.asesoria = asesoria;
+	}
+	
+	public String getX() {
+		return x;
+	}
+
+	public void setX(String x) {
+		this.x = x;
 	}
 
 	

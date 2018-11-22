@@ -5,10 +5,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Properties;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import dao.EstudianteDao;
@@ -28,6 +36,7 @@ public class EstudianteBean {
 	private GrupoDao grupoDao;
 	private String nombreEstu;
 	private String grupo;
+	private String x;
 	private boolean tipoUser;
 	
 	private ArrayList<String> nombresEstudiantes =  new ArrayList<>();
@@ -150,15 +159,91 @@ public class EstudianteBean {
 		mensajeConfirmacion=estudianteDao.registrarEstudiante(estudiante);
 		if(mensajeConfirmacion!=null){
 			login.calcularPanelEstadisticas();
+			enviarCorreo(estudiante, 1);
 		}
 		estudiante=new EstudianteVo();
 	}
 	
 
+	private void enviarCorreo(EstudianteVo estudiante2, int cod) {
+		Properties propiedad = new Properties();
+		propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
+		propiedad.setProperty("mail.smtp.starttls.enable", "true");
+        propiedad.setProperty("mail.smtp.port", "587");
+        propiedad.setProperty("mail.smtp.auth", "true");
+		
+		Session sesion = Session.getDefaultInstance(propiedad);
+		
+		String correoEnvia = "adsisga@gmail.com";
+		String contraseña = "adsi1598667";
+		String destinatario = estudiante2.getEmail(); 
+		String asunto = "";
+		String mensaje="";
+		
+		switch (cod) {
+		case 1:
+			asunto = "Registro de Estudiante";
+			mensaje = "Estimado(a)  "+estudiante2.getNombre()+"\n";
+			mensaje+="Usted fue registrado en la plataforma SGA(Sistema Gestion de Asistencias) \n\n";
+			mensaje+="A continuación encontará los datos del Registro: "+"\n\n";
+			mensaje+="    	Documento: "+estudiante2.getDocumento()+"\n\n";
+			mensaje+="    	Nombre: "+estudiante2.getNombre()+"\n\n";
+			mensaje+="    	Teléfono: "+estudiante2.getTelefono()+"\n\n";
+			mensaje+="    	Fecha de Nacimiento: "+estudiante2.getFecha()+"\n\n";
+			mensaje+="    	Sexo: "+estudiante2.getSexo()+"\n\n";
+			mensaje+="    	Email: "+estudiante2.getEmail()+"\n\n";
+			mensaje+="    	Dirección: "+estudiante2.getDireccion()+"\n\n";
+			mensaje+="    	Estado: "+estudiante2.getEstado()+"\n\n";
+			mensaje+="Para verificar su registro ingrese a http://localhost:8080/SistemaGestionAsistencia/pages/login.jsf"+"\n\n\n	";
+			mensaje+="********NO RESPONDER - Mensaje Generado Automáticamente********";
+			break;
+		case 2:
+			asunto = "Cambio de Estado";
+			mensaje = "Estimado(a)  "+estudiante2.getNombre()+"\n";
+			mensaje+="Su estado a sido cambiado a:  "+estudiante2.getEstado()+"\n\n";
+			mensaje+="A continuacion encontará los datos del cambio de estado: "+"\n\n";
+			mensaje+="    	Documento: "+estudiante2.getDocumento()+"\n\n";
+			mensaje+="    	Nombre: "+estudiante2.getNombre()+"\n\n";
+			mensaje+="    	Telefono: "+estudiante2.getTelefono()+"\n\n";
+			mensaje+="    	Estado: "+estudiante2.getEstado()+"\n\n";
+			mensaje+="Para verificar el cambio de estado ingrese a http://localhost:8080/SistemaGestionAsistencia/pages/login.jsf"+"\n\n\n	";
+			mensaje+="********NO RESPONDER - Mensaje Generado Automáticamente********";
+			break;
+
+		default:
+			break;
+		}
+		
+		MimeMessage mail = new MimeMessage(sesion);
+		try {
+			mail.setFrom(new InternetAddress(correoEnvia));
+			mail.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
+			mail.setSubject(asunto);
+			mail.setText(mensaje);
+			
+			Transport transporte = sesion.getTransport("smtp");
+			transporte.connect(correoEnvia,contraseña);
+			transporte.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
+			transporte.close();
+			
+			System.out.println("Correos enviados exitosamente: "+destinatario);
+		
+		} catch (AddressException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
 	public void editarEstudiante(EstudianteVo estudiante){
 		System.out.println("VA A EDITAR ESTUDIANTE");
 		System.out.println("codigo - "+estudiante.getDocumento());
 		System.out.println("Nombre - "+estudiante.getNombre());
+		x=estudiante.getEstado(); 
+		System.out.println(x);
 		estudiante.setEditar(true);
 	}
 	
@@ -167,10 +252,19 @@ public class EstudianteBean {
 		System.out.println("codigo - "+estudiante.getDocumento());
 		System.out.println("Nombre - "+estudiante.getNombre());
 		mensajeConfirmacion=estudianteDao.actualizarEstudiante(estudiante);
+		if(mensajeConfirmacion!=null){
+			if(x.equals(estudiante.getEstado())){
+				System.out.println("EL ESTADO NO CAMBIO");
+				
+			}else{
+				
+				enviarCorreo(estudiante, 2);
+			}
+		}
 		estudiante.setEditar(false);
 		
 	}
-	
+
 	public void eliminarEstudiante(EstudianteVo estudiante){
 		System.out.println("VA A ELIMINAR ESTUDIANTE");
 		System.out.println("codigo - "+estudiante.getDocumento());

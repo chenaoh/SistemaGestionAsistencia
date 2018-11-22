@@ -75,9 +75,9 @@
             		</h:column>
             		<h:column>
 						<f:facet name="header">Acciones</f:facet>
-						<h:commandLink action="#{grupoBean.editarGrupo(datos)}" rendered="#{not datos.editar}" ><i class="material-icons s12">create</i></h:commandLink>
+						<h:commandLink action="#{grupoBean.editarGrupo(datos)}" rendered="#{not datos.editar}" ><i class="material-icons s12" jsf:rendered="#{loginBean.ver}">create</i></h:commandLink>
 						<h:commandLink action="#{grupoBean.guardarGrupo(datos)}" rendered="#{datos.editar}" ><i class="material-icons s12">save</i></h:commandLink> 
-						<h:commandLink action="#{grupoBean.eliminarGrupo(datos)}" ><i class="material-icons s12">delete</i></h:commandLink>
+						<h:commandLink action="#{grupoBean.eliminarGrupo(datos)}" ><i class="material-icons s12" jsf:rendered="#{loginBean.ver}" onclick="return confirm('¿Estas seguro que deseas eliminar el grupo?');">delete</i></h:commandLink>
 						<h:commandLink action="#{grupoBean.perfilGrupo(datos.codigo)}" ><i class="material-icons s12">account_circle</i></h:commandLink>
 					<!--  	<a class="waves-effect waves-light modal-trigger" href="#modal2"  ><i class="material-icons left">help_outline</i></a>-->
 					</h:column>
