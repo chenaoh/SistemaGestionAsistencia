@@ -36,6 +36,7 @@ public class EstudianteBean {
 	private GrupoDao grupoDao;
 	private String nombreEstu;
 	private String grupo;
+	private String x;
 	private boolean tipoUser;
 	
 	private ArrayList<String> nombresEstudiantes =  new ArrayList<>();
@@ -241,6 +242,8 @@ public class EstudianteBean {
 		System.out.println("VA A EDITAR ESTUDIANTE");
 		System.out.println("codigo - "+estudiante.getDocumento());
 		System.out.println("Nombre - "+estudiante.getNombre());
+		x=estudiante.getEstado(); 
+		System.out.println(x);
 		estudiante.setEditar(true);
 	}
 	
@@ -250,10 +253,11 @@ public class EstudianteBean {
 		System.out.println("Nombre - "+estudiante.getNombre());
 		mensajeConfirmacion=estudianteDao.actualizarEstudiante(estudiante);
 		if(mensajeConfirmacion!=null){
-			if(estudiante.getEstado().equals("inactivo")){
-				System.out.println("ESTA PREGUNTANDO EL ESTADO");
-				enviarCorreo(estudiante, 2);
-			}else if(estudiante.getEstado().equals("activo")){
+			if(x.equals(estudiante.getEstado())){
+				System.out.println("EL ESTADO NO CAMBIO");
+				
+			}else{
+				
 				enviarCorreo(estudiante, 2);
 			}
 		}
