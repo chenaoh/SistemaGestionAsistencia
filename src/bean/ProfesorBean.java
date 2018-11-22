@@ -183,23 +183,6 @@ public class ProfesorBean {
 		return "consulta_profesores.jsf?faces-redirect=true";
 	}
 	
-	public void mandarObjeto(ProfesorVo profesorVo2){
-		System.out.println("Entra a mandar el objeto");
-		prof2 = profesorVo2;
-	}
-	
-	public void eliminarObjeto(int cod) {
-		System.out.println("CODIGO LLEGADA*****: "+cod);
-		switch (cod) {
-		case 1:
-			eliminarProfesor(prof2);
-			break;
-		default:
-			break;
-		}
-		
-	}
-
 	public void eliminarProfesor(ProfesorVo profesor){
 		System.out.println("VA A ELIMINAR PROFESOR");
 		System.out.println("codigo - "+profesor.getDocumento());
