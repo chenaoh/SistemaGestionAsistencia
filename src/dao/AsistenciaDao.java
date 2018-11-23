@@ -26,8 +26,10 @@ public class AsistenciaDao {
 				+ "  VALUES (?,?,?,?,?)";
 
 		try {
-			//Date myDate = new Date();
-			//fecha = new SimpleDateFormat("yyyy-MM-dd").format(myDate);
+			if(fecha.equals("") || fecha.equals(null)){
+				Date myDate = new Date();
+				fecha = new SimpleDateFormat("yyyy-MM-dd").format(myDate);	
+			}
 			
 			for (int i = 0; i < documentos.size(); i++) {
 				preStatement = connection.prepareStatement(consulta);
