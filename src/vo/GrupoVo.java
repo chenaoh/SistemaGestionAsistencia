@@ -8,8 +8,10 @@ import java.text.SimpleDateFormat;
 
 public class GrupoVo {
 	
+	private Integer codigoGrupoA;
 	private String codigo;
 	private String nombre;
+	private String nombreGrupo;
 	private String directorGrupo;
 	private Date fechaInicioGrupo;
 	private Date fechaFinGrupo;
@@ -130,6 +132,22 @@ public class GrupoVo {
 
 	public void setEditar(boolean editar) {
 		this.editar = editar;
+	}
+
+	public Integer getCodigoGrupoA() {
+		return codigoGrupoA;
+	}
+
+	public void setCodigoGrupoA(Integer codigoGrupoA) {
+		this.codigoGrupoA = codigoGrupoA;
+	}
+
+	public String getNombreGrupo() {
+		return nombreGrupo;
+	}
+
+	public void setNombreGrupo(String nombreGrupo) {
+		this.nombreGrupo = nombreGrupo;
 	}
 		
 }

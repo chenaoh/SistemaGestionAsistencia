@@ -23,17 +23,25 @@ import dao.ProfesorDao;
 import vo.EstudianteVo;
 import vo.GrupoVo;
 import vo.ProfesorVo;
+//import vo.ProyectoVo;
 @ManagedBean
 @SessionScoped
 public class GrupoBean implements Serializable{
-	
+
 	private String nombreGrupo;
+	private String nombreGrupoA;//nombre grupo asociado
 	private GrupoVo grupo;
 	private String fechaInicio;
 	private String fechaFin;
 	private String mensajeConfirmacion;
+	private ArrayList<String> grupos;
 	private GrupoDao grupoDao;
+	private EstudianteDao estudianteDao;
+	EstudianteBean estudianteBean;
+	private ArrayList<String> nombresEstudiantes;
+	private ArrayList<String> estudiantes;
 	private String grupoId;
+	private String mensaje;
 	FacesContext context = FacesContext.getCurrentInstance();
 	HttpSession session = (HttpSession)context.getExternalContext().getSession(true);
 	
@@ -43,6 +51,25 @@ public class GrupoBean implements Serializable{
 	HashMap<String, GrupoVo> mapaGrupos=new HashMap<>();
 	
 	List<String> listaDias, listaSeleccionados;
+	
+	public GrupoBean(){
+		grupo=new GrupoVo();
+		grupoDao=new GrupoDao();
+		estudianteDao=new EstudianteDao();
+		estudianteBean=new EstudianteBean();
+		itemProfesores=new ArrayList<SelectItem>();
+		itemEstudiantesDisponibles=new ArrayList<SelectItem>();
+		itemEstudiantesAsociados=new ArrayList<SelectItem>();
+		itemGrupos=new ArrayList<SelectItem>();
+		listaEstudiantesDisponibles=new ArrayList<>();
+		listaEstudiantesAsociados=new ArrayList<>();
+		cargarGrupos();	
+		cargarListaGrupos();	
+		cargarProfesores();
+		cargarDatosHashMapGrupos();
+		cargarEstudiantes();
+	}
+	
 	
 	public void consultarGrupoNombre(){
 		setListaGrupos(grupoDao.consultarGrupoNombre(getNombreGrupo()));
@@ -74,22 +101,25 @@ public class GrupoBean implements Serializable{
 	private List<String> listaEstudiantesDisponibles,listaEstudiantesAsociados;
 	ArrayList<EstudianteVo> listaEstudiantes;
 	
-	public GrupoBean(){
-		grupo=new GrupoVo();
-		grupoDao=new GrupoDao();
-		itemProfesores=new ArrayList<SelectItem>();
-		itemEstudiantesDisponibles=new ArrayList<SelectItem>();
-		itemEstudiantesAsociados=new ArrayList<SelectItem>();
-		itemGrupos=new ArrayList<SelectItem>();
-		listaEstudiantesDisponibles=new ArrayList<>();
-		listaEstudiantesAsociados=new ArrayList<>();
-		cargarGrupos();	
-		cargarProfesores();
+	public void cargarListaGrupos(){
+		grupos=grupoDao.cargarGrupos();
+	}
+		
+	public void cargarDatosHashMapGrupos() {
+		ArrayList<GrupoVo> listGrupos = grupoDao.obtenerListaGrupos();
+		grupoDao.cargarDatosHashMapGrupos(listGrupos);
+		estudianteBean.cargarDatosHashMapEstudiantes();
 	}
 	
 	public void cargarLista(){
 			
 	}
+	public void cargarestudiantes() {
+		setEstudiantes(estudianteDao.obtenerNombres());
+		
+	}
+
+
 	
 	private void cargarProfesores() {
 		ProfesorDao profesorDao=new ProfesorDao();
@@ -113,6 +143,7 @@ public class GrupoBean implements Serializable{
 		EstudianteDao estudianteDao=new EstudianteDao();
 
 		listaEstudiantes=estudianteDao.obtenerListaEstudiantes();
+		estudianteDao.cargarDatosHashMapEstudiantes(listaEstudiantes);
 		System.out.println("VA A CARGAR ESTUDIANTES DESPUES DEL EVENTO!");
 		itemEstudiantesDisponibles.clear();
 		if (listaEstudiantes.size()>0) {
@@ -148,6 +179,7 @@ public class GrupoBean implements Serializable{
 	private void cargarGrupos() {
 		listaGrupos.clear();
 		listaGrupos=grupoDao.obtenerListaGrupos();
+		
 		
 		if (listaGrupos!=null) {
 			for (int i = 0; i < listaGrupos.size(); i++) {
@@ -200,7 +232,7 @@ public class GrupoBean implements Serializable{
 		this.listaGrupoSeleccionado = listaGrupoSeleccionado;
 	}
 
-	public void asociarEstudiantes(){
+	/*public void asociarEstudiantes(){
 		System.out.println("VA A ASOCIAR ESTUDIANTES");
 		for (int i = 0; i < listaEstudiantesDisponibles.size(); i++) {
 			System.out.println(listaEstudiantesDisponibles.get(i));
@@ -211,7 +243,7 @@ public class GrupoBean implements Serializable{
 		for (int i = 0; i < listaEstudiantesAsociados.size(); i++) {
 			System.out.println(listaEstudiantesDisponibles.get(i));
 		}
-	}
+	}*/
 	
 	public void quitarEstudiantes(){
 		System.out.println("VA A QUITAR ESTUDIANTES");
@@ -381,5 +413,82 @@ public class GrupoBean implements Serializable{
 	public void setNombreGrupo(String nombreGrupo) {
 		this.nombreGrupo = nombreGrupo;
 	}
+
+	public String getNombreGrupoA() {
+		return nombreGrupoA;
+	}
+
+	public void setNombreGrupoA(String nombreGrupoA) {
+		this.nombreGrupoA = nombreGrupoA;
+	}
+
+	public ArrayList<String> getGrupos() {
+		return grupos;
+	}
+
+	public void setGrupos(ArrayList<String> grupos) {
+		this.grupos = grupos;
+	}
+	
+	public void asociarEstudiantes(){
+		String res = grupoDao.consultarAsociacion(nombresEstudiantes);
+		if(res.equals("no existe")) {
+			ArrayList<GrupoVo> listGrupos = grupoDao.obtenerListaGrupos();
+			grupoDao.cargarDatosHasgMap(listGrupos);
+			String idGrupo = grupoDao.obtenerId(getNombreGrupoA());
+			registrarAsociacionDeEstudiantes(nombresEstudiantes,idGrupo);
+		}else {
+			setMensaje("Uno o los estudiantes ya se encuentra asociados a un Grupo");
+		}
+	}
+	
+	public void desasociarEstudiantes(String nombre){
+		String doc = estudianteDao.obtenerIdUnEstudiante(nombre);
+		System.out.println("Documento estudiante***: "+doc);
+		
+		String res = grupoDao.desasociarEstudiantes(doc);
+		
+		if(res.equals("ok")){
+			estudianteBean.cargarListaAsociadosGrupos();
+		}
+	}
+
+
+
+	private void registrarAsociacionDeEstudiantes(ArrayList<String> idEstudiante, String idGrupo) {
+		String res = grupoDao.registrarAsociacionDeEstudiantes(idEstudiante,idGrupo);
+		if(res.equals("ok")){
+			setMensaje("Registro Exitoso!!!");
+			estudianteBean.cargarListaAsociadosGrupos();
+		}else{
+			setMensaje("Registro Erroneo");
+		}
+		
+	}
+
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+
+	public ArrayList<String> getNombresEstudiantes() {
+		return nombresEstudiantes;
+	}
+
+	public void setNombresEstudiantes(ArrayList<String> nombresEstudiantes) {
+		this.nombresEstudiantes = nombresEstudiantes;
+	}
+
+	public ArrayList<String> getEstudiantes() {
+		return estudiantes;
+	}
+
+	public void setEstudiantes(ArrayList<String> estudiantes) {
+		this.estudiantes = estudiantes;
+	}
+	
 	
 }

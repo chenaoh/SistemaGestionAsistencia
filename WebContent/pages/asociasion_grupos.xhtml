@@ -6,46 +6,47 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      template="/templates/gestion_proyectos.xhtml"> 
+      template="/templates/gestion_grupos.xhtml"> 
 
-<ui:param name="tituloPagina" value="Asociacion Proyectos" />	
-<ui:param name="nombrePagina" value="Gestión de Proyectos - Asociación Proyecto Estudiantes" />	
+<ui:param name="tituloPagina" value="Asociacion Grupos" />	
+<ui:param name="nombrePagina" value="Gestión de Grupos - Asociación Estudiantes Grupo" />	
 
-<ui:define name="tabProyectos">
-             ////////refrescar la asociacion
+
+<ui:define name="tabGrupos">
+        
 	<h:form>
 		<div class="row">
 			<div class="col s12 m12 deep-orange accent-3">
-          		<div class="tarjetas-text">Asociación Proyecto - Estudiantes</div>
+          		<div class="tarjetas-text">Asociación Estudiantes Grupo</div>
           	</div>
         </div>   
         		<h:outputLabel value="#{proyectoBean.mensaje}" />
         
         <div class="row">
         	<div class="input-field col s6">
-        		<h:selectOneMenu value="#{proyectoBean.nombreProyecto}">
-	        		<f:selectItems value="#{proyectoBean.proyectos}"/>
+        		<h:selectOneMenu value="#{grupoBean.nombreGrupoA}">
+	        		<f:selectItems value="#{grupoBean.grupos}"/>
 	        	</h:selectOneMenu>
-	        	<label>Proyectos</label>
+	        	<label>Grupos</label>
         	</div>
         	<div class="input-field col s6">
-        		<h:selectManyListbox value="#{proyectoBean.nombresEstudiantes}">
-        			<f:selectItems value="#{proyectoBean.estudiantes}"/>
+        		<h:selectManyListbox value="#{grupoBean.nombresEstudiantes}">
+        			<f:selectItems value="#{grupoBean.itemEstudiantesDisponibles}"/>
         		</h:selectManyListbox>
         		<label>Estudiantes</label>
         	</div>
         	<div class="input-field col s6">
-        		<h:commandButton value="Asociar" class="btn" action="#{proyectoBean.asociarEstudiantes()}"/>
+        		<h:commandButton value="Asociar" class="btn" action="#{grupoBean.asociarEstudiantes()}"/>
         	</div>
         </div>
      </h:form> 
             <h:form>  
             	<div class="row">
             		<div class="card-panel">
-            			<h:dataTable value="#{estudianteBean.listaEstudiantesAsociados}" var="asociado" class="striped">
+            			<h:dataTable value="#{estudianteBean.listasAsociadosGrupos}" var="asociado" class="striped">
             				<h:column>
-            					<f:facet name="header">Proyecto</f:facet>
-            					<h:outputLabel value="#{asociado.cod_proyecto}" />
+            					<f:facet name="header">Grupos</f:facet>
+            					<h:outputLabel value="#{asociado.cod_grupo}" />
             				</h:column>
             				<h:column>
             					<f:facet name="header">Estudiantes</f:facet>
@@ -53,7 +54,7 @@
             				</h:column>
             				<h:column>
             					<f:facet name="header">Desasociar</f:facet>
-            					<h:commandButton value="clear" action="#{proyectoBean.desasociarEstudiantes(asociado.docEstudiante)}" class="material-icons no-btn red-text"/>
+            					<h:commandButton value="clear" action="#{grupoBean.desasociarEstudiantes(asociado.docEstudiante)}" class="material-icons no-btn red-text"/>
             				</h:column>
             			</h:dataTable>
             		</div>

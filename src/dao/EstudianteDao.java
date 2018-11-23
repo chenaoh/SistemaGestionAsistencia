@@ -9,10 +9,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+
+
 import conexion.Conexion;
 import vo.EstudianteVo;
 import vo.EstudiantesPtoyectosVo;
 import vo.GrupoVo;
+import vo.estudiantesGrupoVo;
 
 public class EstudianteDao {
 	
@@ -474,5 +477,45 @@ public class EstudianteDao {
 		return estudiante;
 
 	}
+	
+public ArrayList<estudiantesGrupoVo>  cargarListaAsociados() {
+		
+		
+		Connection conn = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		estudiantesGrupoVo estuGrupos;
+		ArrayList<estudiantesGrupoVo> listaGruposAsociados= new ArrayList<>();
+		Conexion conexion = new Conexion();
+		
+		conn = conexion.getConnection();
+		
+		String consulta = "SELECT e.nombre as nombre, p.nombre as nombreG FROM grupo_estudiantes pe, estudiante e, grupo p WHERE pe.cod_grupo = p.codigo AND pe.doc_estudiante = e.documento ";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			result = statement.executeQuery();
+			
+			while(result.next()){
+				estuGrupos = new estudiantesGrupoVo();
+				estuGrupos.setCod_grupo(result.getString("nombreG"));
+				estuGrupos.setDocEstudiante(result.getString("nombre"));
+				listaGruposAsociados.add(estuGrupos);
+			}
+			
+			conexion.desconectar();
+			
+			
+		} catch (SQLException e) {
+			System.out.println("Error al traer la lista de estudiantes asociados: "+e.getMessage());
+			listaGruposAsociados = null;
+		}
+		
+		System.out.println("********************************************************************************************************************");
+		System.out.println("////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
+		System.out.println(listaGruposAsociados);
+		return listaGruposAsociados;
+}
 
 }
