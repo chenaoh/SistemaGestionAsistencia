@@ -14,7 +14,7 @@ import vo.GrupoVo;
 
 public class AsistenciaDao {
 	public String fecha;
-	public String registrarAsistencia(ArrayList<String> documentos, String profesor, String grupo, String observacion) {
+	public String registrarAsistencia(ArrayList<String> documentos, String profesor, String grupo, String observacion, String fecha) {
 		String resultado = "";
 
 		Connection connection = null;
@@ -26,8 +26,8 @@ public class AsistenciaDao {
 				+ "  VALUES (?,?,?,?,?)";
 
 		try {
-			Date myDate = new Date();
-			fecha = new SimpleDateFormat("yyyy-MM-dd").format(myDate);
+			//Date myDate = new Date();
+			//fecha = new SimpleDateFormat("yyyy-MM-dd").format(myDate);
 			
 			for (int i = 0; i < documentos.size(); i++) {
 				preStatement = connection.prepareStatement(consulta);

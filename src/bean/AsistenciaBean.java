@@ -152,7 +152,7 @@ public class AsistenciaBean {
 		estudianteDao.cargarDatosHashMapEstudiantes(estudiantes);
 		ArrayList<String> documentos = estudianteDao.obtenerIdEstudiante(getAsistenciaNombres());
 		System.out.println("**Documentos EStudintes**: "+documentos);
-		String res = asistenciaDao.registrarAsistencia(documentos, documento, getCodGrupo(),getObservacion());	
+		String res = asistenciaDao.registrarAsistencia(documentos, documento, getCodGrupo(),getObservacion(),getFecha());	
 		
 		if(res.equals("ok")){
 			LoginBean login = new LoginBean();
