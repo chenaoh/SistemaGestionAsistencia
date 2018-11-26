@@ -175,7 +175,7 @@ public class EstudianteBean {
 		Session sesion = Session.getDefaultInstance(propiedad);
 		
 		String correoEnvia = "adsisga@gmail.com";
-		String contraseña = "adsi1598667";
+		String contrasena = "adsi1598667";
 		String destinatario = estudiante2.getEmail(); 
 		String asunto = "";
 		String mensaje="";
@@ -222,7 +222,7 @@ public class EstudianteBean {
 			mail.setText(mensaje);
 			
 			Transport transporte = sesion.getTransport("smtp");
-			transporte.connect(correoEnvia,contraseña);
+			transporte.connect(correoEnvia,contrasena);
 			transporte.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
 			transporte.close();
 			

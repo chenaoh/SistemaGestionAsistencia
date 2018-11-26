@@ -93,7 +93,7 @@ public class ProfesorBean {
 	}
 	
 	public void registrarProfesor(){
-		System.out.println(profesor.getDocumento());
+		System.out.println("Se registra profesor" +profesor.getDocumento());
 		System.out.println(profesor.getNombre());
 		
 		profesor.setPassword(profesor.getDocumento());
@@ -116,7 +116,7 @@ public class ProfesorBean {
 		Session sesion = Session.getDefaultInstance(propiedad);
 		
 		String correoEnvia = "adsisga@gmail.com";
-		String contraseña = "adsi1598667";
+		String contrasena = "adsi1598667";
 		String destinatario = profesor2.getEmail(); 
 		String asunto = "Registro de Profesor";
 		String mensaje = "Estimado(a)  "+profesor2.getNombre()+"\n";
@@ -169,7 +169,7 @@ public class ProfesorBean {
 			mail.setText(mensaje);
 			
 			Transport transporte = sesion.getTransport("smtp");
-			transporte.connect(correoEnvia,contraseña);
+			transporte.connect(correoEnvia,contrasena);
 			transporte.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
 			transporte.close();
 			
