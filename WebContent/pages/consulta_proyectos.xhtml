@@ -74,7 +74,7 @@
 						<f:facet name="header">Acciones</f:facet>
 						<h:commandLink action="#{proyectoBean.editarProyecto(datos)}" rendered="#{not datos.editar}"><i class="material-icons s12" >create</i></h:commandLink>
 						<h:commandLink action="#{proyectoBean.guardarProyecto(datos)}" rendered="#{datos.editar}" ><i class="material-icons s12">save</i></h:commandLink>
-						<h:commandLink action="#{proyectoBean.eliminarProyecto(datos)}" ><i class="material-icons s12">delete</i></h:commandLink>
+						<h:commandLink action="#{proyectoBean.eliminarProyecto(datos)}" onclick="return confirm('¿Estas seguro que deseas eliminar el proyecto?');"><i class="material-icons s12">delete</i></h:commandLink>
 					</h:column>
             	
             	</h:dataTable>
