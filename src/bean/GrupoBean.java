@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -14,6 +15,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import dao.EstudianteDao;
@@ -35,6 +43,7 @@ public class GrupoBean implements Serializable{
 	private GrupoDao grupoDao;
 	private String grupoId;
 	private ProfesorDao profesorDAO;
+	private ProfesorVo profesorVo;
 	private String mensaje;
 	private ArrayList<String>profesores;
 	private ArrayList<String> nombresProfesores;
@@ -285,14 +294,62 @@ public class GrupoBean implements Serializable{
 	
 	public void asociarProfesores(){
 		ArrayList<String> idProfesor=profesorDAO.obtenerIdProfesor(getNombresProfesores());
+		ArrayList<String> correosProf = profesorDAO.obtenerCorreos(getNombresProfesores());
+		
 		System.out.println("IDS: "+idProfesor);
+		System.out.println("Nombre G: "+nombreGrupo);
 		String res = grupoDao.consultarAsociacion(idProfesor);	
 		if(res.equals("no existe")) {
 			registrarAsociacionDeProfesores(idProfesor,getGrupoId());
+			login.calcularPanelEstadisticas();
+			enviarCorreoAsociacion(correosProf, getNombresProfesores());
 			profesorBean.cargarProfesoresAsociados();
 		}else {
 			setMensaje("Uno o los profesores ya se encuentras asociados a un grupo");
 		}
+	}
+	
+	private void enviarCorreoAsociacion(ArrayList<String> correosProf, ArrayList<String> nombres) {
+			
+		for(int i = 0; i<correosProf.size(); i++){
+			Properties propiedad = new Properties();
+			propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
+			propiedad.setProperty("mail.smtp.starttls.enable", "true");
+	        propiedad.setProperty("mail.smtp.port", "587");
+	        propiedad.setProperty("mail.smtp.auth", "true");
+			
+			Session sesion = Session.getDefaultInstance(propiedad);
+			
+			String correoEnvia = "adsisga@gmail.com";
+			String contrasena = "adsi1598667";
+			String destinatario = correosProf.get(i);
+			String asunto = "Asociacion A Un Grupo";
+			String mensaje = "Estimado(a) " +nombres.get(i)+" \n\n";
+			mensaje+="Usted fue Asociado Al Grupo: " +grupo.getNombre();
+			
+			MimeMessage mail = new MimeMessage(sesion);
+			try {
+				mail.setFrom(new InternetAddress(correoEnvia));
+				mail.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
+				mail.setSubject(asunto);
+				mail.setText(mensaje);
+				
+				Transport transporte = sesion.getTransport("smtp");
+				transporte.connect(correoEnvia,contrasena);
+				transporte.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
+				transporte.close();
+				
+				System.out.println("Correos enviados exitosamente: "+destinatario);
+			
+			} catch (AddressException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
 	
 	public void desasociarProfesores(String nombre){
