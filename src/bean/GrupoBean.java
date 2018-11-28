@@ -321,7 +321,7 @@ public class GrupoBean implements Serializable{
 			Session sesion = Session.getDefaultInstance(propiedad);
 			
 			String correoEnvia = "adsisga@gmail.com";
-			String contraseña = "adsi1598667";
+			String contrasena = "adsi1598667";
 			String destinatario = correosProf.get(i);
 			String asunto = "Asociacion A Un Grupo";
 			String mensaje = "Estimado(a) " +nombres.get(i)+" \n\n";
@@ -335,7 +335,7 @@ public class GrupoBean implements Serializable{
 				mail.setText(mensaje);
 				
 				Transport transporte = sesion.getTransport("smtp");
-				transporte.connect(correoEnvia,contraseña);
+				transporte.connect(correoEnvia,contrasena);
 				transporte.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
 				transporte.close();
 				
