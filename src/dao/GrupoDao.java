@@ -414,5 +414,114 @@ public class GrupoDao {
 		
 		return res;
 	}
+	
+	public void cargarDatosHashMapGrupos(ArrayList<GrupoVo> listaGrupos) {
+		for (int i = 0; i < listaGrupos.size(); i++) {
+			mapaGrupos.put(listaGrupos.get(i).getNombreGrupo(), listaGrupos.get(i));
+		}
+			
+		System.out.println("****Mapa Grupos****: "+mapaGrupos);
+	}
+	
+	public String consultarAsociacionEstudiantes(ArrayList<String> idEstudiante) {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		Conexion conexion = new Conexion();
+		ResultSet result = null;
+		String res="";
+		
+		conn = conexion.getConnection();
+		
+		try {
+			
+			for (int i = 0; i < idEstudiante.size(); i++) {
+				String consulta = "SELECT * FROM grupo_estudiantes WHERE doc_estudiante = ?";
+				statement = conn.prepareStatement(consulta);
+				statement.setString(1, idEstudiante.get(i));
+				result = statement.executeQuery();
+				System.out.println("documnedbdrg"+result);
+				if(result.next()==true) {
+					res="existe";
+					break;
+				}else {
+					res="no existe";
+				}
+				
+				System.out.println("REspuesta de asocicacion: ******jjsdfhsdjfd"+res);
+				
+			}
+			
+			conexion.desconectar();
+			
+		} catch (SQLException e) {
+			System.out.println("Error al verificar la existencia de la asociacion: "+e.getMessage());
+		}
+		
+		return res;
+	}
+	
+	public String registrarAsociacionDeEstudiantes(ArrayList<String> idEstudiante, String idGrupo) {
+		String resultado = "";
+		Connection conn = null;
+		PreparedStatement statement = null;
+		Conexion conexion  = new Conexion();
+		
+		conn = conexion.getConnection();
+		
+		
+		
+		try {
+			
+			for (int i = 0; i < idEstudiante.size(); i++) {
+				System.out.println("Estudiante "+i+"-"+idEstudiante.get(i));
+				String consulta = "INSERT INTO grupo_estudiantes VALUES (?,?)";
+				statement = conn.prepareStatement(consulta);
+				statement.setString(1, idGrupo);
+				statement.setString(2, idEstudiante.get(i));
+				statement.execute();
+			}
+			
+			resultado = "ok";
+			
+			
+		} catch (SQLException e) {
+			System.out.println("Error al registrar la asociacion: "+e.getMessage());
+			resultado = "error";
+		}
+		
+		conexion.desconectar();
+		
+		return resultado;
+		
+	}
+	public String desasociarEstudiantes(String doc) {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		Conexion conexion = new Conexion();
+		String res ="";
+		
+		conn = conexion.getConnection();
+		
+		String consulta = "DELETE FROM grupo_estudiantes WHERE doc_estudiante = ?";
+		
+		try {
+			
+			statement = conn.prepareStatement(consulta);
+			statement.setString(1, doc);
+			statement.execute();
+		
+			res = "ok";
+			
+			
+			
+		} catch (SQLException e) {
+			System.out.println("Error al desasociar al estudiante: "+e.getMessage());
+			res = "error";
+		}
+		
+		conexion.desconectar();
+		
+		return res;
+	}
 
 }

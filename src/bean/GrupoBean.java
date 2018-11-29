@@ -36,18 +36,24 @@ import vo.ProfesorVo;
 public class GrupoBean implements Serializable{
 	
 	private String nombreGrupo;
+	private String nombreGrupoA;//nombre grupo asociado
 	private GrupoVo grupo;
 	private String fechaInicio;
 	private String fechaFin;
 	private String mensajeConfirmacion;
+	private ArrayList<String> grupos;
 	private GrupoDao grupoDao;
 	private String grupoId;
+	private EstudianteDao estudianteDao;
+	EstudianteBean estudianteBean;
 	private ProfesorDao profesorDAO;
 	private ProfesorVo profesorVo;
 	private String mensaje;
 	private ArrayList<String>profesores;
 	private ArrayList<String> nombresProfesores;
 	ProfesorBean profesorBean;
+	private ArrayList<String> nombresEstudiantes;
+	private ArrayList<String> estudiantes;
 	FacesContext context = FacesContext.getCurrentInstance();
 	HttpSession session = (HttpSession)context.getExternalContext().getSession(true);
 	
@@ -58,6 +64,29 @@ public class GrupoBean implements Serializable{
 	LoginBean login = new LoginBean();
 	
 	List<String> listaDias, listaSeleccionados;
+	
+	public GrupoBean(){
+		grupo=new GrupoVo();
+		grupoDao=new GrupoDao();
+		itemProfesores=new ArrayList<SelectItem>();
+		itemEstudiantesDisponibles=new ArrayList<SelectItem>();
+		itemEstudiantesAsociados=new ArrayList<SelectItem>();
+		itemGrupos=new ArrayList<SelectItem>();
+		listaEstudiantesDisponibles=new ArrayList<>();
+		listaEstudiantesAsociados=new ArrayList<>();
+		profesores = new ArrayList<>();
+		nombresProfesores = new ArrayList<>();
+		profesorDAO = new ProfesorDao();
+		profesorBean = new ProfesorBean();
+		estudianteDao=new EstudianteDao();
+		estudianteBean=new EstudianteBean();
+		cargarGrupos();	
+		cargarProfesores();
+		cargarListaGrupos();	
+		cargarProfesores();
+		cargarDatosHashMapGrupos();
+		cargarEstudiantes();
+	}
 	
 	public void consultarGrupoNombre(){
 		setListaGrupos(grupoDao.consultarGrupoNombre(getNombreGrupo()));
@@ -89,26 +118,21 @@ public class GrupoBean implements Serializable{
 	private List<String> listaEstudiantesDisponibles,listaEstudiantesAsociados;
 	ArrayList<EstudianteVo> listaEstudiantes;
 	
-	public GrupoBean(){
-		grupo=new GrupoVo();
-		grupoDao=new GrupoDao();
-		itemProfesores=new ArrayList<SelectItem>();
-		itemEstudiantesDisponibles=new ArrayList<SelectItem>();
-		itemEstudiantesAsociados=new ArrayList<SelectItem>();
-		itemGrupos=new ArrayList<SelectItem>();
-		listaEstudiantesDisponibles=new ArrayList<>();
-		listaEstudiantesAsociados=new ArrayList<>();
-		profesores = new ArrayList<>();
-		nombresProfesores = new ArrayList<>();
-		profesorDAO = new ProfesorDao();
-		profesorBean = new ProfesorBean();
-		cargarGrupos();	
-		cargarProfesores();
-	}
 	
 	public void cargarLista(){
 			
 	}
+	
+	public void cargarListaGrupos(){
+		grupos=grupoDao.cargarGrupos();
+	}
+	
+	public void cargarDatosHashMapGrupos() {
+		ArrayList<GrupoVo> listGrupos = grupoDao.obtenerListaGrupos();
+		grupoDao.cargarDatosHashMapGrupos(listGrupos);
+		estudianteBean.cargarDatosHashMapEstudiantes();
+	}
+	
 	
 	public void cargarProfesores(){
 		System.out.println("ESTA Cargando los profesores");
@@ -140,6 +164,11 @@ public class GrupoBean implements Serializable{
 			mensajeConfirmacion="Actualmente no existen estudiantes registrados para asociarlos al grupo";
 			System.out.println("************************POR SI LAS MOSCAS**********************");
 		}
+	}
+	
+	public void cargarestudiantes() {
+		setEstudiantes(estudianteDao.obtenerNombres());
+		
 	}
 	
 	public String obtenerNombreProfesor(String documento){
@@ -221,6 +250,18 @@ public class GrupoBean implements Serializable{
 		System.out.println("LISTA ASOCIADOS");
 		for (int i = 0; i < listaEstudiantesAsociados.size(); i++) {
 			System.out.println(listaEstudiantesDisponibles.get(i));
+		}
+	}
+	
+	public void asociarEstudiantesGrupo(){
+		String res = grupoDao.consultarAsociacion(nombresEstudiantes);
+		if(res.equals("no existe")) {
+			ArrayList<GrupoVo> listGrupos = grupoDao.obtenerListaGrupos();
+			grupoDao.cargarDatosHasgMap(listGrupos);
+			String idGrupo = grupoDao.obtenerId(getNombreGrupoA());
+			registrarAsociacionDeEstudiantes(nombresEstudiantes,idGrupo);
+		}else {
+			setMensaje("Uno o los estudiantes ya se encuentra asociados a un Grupo");
 		}
 	}
 	
@@ -375,6 +416,30 @@ public class GrupoBean implements Serializable{
 	}
 	
 	
+	
+	public void desasociarEstudiantes(String nombre){
+		String doc = estudianteDao.obtenerIdUnEstudiante(nombre);
+		System.out.println("Documento estudiante***: "+doc);
+		
+		String res = grupoDao.desasociarEstudiantes(doc);
+		
+		if(res.equals("ok")){
+			estudianteBean.cargarListaAsociadosGrupos();
+		}
+	}
+	
+	private void registrarAsociacionDeEstudiantes(ArrayList<String> idEstudiante, String idGrupo) {
+		String res = grupoDao.registrarAsociacionDeEstudiantes(idEstudiante,idGrupo);
+		if(res.equals("ok")){
+			setMensaje("Registro Exitoso!!!");
+			estudianteBean.cargarListaAsociadosGrupos();
+		}else{
+			setMensaje("Registro Erroneo");
+		}
+		
+	}
+	
+	
 	public GrupoVo getGrupo() {
 		return grupo;
 	}
@@ -499,6 +564,38 @@ public class GrupoBean implements Serializable{
 	
 	public void setProfesores(ArrayList<String>profesores) {
 		this.profesores = profesores;
+	}
+	
+	public ArrayList<String> getEstudiantes() {
+		return estudiantes;
+	}
+
+	public void setEstudiantes(ArrayList<String> estudiantes) {
+		this.estudiantes = estudiantes;
+	}
+	
+	public String getNombreGrupoA() {
+		return nombreGrupoA;
+	}
+
+	public void setNombreGrupoA(String nombreGrupoA) {
+		this.nombreGrupoA = nombreGrupoA;
+	}
+	
+	public ArrayList<String> getGrupos() {
+		return grupos;
+	}
+
+	public void setGrupos(ArrayList<String> grupos) {
+		this.grupos = grupos;
+	}
+	
+	public ArrayList<String> getNombresEstudiantes() {
+		return nombresEstudiantes;
+	}
+
+	public void setNombresEstudiantes(ArrayList<String> nombresEstudiantes) {
+		this.nombresEstudiantes = nombresEstudiantes;
 	}
 	
 }

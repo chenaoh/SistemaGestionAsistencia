@@ -24,12 +24,14 @@ import dao.GrupoDao;
 import vo.EstudianteVo;
 import vo.EstudiantesPtoyectosVo;
 import vo.GrupoVo;
+import vo.estudiantesGrupoVo;
 @ManagedBean
 @ViewScoped
 public class EstudianteBean {
 	
 	private EstudianteVo estudiante;
 	private EstudiantesPtoyectosVo estuProyectoVo;
+	private estudiantesGrupoVo estuGrupoVo;
 	private String fecha;
 	private String mensajeConfirmacion;
 	private EstudianteDao estudianteDao;
@@ -43,6 +45,7 @@ public class EstudianteBean {
 	private static ArrayList<EstudianteVo> listaEstudiantes=new ArrayList<>();
 	private ArrayList<String> grupos=new ArrayList<>();
 	private static ArrayList<EstudiantesPtoyectosVo>  listaEstudiantesAsociados = new ArrayList<>();
+	private static ArrayList<estudiantesGrupoVo>  listasAsociadosGrupos = new ArrayList<>();
 	LoginBean login = new LoginBean();
 	
 	FacesContext context = FacesContext.getCurrentInstance();
@@ -59,6 +62,11 @@ public class EstudianteBean {
 		cargarDatosHashMapEstudiantes();
 		cargarEstudiantesAsociados();
 		cargarGrupos();
+		cargarListaAsociadosGrupos();
+	}
+	
+	public void cargarListaAsociadosGrupos(){
+		setListasAsociadosGrupos(estudianteDao.cargarListaAsociados());
 	}
 	
 	public void cargarEstudiante(){
@@ -377,6 +385,12 @@ public class EstudianteBean {
 		this.grupos = grupos;
 	}
 	
-	
+	public ArrayList<estudiantesGrupoVo> getListasAsociadosGrupos() {
+		return listasAsociadosGrupos;
+	}
+
+	public void setListasAsociadosGrupos(ArrayList<estudiantesGrupoVo> listasAsociadosGrupos) {
+		this.listasAsociadosGrupos = listasAsociadosGrupos;
+	}
 
 }
