@@ -177,8 +177,8 @@ public class EstudianteBean {
 		String correoEnvia = "adsisga@gmail.com";
 		String contrasena = "adsi1598667";
 		String destinatario = estudiante2.getEmail(); 
-		String asunto = "";
-		String mensaje="";
+		String asunto = "Registro de Estudiante";
+		String mensaje="Estimado(a)" +estudiante2.getNombre()+"\n";
 		
 		switch (cod) {
 		case 1:

@@ -266,6 +266,49 @@ public class GrupoDao {
 		}
 		return grupo;
 	}
+	
+	public ArrayList<GrupoVo> listaGruposAsociados(String director_grupo) {
+		Connection connection = null;
+		Conexion miConexion = new Conexion();
+		PreparedStatement statement = null;
+		ResultSet result = null;
+
+		GrupoVo miGrupo = new GrupoVo();
+		ArrayList<GrupoVo> listaGruposAsociados = null;
+
+		connection = miConexion.getConnection();
+		
+		String consulta = "SELECT * FROM where director = ? ";
+		System.out.println(consulta);
+		try {
+			if (connection != null) {
+				listaGruposAsociados = new ArrayList<>();
+				statement = connection.prepareStatement(consulta);
+
+				result = statement.executeQuery();
+
+				while (result.next() == true) {
+					miGrupo = new GrupoVo();
+					miGrupo.setCodigo(result.getString("codigo"));
+					miGrupo.setNombre(result.getString("nombre"));
+					miGrupo.setDirectorGrupo(result.getString("director_grupo"));
+					miGrupo.setFechaInicioGrupo(result.getDate("fecha_inicio"));
+					miGrupo.setFechaFinGrupo(result.getDate("fecha_fin"));
+					miGrupo.setObservacion(result.getString("observacion"));
+					miGrupo.setEstado(result.getString("estado"));
+					miGrupo.setFechaIni(miGrupo.getFechaInicioGrupo()+"");
+					miGrupo.setFechaFin(miGrupo.getFechaFinGrupo()+"");
+					listaGruposAsociados.add(miGrupo);
+				}
+				
+			}
+		} catch (SQLException e) {
+			System.out.println("Error en la consulta de los grupos: " + e.getMessage());
+		} finally {
+			miConexion.desconectar();
+		}
+		return listaGruposAsociados;
+	}
 
 	public void cargarDatosHasgMap(ArrayList<GrupoVo> listaGrupos) {
 		for (int i = 0; i < listaGrupos.size(); i++) {

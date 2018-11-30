@@ -44,6 +44,7 @@ public class GrupoBean implements Serializable{
 	
 	private ArrayList<GrupoVo> listaGrupos=new ArrayList<>();
 	private ArrayList<GrupoVo> listaGrupoSeleccionado=new ArrayList<>();
+	private ArrayList<GrupoVo> listaGruposAsociados=new ArrayList<>();
 	HashMap<String, ProfesorVo> mapaProfesores=new HashMap<>();
 	HashMap<String, GrupoVo> mapaGrupos=new HashMap<>();
 	LoginBean login = new LoginBean();
@@ -161,6 +162,20 @@ public class GrupoBean implements Serializable{
 			mensajeConfirmacion="Actualmente no existen grupos registrados para asociarlos al Proyecto";
 		}
 	}
+	
+	/*private void gruposAsociados() {
+		listaGruposAsociados=grupoDao.listaGruposAsociados(director_grupo);
+		
+		if (listaGruposAsociados!=null) {
+			for (int i = 0; i < listaGruposAsociados.size(); i++) {
+				itemGrupos.add(new SelectItem(listaGruposAsociados.get(i).getCodigo(),listaGruposAsociados.get(i).getNombre()));
+				mapaGrupos.put(listaGruposAsociados.get(i).getCodigo(),listaGruposAsociados.get(i));
+			}			
+			
+		}else{
+			mensajeConfirmacion="Actualmente no existen grupos asociados al profesor";
+		}
+	}*/
 	
 	public void consultarEstudiantesGrupo(AjaxBehaviorEvent event){
 		System.out.println("INGRESA AL METODO DEL CAMBIO");
@@ -442,6 +457,14 @@ public class GrupoBean implements Serializable{
 	
 	public void setProfesores(ArrayList<String>profesores) {
 		this.profesores = profesores;
+	}
+	
+	public ArrayList<GrupoVo> getListaGruposAsociados() {
+		return listaGruposAsociados;
+	}
+
+	public void setListaGruposAsociados(ArrayList<GrupoVo> listaGruposAsociados) {
+		this.listaGruposAsociados = listaGruposAsociados;
 	}
 	
 }

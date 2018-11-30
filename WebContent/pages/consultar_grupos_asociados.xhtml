@@ -21,7 +21,7 @@
 				<div class="card-panel ">                  
 
  					<form jsf:id="tabla">
-		            	<h:dataTable value="#{grupoBean.listaGrupos}" var="datos" class="striped">
+		            	<h:dataTable value="#{grupoBean.listaGruposAsociados}" var="datos" class="striped">
 		            		<h:column>
 								<f:facet name="header">Codigo</f:facet>
 								<h:inputText value="#{datos.codigo}" rendered="#{datos.editar}" disabled="true"/>
@@ -65,6 +65,12 @@
 		            	
 		            	</h:dataTable>
              		</form>
+             		
+             		<div class="row">	 
+	  	  		<div class="col s6 m5 ">
+	  	  				<a class="waves-effect waves-light btn" href="perfil_profesor.jsf" style="width: 40%">Regresar</a>
+				</div>	 
+        	</div>
               	
               	</div>
 	

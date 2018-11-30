@@ -93,9 +93,9 @@
             		<h:column>
 						<f:facet name="header">Acciones</f:facet>
 						<h:commandLink action="#{estudianteBean.editarEstudiante(datos)}" rendered="#{not datos.editar}"><i class="material-icons s12"  jsf:rendered="#{loginBean.ver}">create</i></h:commandLink>
-					<h:commandLink action="#{estudianteBean.guardarEstudiante(datos)}" rendered="#{datos.editar}" ><i class="material-icons s12">save</i></h:commandLink>
-						<h:commandLink action="#{estudianteBean.eliminarEstudiante(datos)}" ><i class="material-icons s12" jsf:rendered="#{loginBean.ver}">delete</i></h:commandLink>
-					<h:commandLink action="#{estudianteBean.perfilEstudiante(datos.documento)}" ><i class="material-icons s12">visibility</i></h:commandLink>
+						<h:commandLink action="#{estudianteBean.guardarEstudiante(datos)}" rendered="#{datos.editar}" ><i class="material-icons s12">save</i></h:commandLink>
+						<h:commandLink action="#{estudianteBean.eliminarEstudiante(datos)}" onclick="return confirm('¿Estas seguro que deseas eliminar el estudiante?');"><i class="material-icons s12" jsf:rendered="#{loginBean.ver}">delete</i></h:commandLink>
+						<h:commandLink action="#{estudianteBean.perfilEstudiante(datos.documento)}" ><i class="material-icons s12">visibility</i></h:commandLink>
 					
 					
 					</h:column>

@@ -22,7 +22,7 @@
             <div class="card-panel ">
                  <div class="row">
                     <div class="input-field col m3 offset-m9">
-                    <input id="documento" type="text" class="validate" jsf:value="#{profesorBean.profesor.documento}" />
+                    <input id="documento" type="number" class="validate" jsf:value="#{profesorBean.profesor.documento}" />
                     <label for="documento">Documento</label>
                   </div>  
 
@@ -32,7 +32,7 @@
                   </div>
 
                   <div class="input-field col m6">
-                    <input id="telefono" type="text" class="validate" jsf:value="#{profesorBean.profesor.telefono}" />
+                    <input id="telefono" type="number" class="validate" jsf:value="#{profesorBean.profesor.telefono}" />
                     <label for="telefono">Telefono</label>
                   </div>  
 
@@ -41,8 +41,9 @@
                     <label for="profesion">Profesion</label>
                   </div>  
                   <div class="input-field col m6">
-                    <input id="email" type="text" class="validate" jsf:value="#{profesorBean.profesor.email}" />
+                    <input id="email" type="email" class="validate" jsf:value="#{profesorBean.profesor.email}" />
                     <label for="email">Email</label>
+                    <span class="helper-text" data-error="Error" data-success="Correcto"></span>
                   </div>  
 
                   <div class="input-field col m6">
