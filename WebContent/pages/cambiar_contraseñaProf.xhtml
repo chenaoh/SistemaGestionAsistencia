@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<ui:composition
+	  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      template="/templates/plantilla.xhtml"> 
+
+<ui:param name="tituloPagina" value="Perfil Usuario" />	
+<ui:param name="nombrePagina" value="Cambio de Contraseña" />	
+
+<ui:define name="contenido">
+	<h:form>
+		<div class="card-panel">
+			<h:outputLabel value="#{perfilBean.mensaje}" class="red-text darken-1"/>
+			<div class="row">
+				<div class="input-field col s6">
+					<h:inputText value="#{objeto.password}" disabled="true"/>
+					<h:outputLabel value="Contraseña" />
+				</div>
+				<div class="input-field col s6">
+					<h:inputSecret value="#{perfilBean.passNew}" />
+					<h:outputLabel value="Contraseña Nueva" />
+				</div>
+				<div class="input-field col s6">
+					<h:inputSecret value="#{perfilBean.confirmPass}" />
+					<h:outputLabel value="Confirmar Contraseña" />
+				</div>
+				<div class="input-field col s6">
+					<h:commandButton action="#{perfilBean.actualizarContrasena(objeto)}" value="Guardar Contraseña" class="btn"/>
+				</div>
+			</div>
+		</div>
+	</h:form>
+</ui:define>
+
+
+</ui:composition>

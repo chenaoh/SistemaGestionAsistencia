@@ -43,7 +43,7 @@ public class PerfilDao {
 					//miEstudiante.setFechaNacimiento(result.getDate("fecha_nacimiento"));
 					miEstudiante.setSexo(result.getString("sexo"));
 					miEstudiante.setEstado(result.getString("estado"));
-					//miEstudiante.setPassword(result.getString("password"));
+					miEstudiante.setPassword(result.getString("password"));
 					miEstudiante.setTipo(result.getString("tipo"));
 				}
 			}
@@ -55,6 +55,41 @@ public class PerfilDao {
 		System.out.println("55555555555555555555555555555555555555555555555555555");
 		System.out.println(miEstudiante);
 		return miEstudiante;
+	}
+
+	
+	public String cambiarContrasena(String documento, String tipo, String password) {
+		String consulta = "";
+		String resultado = "";
+		Connection conn = null;
+		PreparedStatement statement = null;
+		Conexion conexion = new Conexion();
+		
+		conn = conexion.getConnection();
+		
+		try {
+			
+			if(tipo.equals("estudiante")) {
+				consulta="UPDATE estudiante SET password = ? WHERE documento = ?";
+			}else {
+				consulta="UPDATE profesor SET password = ? WHERE documento = ?";
+			}
+			
+			statement = conn.prepareStatement(consulta);
+			statement.setString(1, password);
+			statement.setString(2, documento);
+			statement.executeUpdate();
+			
+			resultado = "ok";
+			
+			conexion.desconectar();
+			
+		} catch (SQLException e) {
+			System.out.println("Error al actualizar la contraseña: "+e.getMessage());
+		}
+		
+		return resultado;
+		
 	}
 
 }

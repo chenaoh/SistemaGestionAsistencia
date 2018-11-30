@@ -432,4 +432,15 @@ public class ProfesorDao {
 		return listaNombres;
 	}
 
+	public ArrayList<String> obtenerCorreos(ArrayList<String> nombresProfesores) {
+		ArrayList<String> correos = new ArrayList<>();
+		ProfesorVo profesorVo;
+		for (int i = 0; i < nombresProfesores.size(); i++) {
+			profesorVo = new ProfesorVo();
+			profesorVo = mapaProfesores.get(nombresProfesores.get(i));
+			correos.add(profesorVo.getEmail());
+		}
+		return correos;
+	}
+
 }

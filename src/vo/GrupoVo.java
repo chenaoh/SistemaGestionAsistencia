@@ -11,6 +11,7 @@ public class GrupoVo {
 	private String codigo;
 	private Integer codigoGrupo;
 	private String nombre;
+	private String nombreGrupo;
 	private String directorGrupo;
 	private Date fechaInicioGrupo;
 	private Date fechaFinGrupo;
@@ -141,5 +142,12 @@ public class GrupoVo {
 	public void setEditar(boolean editar) {
 		this.editar = editar;
 	}
-		
+	
+	public String getNombreGrupo() {
+		return nombreGrupo;
+	}
+
+	public void setNombreGrupo(String nombreGrupo) {
+		this.nombreGrupo = nombreGrupo;
+	}
 }

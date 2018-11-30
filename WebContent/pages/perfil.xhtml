@@ -67,9 +67,10 @@
 	                   </h:selectOneMenu>
 	                  </div>
                   </div> 
-                  
                   <div class="input-field col m4">
-                  	<a href="#!" class="btn">Cambiar Contraseña</a>
+	                  <h:form>
+	                  	<h:commandButton action="#{perfilBean.cambiarContrasena(perfilBean.perfil.documento, perfilBean.perfil.tipo)}" value="Cambiar Contraseña" class="btn"/>
+	                  </h:form>
                   </div>         
                       
     			
