@@ -195,25 +195,20 @@ public class GrupoBean implements Serializable{
 				itemGrupos.add(new SelectItem(listaGrupos.get(i).getCodigo(),listaGrupos.get(i).getNombre()));
 				mapaGrupos.put(listaGrupos.get(i).getCodigo(),listaGrupos.get(i));
 			}			
-			
 		}else{
 			mensajeConfirmacion="Actualmente no existen grupos registrados para asociarlos al Proyecto";
 		}
 	}
-	
-	/*private void gruposAsociados() {
-		listaGruposAsociados=grupoDao.listaGruposAsociados(director_grupo);
+
+	public String gruposAsociados(String doc) {
+		System.out.println("entra al metodo grupos!!! documento: "+doc);
+		String res = "";
+		listaGruposAsociados=grupoDao.listaGruposAsociados(doc);
+		System.out.println("Lista de grupos: "+getListaGruposAsociados());
+		res = "consultar_grupos_asociados.jsf";
 		
-		if (listaGruposAsociados!=null) {
-			for (int i = 0; i < listaGruposAsociados.size(); i++) {
-				itemGrupos.add(new SelectItem(listaGruposAsociados.get(i).getCodigo(),listaGruposAsociados.get(i).getNombre()));
-				mapaGrupos.put(listaGruposAsociados.get(i).getCodigo(),listaGruposAsociados.get(i));
-			}			
-			
-		}else{
-			mensajeConfirmacion="Actualmente no existen grupos asociados al profesor";
-		}
-	}*/
+		return res;
+	}
 	
 	public void consultarEstudiantesGrupo(AjaxBehaviorEvent event){
 		System.out.println("INGRESA AL METODO DEL CAMBIO");
