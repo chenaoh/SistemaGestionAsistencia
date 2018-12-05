@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-12-2018 a las 18:42:31
--- Versión del servidor: 10.1.28-MariaDB
--- Versión de PHP: 7.1.11
+-- Tiempo de generación: 05-12-2018 a las 20:51:52
+-- Versión del servidor: 10.1.30-MariaDB
+-- Versión de PHP: 5.6.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `sga_bd`
 --
+CREATE DATABASE IF NOT EXISTS `sga_bd` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
+USE `sga_bd`;
 
 -- --------------------------------------------------------
 
@@ -29,6 +31,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `asistencia` (
+  `codigo` int(11) NOT NULL,
   `doc_est_` varchar(15) DEFAULT NULL,
   `cod_grupo` varchar(10) DEFAULT NULL,
   `doc_prof` varchar(15) DEFAULT NULL,
@@ -37,6 +40,13 @@ CREATE TABLE `asistencia` (
   `tiempo_falta` int(11) DEFAULT NULL,
   `observacion_falta` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `asistencia`
+--
+
+INSERT INTO `asistencia` (`codigo`, `doc_est_`, `cod_grupo`, `doc_prof`, `novedad_falta`, `fecha_falta`, `tiempo_falta`, `observacion_falta`) VALUES
+(1, '222', '122', '111', NULL, '2018-12-26', NULL, 'hola');
 
 -- --------------------------------------------------------
 
@@ -63,9 +73,10 @@ CREATE TABLE `estudiante` (
 --
 
 INSERT INTO `estudiante` (`documento`, `nombre`, `direccion`, `telefono`, `email`, `grupo`, `fecha_nacimiento`, `sexo`, `estado`, `password`, `tipo`) VALUES
-('123', 'Pedro Perez', 'calle 2 # 19 - 21 B/Las Palmas', '234566', 'pedro@gmail.com', '121', '2011-02-11', 'M', 'activo', '123', 'estudiante'),
+('1005308685', 'Juan Camilo Ramos R.', 'Circasia', '3116178494', 'camiramos234@gmail.com', '0', '2000-12-23', 'M', 'Activo', '1005308685', 'estudiante'),
+('123', 'Pedro Perez', 'calle 2 # 19 - 21 B/Las Palmas', '234566', 'pedro@gmail.com', '122', '2011-02-11', 'M', 'activo', '123', 'estudiante'),
 ('199', 'Ana Milena Arias', 'barrio ciudad dorada', '758962', 'anamile@gmail.com', '0', '1991-06-25', 'F', 'activo', '199', 'estudiante'),
-('222', 'Maria Perez', 'Calle 2 # 23 - 19 B/ Belen', '3113654893', 'pepito@gmail.com', '121', '1999-02-12', 'M', 'Activo', '222', 'estudiante'),
+('222', 'Maria Perez', 'Calle 2 # 23 - 19 B/ Belen', '3113654893', 'pepito@gmail.com', '122', '1999-02-12', 'M', 'Activo', '222', 'estudiante'),
 ('23423', 'fdgsgdfs', 'dfgdsf', '354432', 'fdsgdfs', '0', '2018-11-22', 'F', 'Activo', '23423', 'estudiante'),
 ('333', 'Maria Camila Perez', 'Calle 2 # 21 -2 B/Arboleda', '311358961', 'mcamila@gmail.com', '0', '2009-08-20', 'F', 'Activo', '333', 'estudiante'),
 ('4445', 'Luisa', 'calarca', '345632', 'lui@sena.edu.co', '0', '2018-10-09', 'F', 'activo', '4445', 'estudiante'),
@@ -229,6 +240,12 @@ INSERT INTO `proyecto_estudiantes` (`cod_proyecto`, `doc_estudiante`) VALUES
 --
 
 --
+-- Indices de la tabla `asistencia`
+--
+ALTER TABLE `asistencia`
+  ADD PRIMARY KEY (`codigo`);
+
+--
 -- Indices de la tabla `estudiante`
 --
 ALTER TABLE `estudiante`
@@ -255,6 +272,12 @@ ALTER TABLE `proyecto`
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `asistencia`
+--
+ALTER TABLE `asistencia`
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `proyecto`
