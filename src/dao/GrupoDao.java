@@ -267,7 +267,7 @@ public class GrupoDao {
 		return grupo;
 	}
 	
-	public ArrayList<GrupoVo> listaGruposAsociados(String director_grupo) {
+	public ArrayList<GrupoVo> listaGruposAsociados(String doc) {
 		Connection connection = null;
 		Conexion miConexion = new Conexion();
 		PreparedStatement statement = null;
@@ -278,12 +278,13 @@ public class GrupoDao {
 
 		connection = miConexion.getConnection();
 		
-		String consulta = "SELECT * FROM where director = ? ";
+		String consulta = "SELECT * FROM grupo WHERE director_grupo = ? ";
 		System.out.println(consulta);
 		try {
 			if (connection != null) {
 				listaGruposAsociados = new ArrayList<>();
 				statement = connection.prepareStatement(consulta);
+				statement.setString(1, doc);
 
 				result = statement.executeQuery();
 
@@ -300,7 +301,6 @@ public class GrupoDao {
 					miGrupo.setFechaFin(miGrupo.getFechaFinGrupo()+"");
 					listaGruposAsociados.add(miGrupo);
 				}
-				
 			}
 		} catch (SQLException e) {
 			System.out.println("Error en la consulta de los grupos: " + e.getMessage());

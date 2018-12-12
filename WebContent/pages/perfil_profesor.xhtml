@@ -100,7 +100,9 @@
               	
               <div class="row right">	 
 	  	  		<div class="col s6 m5 ">
-	  	  				<a class="waves-effect waves-light btn" href="consultar_grupos_asociados.jsf" style="width: 270%">Consultar Grupos Asociados</a>
+	  	  		<h:form>
+	  	  				<h:commandButton action="#{grupoBean.gruposAsociados(profesor.documento)}"  value="Consultar grupos asociados" class="btn"/>
+				</h:form>
 				</div>	 
         	</div>
                            
